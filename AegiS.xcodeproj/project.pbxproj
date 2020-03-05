@@ -1,0 +1,606 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		EDCD0DD62411A30300FC6524 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCD0DD52411A30300FC6524 /* AppDelegate.swift */; };
+		EDCD0DD82411A30300FC6524 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCD0DD72411A30300FC6524 /* SceneDelegate.swift */; };
+		EDCD0DDA2411A30300FC6524 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCD0DD92411A30300FC6524 /* ViewController.swift */; };
+		EDCD0DDD2411A30300FC6524 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDCD0DDB2411A30300FC6524 /* Main.storyboard */; };
+		EDCD0DE02411A30300FC6524 /* AegiS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EDCD0DDE2411A30300FC6524 /* AegiS.xcdatamodeld */; };
+		EDCD0DE22411A30500FC6524 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EDCD0DE12411A30500FC6524 /* Assets.xcassets */; };
+		EDCD0DE52411A30500FC6524 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDCD0DE32411A30500FC6524 /* LaunchScreen.storyboard */; };
+		EDCD0DF02411A30500FC6524 /* AegiSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCD0DEF2411A30500FC6524 /* AegiSTests.swift */; };
+		EDCD0DFB2411A30500FC6524 /* AegiSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCD0DFA2411A30500FC6524 /* AegiSUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		EDCD0DEC2411A30500FC6524 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EDCD0DCA2411A30300FC6524 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EDCD0DD12411A30300FC6524;
+			remoteInfo = AegiS;
+		};
+		EDCD0DF72411A30500FC6524 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EDCD0DCA2411A30300FC6524 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EDCD0DD12411A30300FC6524;
+			remoteInfo = AegiS;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		EDCD0DD22411A30300FC6524 /* AegiS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AegiS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EDCD0DD52411A30300FC6524 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		EDCD0DD72411A30300FC6524 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		EDCD0DD92411A30300FC6524 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		EDCD0DDC2411A30300FC6524 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		EDCD0DDF2411A30300FC6524 /* AegiS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AegiS.xcdatamodel; sourceTree = "<group>"; };
+		EDCD0DE12411A30500FC6524 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		EDCD0DE42411A30500FC6524 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		EDCD0DE62411A30500FC6524 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EDCD0DEB2411A30500FC6524 /* AegiSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AegiSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EDCD0DEF2411A30500FC6524 /* AegiSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AegiSTests.swift; sourceTree = "<group>"; };
+		EDCD0DF12411A30500FC6524 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EDCD0DF62411A30500FC6524 /* AegiSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AegiSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EDCD0DFA2411A30500FC6524 /* AegiSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AegiSUITests.swift; sourceTree = "<group>"; };
+		EDCD0DFC2411A30500FC6524 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EDCD0DCF2411A30300FC6524 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDCD0DE82411A30500FC6524 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDCD0DF32411A30500FC6524 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		EDCD0DC92411A30300FC6524 = {
+			isa = PBXGroup;
+			children = (
+				EDCD0DD42411A30300FC6524 /* AegiS */,
+				EDCD0DEE2411A30500FC6524 /* AegiSTests */,
+				EDCD0DF92411A30500FC6524 /* AegiSUITests */,
+				EDCD0DD32411A30300FC6524 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		EDCD0DD32411A30300FC6524 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EDCD0DD22411A30300FC6524 /* AegiS.app */,
+				EDCD0DEB2411A30500FC6524 /* AegiSTests.xctest */,
+				EDCD0DF62411A30500FC6524 /* AegiSUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EDCD0DD42411A30300FC6524 /* AegiS */ = {
+			isa = PBXGroup;
+			children = (
+				EDCD0DD52411A30300FC6524 /* AppDelegate.swift */,
+				EDCD0DD72411A30300FC6524 /* SceneDelegate.swift */,
+				EDCD0DD92411A30300FC6524 /* ViewController.swift */,
+				EDCD0DDB2411A30300FC6524 /* Main.storyboard */,
+				EDCD0DE12411A30500FC6524 /* Assets.xcassets */,
+				EDCD0DE32411A30500FC6524 /* LaunchScreen.storyboard */,
+				EDCD0DE62411A30500FC6524 /* Info.plist */,
+				EDCD0DDE2411A30300FC6524 /* AegiS.xcdatamodeld */,
+			);
+			path = AegiS;
+			sourceTree = "<group>";
+		};
+		EDCD0DEE2411A30500FC6524 /* AegiSTests */ = {
+			isa = PBXGroup;
+			children = (
+				EDCD0DEF2411A30500FC6524 /* AegiSTests.swift */,
+				EDCD0DF12411A30500FC6524 /* Info.plist */,
+			);
+			path = AegiSTests;
+			sourceTree = "<group>";
+		};
+		EDCD0DF92411A30500FC6524 /* AegiSUITests */ = {
+			isa = PBXGroup;
+			children = (
+				EDCD0DFA2411A30500FC6524 /* AegiSUITests.swift */,
+				EDCD0DFC2411A30500FC6524 /* Info.plist */,
+			);
+			path = AegiSUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		EDCD0DD12411A30300FC6524 /* AegiS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EDCD0DFF2411A30500FC6524 /* Build configuration list for PBXNativeTarget "AegiS" */;
+			buildPhases = (
+				EDCD0DCE2411A30300FC6524 /* Sources */,
+				EDCD0DCF2411A30300FC6524 /* Frameworks */,
+				EDCD0DD02411A30300FC6524 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AegiS;
+			productName = AegiS;
+			productReference = EDCD0DD22411A30300FC6524 /* AegiS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		EDCD0DEA2411A30500FC6524 /* AegiSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EDCD0E022411A30500FC6524 /* Build configuration list for PBXNativeTarget "AegiSTests" */;
+			buildPhases = (
+				EDCD0DE72411A30500FC6524 /* Sources */,
+				EDCD0DE82411A30500FC6524 /* Frameworks */,
+				EDCD0DE92411A30500FC6524 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EDCD0DED2411A30500FC6524 /* PBXTargetDependency */,
+			);
+			name = AegiSTests;
+			productName = AegiSTests;
+			productReference = EDCD0DEB2411A30500FC6524 /* AegiSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		EDCD0DF52411A30500FC6524 /* AegiSUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EDCD0E052411A30500FC6524 /* Build configuration list for PBXNativeTarget "AegiSUITests" */;
+			buildPhases = (
+				EDCD0DF22411A30500FC6524 /* Sources */,
+				EDCD0DF32411A30500FC6524 /* Frameworks */,
+				EDCD0DF42411A30500FC6524 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EDCD0DF82411A30500FC6524 /* PBXTargetDependency */,
+			);
+			name = AegiSUITests;
+			productName = AegiSUITests;
+			productReference = EDCD0DF62411A30500FC6524 /* AegiSUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EDCD0DCA2411A30300FC6524 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1130;
+				LastUpgradeCheck = 1130;
+				ORGANIZATIONNAME = "Teodor Pavlov";
+				TargetAttributes = {
+					EDCD0DD12411A30300FC6524 = {
+						CreatedOnToolsVersion = 11.3.1;
+					};
+					EDCD0DEA2411A30500FC6524 = {
+						CreatedOnToolsVersion = 11.3.1;
+						TestTargetID = EDCD0DD12411A30300FC6524;
+					};
+					EDCD0DF52411A30500FC6524 = {
+						CreatedOnToolsVersion = 11.3.1;
+						TestTargetID = EDCD0DD12411A30300FC6524;
+					};
+				};
+			};
+			buildConfigurationList = EDCD0DCD2411A30300FC6524 /* Build configuration list for PBXProject "AegiS" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = EDCD0DC92411A30300FC6524;
+			productRefGroup = EDCD0DD32411A30300FC6524 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EDCD0DD12411A30300FC6524 /* AegiS */,
+				EDCD0DEA2411A30500FC6524 /* AegiSTests */,
+				EDCD0DF52411A30500FC6524 /* AegiSUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EDCD0DD02411A30300FC6524 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDCD0DE52411A30500FC6524 /* LaunchScreen.storyboard in Resources */,
+				EDCD0DE22411A30500FC6524 /* Assets.xcassets in Resources */,
+				EDCD0DDD2411A30300FC6524 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDCD0DE92411A30500FC6524 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDCD0DF42411A30500FC6524 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EDCD0DCE2411A30300FC6524 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDCD0DDA2411A30300FC6524 /* ViewController.swift in Sources */,
+				EDCD0DD62411A30300FC6524 /* AppDelegate.swift in Sources */,
+				EDCD0DD82411A30300FC6524 /* SceneDelegate.swift in Sources */,
+				EDCD0DE02411A30300FC6524 /* AegiS.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDCD0DE72411A30500FC6524 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDCD0DF02411A30500FC6524 /* AegiSTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDCD0DF22411A30500FC6524 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDCD0DFB2411A30500FC6524 /* AegiSUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		EDCD0DED2411A30500FC6524 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EDCD0DD12411A30300FC6524 /* AegiS */;
+			targetProxy = EDCD0DEC2411A30500FC6524 /* PBXContainerItemProxy */;
+		};
+		EDCD0DF82411A30500FC6524 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EDCD0DD12411A30300FC6524 /* AegiS */;
+			targetProxy = EDCD0DF72411A30500FC6524 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		EDCD0DDB2411A30300FC6524 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EDCD0DDC2411A30300FC6524 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		EDCD0DE32411A30500FC6524 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EDCD0DE42411A30500FC6524 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		EDCD0DFD2411A30500FC6524 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		EDCD0DFE2411A30500FC6524 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		EDCD0E002411A30500FC6524 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = AegiS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.CreditSuisse.AegiS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EDCD0E012411A30500FC6524 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = AegiS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.CreditSuisse.AegiS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		EDCD0E032411A30500FC6524 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = AegiSTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.CreditSuisse.AegiSTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AegiS.app/AegiS";
+			};
+			name = Debug;
+		};
+		EDCD0E042411A30500FC6524 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = AegiSTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.CreditSuisse.AegiSTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AegiS.app/AegiS";
+			};
+			name = Release;
+		};
+		EDCD0E062411A30500FC6524 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = AegiSUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.CreditSuisse.AegiSUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = AegiS;
+			};
+			name = Debug;
+		};
+		EDCD0E072411A30500FC6524 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = AegiSUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.CreditSuisse.AegiSUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = AegiS;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EDCD0DCD2411A30300FC6524 /* Build configuration list for PBXProject "AegiS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EDCD0DFD2411A30500FC6524 /* Debug */,
+				EDCD0DFE2411A30500FC6524 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EDCD0DFF2411A30500FC6524 /* Build configuration list for PBXNativeTarget "AegiS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EDCD0E002411A30500FC6524 /* Debug */,
+				EDCD0E012411A30500FC6524 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EDCD0E022411A30500FC6524 /* Build configuration list for PBXNativeTarget "AegiSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EDCD0E032411A30500FC6524 /* Debug */,
+				EDCD0E042411A30500FC6524 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EDCD0E052411A30500FC6524 /* Build configuration list for PBXNativeTarget "AegiSUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EDCD0E062411A30500FC6524 /* Debug */,
+				EDCD0E072411A30500FC6524 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		EDCD0DDE2411A30300FC6524 /* AegiS.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				EDCD0DDF2411A30300FC6524 /* AegiS.xcdatamodel */,
+			);
+			currentVersion = EDCD0DDF2411A30300FC6524 /* AegiS.xcdatamodel */;
+			path = AegiS.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = EDCD0DCA2411A30300FC6524 /* Project object */;
+}
