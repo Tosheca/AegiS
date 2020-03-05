@@ -16,6 +16,8 @@
 		EDCD0DE52411A30500FC6524 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDCD0DE32411A30500FC6524 /* LaunchScreen.storyboard */; };
 		EDCD0DF02411A30500FC6524 /* AegiSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCD0DEF2411A30500FC6524 /* AegiSTests.swift */; };
 		EDCD0DFB2411A30500FC6524 /* AegiSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCD0DFA2411A30500FC6524 /* AegiSUITests.swift */; };
+		EDCD0E0B2411AC9300FC6524 /* 58793365_435065583733969_1080487310656536576_n.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EDCD0E092411AC9300FC6524 /* 58793365_435065583733969_1080487310656536576_n.jpg */; };
+		EDCD0E0C2411AC9300FC6524 /* 88184721_197303188163976_3523993075498090496_n.png in Resources */ = {isa = PBXBuildFile; fileRef = EDCD0E0A2411AC9300FC6524 /* 88184721_197303188163976_3523993075498090496_n.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,8 @@
 		EDCD0DF62411A30500FC6524 /* AegiSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AegiSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDCD0DFA2411A30500FC6524 /* AegiSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AegiSUITests.swift; sourceTree = "<group>"; };
 		EDCD0DFC2411A30500FC6524 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EDCD0E092411AC9300FC6524 /* 58793365_435065583733969_1080487310656536576_n.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 58793365_435065583733969_1080487310656536576_n.jpg; sourceTree = "<group>"; };
+		EDCD0E0A2411AC9300FC6524 /* 88184721_197303188163976_3523993075498090496_n.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 88184721_197303188163976_3523993075498090496_n.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +88,7 @@
 				EDCD0DD42411A30300FC6524 /* AegiS */,
 				EDCD0DEE2411A30500FC6524 /* AegiSTests */,
 				EDCD0DF92411A30500FC6524 /* AegiSUITests */,
+				EDCD0E082411AC6800FC6524 /* Images */,
 				EDCD0DD32411A30300FC6524 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -129,6 +134,15 @@
 				EDCD0DFC2411A30500FC6524 /* Info.plist */,
 			);
 			path = AegiSUITests;
+			sourceTree = "<group>";
+		};
+		EDCD0E082411AC6800FC6524 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				EDCD0E092411AC9300FC6524 /* 58793365_435065583733969_1080487310656536576_n.jpg */,
+				EDCD0E0A2411AC9300FC6524 /* 88184721_197303188163976_3523993075498090496_n.png */,
+			);
+			path = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -238,6 +252,8 @@
 				EDCD0DE52411A30500FC6524 /* LaunchScreen.storyboard in Resources */,
 				EDCD0DE22411A30500FC6524 /* Assets.xcassets in Resources */,
 				EDCD0DDD2411A30300FC6524 /* Main.storyboard in Resources */,
+				EDCD0E0C2411AC9300FC6524 /* 88184721_197303188163976_3523993075498090496_n.png in Resources */,
+				EDCD0E0B2411AC9300FC6524 /* 58793365_435065583733969_1080487310656536576_n.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
