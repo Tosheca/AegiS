@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ED64881B241247F000EDD3D3 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED64881A241247F000EDD3D3 /* RegisterViewController.swift */; };
 		EDCD0DD62411A30300FC6524 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCD0DD52411A30300FC6524 /* AppDelegate.swift */; };
 		EDCD0DD82411A30300FC6524 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCD0DD72411A30300FC6524 /* SceneDelegate.swift */; };
 		EDCD0DDA2411A30300FC6524 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCD0DD92411A30300FC6524 /* ViewController.swift */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		ED64881A241247F000EDD3D3 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		EDCD0DD22411A30300FC6524 /* AegiS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AegiS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDCD0DD52411A30300FC6524 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EDCD0DD72411A30300FC6524 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 				EDCD0DD52411A30300FC6524 /* AppDelegate.swift */,
 				EDCD0DD72411A30300FC6524 /* SceneDelegate.swift */,
 				EDCD0DD92411A30300FC6524 /* ViewController.swift */,
+				ED64881A241247F000EDD3D3 /* RegisterViewController.swift */,
 				EDCD0DDB2411A30300FC6524 /* Main.storyboard */,
 				EDCD0DE12411A30500FC6524 /* Assets.xcassets */,
 				EDCD0DE32411A30500FC6524 /* LaunchScreen.storyboard */,
@@ -279,6 +282,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EDCD0DDA2411A30300FC6524 /* ViewController.swift in Sources */,
+				ED64881B241247F000EDD3D3 /* RegisterViewController.swift in Sources */,
 				EDCD0DD62411A30300FC6524 /* AppDelegate.swift in Sources */,
 				EDCD0DD82411A30300FC6524 /* SceneDelegate.swift in Sources */,
 				EDCD0DE02411A30300FC6524 /* AegiS.xcdatamodeld in Sources */,
