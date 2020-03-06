@@ -31,7 +31,7 @@ class ViewController: UIViewController {
         
         loginView.clipsToBounds = true
         loginView.layer.cornerRadius = 10
-        loginView.backgroundColor = UIColor.white.withAlphaComponent(0.8)
+        loginView.backgroundColor = UIColor.white.withAlphaComponent(0.98)
         
         titleBackground.clipsToBounds = true
         titleBackground.layer.cornerRadius = 10
