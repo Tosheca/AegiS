@@ -2,8 +2,8 @@
 //  RegisterViewController.swift
 //  AegiS
 //
-//  Created by Teodor Pavlov on 3/6/20.
-//  Copyright © 2020 Teodor Pavlov. All rights reserved.
+//  Created by Zhilber Baev on 3/6/20.
+//  Copyright © 2020 Zhilber Baev. All rights reserved.
 //
 
 import UIKit
