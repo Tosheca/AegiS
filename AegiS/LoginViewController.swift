@@ -10,7 +10,7 @@ import UIKit
 import FirebaseAuth
 import Firebase
 
-class ViewController: UIViewController {
+class LoginViewController: UIViewController {
 
     @IBOutlet weak var titleBackground: UIView!
     
@@ -54,7 +54,13 @@ class ViewController: UIViewController {
                 }
                 else {
                     print("logged in successfully")
+                    
+                    let nc = UINavigationController(rootViewController: MainTabBarViewController())
+                    nc.modalPresentationStyle = .fullScreen
+                    nc.view.backgroundColor = .white
+                    self.present(nc, animated: true, completion: nil)
                 }
+                
             }
             
         }
@@ -63,14 +69,9 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func register(_ sender: Any) {
+    @IBAction func goToRegister(_ sender: Any) {
         
     }
-    
-    
-    
-    
-    
     
     
     @objc func dismissKeyboard() {

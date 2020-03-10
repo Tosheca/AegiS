@@ -3,16 +3,21 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		8AB64031E07ADB63D51F1E71 /* Pods_AegiSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4265850CBD3DDA93F9EC33 /* Pods_AegiSTests.framework */; };
+		ED5DAEDD2417B4480085F08A /* MainNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5DAEDC2417B4480085F08A /* MainNavigationViewController.swift */; };
+		ED5DAEDF2417B6BA0085F08A /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5DAEDE2417B6BA0085F08A /* MainTabBarViewController.swift */; };
+		ED5DAEE12417BEEE0085F08A /* SecuritiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5DAEE02417BEEE0085F08A /* SecuritiesViewController.swift */; };
+		ED5DAEE32417BEFA0085F08A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5DAEE22417BEFA0085F08A /* HomeViewController.swift */; };
+		ED5DAEE52417BF6D0085F08A /* ClientsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5DAEE42417BF6D0085F08A /* ClientsViewController.swift */; };
 		ED64881B241247F000EDD3D3 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED64881A241247F000EDD3D3 /* RegisterViewController.swift */; };
 		ED64881F2415345400EDD3D3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED64881E2415345400EDD3D3 /* GoogleService-Info.plist */; };
 		EDCD0DD62411A30300FC6524 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCD0DD52411A30300FC6524 /* AppDelegate.swift */; };
 		EDCD0DD82411A30300FC6524 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCD0DD72411A30300FC6524 /* SceneDelegate.swift */; };
-		EDCD0DDA2411A30300FC6524 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCD0DD92411A30300FC6524 /* ViewController.swift */; };
+		EDCD0DDA2411A30300FC6524 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCD0DD92411A30300FC6524 /* LoginViewController.swift */; };
 		EDCD0DDD2411A30300FC6524 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDCD0DDB2411A30300FC6524 /* Main.storyboard */; };
 		EDCD0DE02411A30300FC6524 /* AegiS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EDCD0DDE2411A30300FC6524 /* AegiS.xcdatamodeld */; };
 		EDCD0DE22411A30500FC6524 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EDCD0DE12411A30500FC6524 /* Assets.xcassets */; };
@@ -51,12 +56,17 @@
 		C0DB5E911A0E70F97C9C7950 /* Pods-AegiSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AegiSTests.debug.xcconfig"; path = "Target Support Files/Pods-AegiSTests/Pods-AegiSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CEA4752195F6BA40FA5E6C2B /* Pods-AegiS-AegiSUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AegiS-AegiSUITests.release.xcconfig"; path = "Target Support Files/Pods-AegiS-AegiSUITests/Pods-AegiS-AegiSUITests.release.xcconfig"; sourceTree = "<group>"; };
 		DF4265850CBD3DDA93F9EC33 /* Pods_AegiSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AegiSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED5DAEDC2417B4480085F08A /* MainNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigationViewController.swift; sourceTree = "<group>"; };
+		ED5DAEDE2417B6BA0085F08A /* MainTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
+		ED5DAEE02417BEEE0085F08A /* SecuritiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecuritiesViewController.swift; sourceTree = "<group>"; };
+		ED5DAEE22417BEFA0085F08A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		ED5DAEE42417BF6D0085F08A /* ClientsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientsViewController.swift; sourceTree = "<group>"; };
 		ED64881A241247F000EDD3D3 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		ED64881E2415345400EDD3D3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EDCD0DD22411A30300FC6524 /* AegiS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AegiS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDCD0DD52411A30300FC6524 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EDCD0DD72411A30300FC6524 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		EDCD0DD92411A30300FC6524 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		EDCD0DD92411A30300FC6524 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		EDCD0DDC2411A30300FC6524 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EDCD0DDF2411A30300FC6524 /* AegiS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AegiS.xcdatamodel; sourceTree = "<group>"; };
 		EDCD0DE12411A30500FC6524 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -111,7 +121,6 @@
 				C0DB5E911A0E70F97C9C7950 /* Pods-AegiSTests.debug.xcconfig */,
 				B3739DBCABEAD5E7DD697388 /* Pods-AegiSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -143,8 +152,13 @@
 			children = (
 				EDCD0DD52411A30300FC6524 /* AppDelegate.swift */,
 				EDCD0DD72411A30300FC6524 /* SceneDelegate.swift */,
-				EDCD0DD92411A30300FC6524 /* ViewController.swift */,
+				EDCD0DD92411A30300FC6524 /* LoginViewController.swift */,
 				ED64881A241247F000EDD3D3 /* RegisterViewController.swift */,
+				ED5DAEDC2417B4480085F08A /* MainNavigationViewController.swift */,
+				ED5DAEDE2417B6BA0085F08A /* MainTabBarViewController.swift */,
+				ED5DAEE02417BEEE0085F08A /* SecuritiesViewController.swift */,
+				ED5DAEE22417BEFA0085F08A /* HomeViewController.swift */,
+				ED5DAEE42417BF6D0085F08A /* ClientsViewController.swift */,
 				EDCD0DDB2411A30300FC6524 /* Main.storyboard */,
 				EDCD0DE12411A30500FC6524 /* Assets.xcassets */,
 				EDCD0DE32411A30500FC6524 /* LaunchScreen.storyboard */,
@@ -434,8 +448,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EDCD0DDA2411A30300FC6524 /* ViewController.swift in Sources */,
+				ED5DAEE12417BEEE0085F08A /* SecuritiesViewController.swift in Sources */,
+				EDCD0DDA2411A30300FC6524 /* LoginViewController.swift in Sources */,
+				ED5DAEDD2417B4480085F08A /* MainNavigationViewController.swift in Sources */,
+				ED5DAEE52417BF6D0085F08A /* ClientsViewController.swift in Sources */,
 				ED64881B241247F000EDD3D3 /* RegisterViewController.swift in Sources */,
+				ED5DAEDF2417B6BA0085F08A /* MainTabBarViewController.swift in Sources */,
+				ED5DAEE32417BEFA0085F08A /* HomeViewController.swift in Sources */,
 				EDCD0DD62411A30300FC6524 /* AppDelegate.swift in Sources */,
 				EDCD0DD82411A30300FC6524 /* SceneDelegate.swift in Sources */,
 				EDCD0DE02411A30300FC6524 /* AegiS.xcdatamodeld in Sources */,
