@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>752287469767-olq12f1hnkbmpq271q1733ou8dnqcnb3.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.752287469767-olq12f1hnkbmpq271q1733ou8dnqcnb3</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCKN3h9S32vy3s-qSU-YpdhXyS9IYrWfiQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>752287469767</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.CreditSuisse.AegiS</string>
+	<key>PROJECT_ID</key>
+	<string>creditsuisse-56280</string>
+	<key>STORAGE_BUCKET</key>
+	<string>creditsuisse-56280.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:752287469767:ios:318084a79bba2664302ee2</string>
+	<key>DATABASE_URL</key>
+	<string>https://creditsuisse-56280.firebaseio.com</string>
+</dict>
+</plist>

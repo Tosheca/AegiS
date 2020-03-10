@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		ED64881B241247F000EDD3D3 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED64881A241247F000EDD3D3 /* RegisterViewController.swift */; };
+		ED64881F2415345400EDD3D3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED64881E2415345400EDD3D3 /* GoogleService-Info.plist */; };
 		EDCD0DD62411A30300FC6524 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCD0DD52411A30300FC6524 /* AppDelegate.swift */; };
 		EDCD0DD82411A30300FC6524 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCD0DD72411A30300FC6524 /* SceneDelegate.swift */; };
 		EDCD0DDA2411A30300FC6524 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCD0DD92411A30300FC6524 /* ViewController.swift */; };
@@ -40,6 +41,7 @@
 
 /* Begin PBXFileReference section */
 		ED64881A241247F000EDD3D3 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		ED64881E2415345400EDD3D3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EDCD0DD22411A30300FC6524 /* AegiS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AegiS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDCD0DD52411A30300FC6524 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EDCD0DD72411A30300FC6524 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 				EDCD0DE32411A30500FC6524 /* LaunchScreen.storyboard */,
 				EDCD0DE62411A30500FC6524 /* Info.plist */,
 				EDCD0DDE2411A30300FC6524 /* AegiS.xcdatamodeld */,
+				ED64881E2415345400EDD3D3 /* GoogleService-Info.plist */,
 			);
 			path = AegiS;
 			sourceTree = "<group>";
@@ -257,6 +260,7 @@
 				EDCD0DDD2411A30300FC6524 /* Main.storyboard in Resources */,
 				EDCD0E0C2411AC9300FC6524 /* 88184721_197303188163976_3523993075498090496_n.png in Resources */,
 				EDCD0E0B2411AC9300FC6524 /* 58793365_435065583733969_1080487310656536576_n.jpg in Resources */,
+				ED64881F2415345400EDD3D3 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
