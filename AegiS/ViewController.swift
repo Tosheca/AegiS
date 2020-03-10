@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import FirebaseAuth
+import Firebase
 
 class ViewController: UIViewController {
 
@@ -46,6 +48,14 @@ class ViewController: UIViewController {
     @IBAction func login(_ sender: Any) {
         if usernameTextField.text != "" && passwordTextField.text != "" {
             
+            Auth.auth().signIn(withEmail: usernameTextField.text!, password: passwordTextField.text!) { (result, error) in
+                if error != nil {
+                    print("wrong user")
+                }
+                else {
+                    print("logged in successfully")
+                }
+            }
             
         }
         else {

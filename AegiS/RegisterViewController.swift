@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import FirebaseAuth
+import Firebase
 
 class RegisterViewController: UIViewController {
     
@@ -44,7 +46,25 @@ class RegisterViewController: UIViewController {
     
     @IBAction func register(_ sender: Any) {
         
-        
+        Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!) { (result, err) in
+            if err != nil {
+                print("Error in creating user")
+            }
+            else {
+                print("Successfully created user")
+                
+                let db = Firestore.firestore()
+                db.collection("users").addDocument(data: ["firstName": self.firstNameTextField.text!, "surname": self.surnameTextField.text!, "email": self.emailTextField.text!]) { (error) in
+                    
+                    if error != nil {
+                        
+                    }
+                    else {
+                        
+                    }
+                }
+            }
+        }
     }
     
     /*

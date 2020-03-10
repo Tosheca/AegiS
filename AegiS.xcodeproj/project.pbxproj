@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8AB64031E07ADB63D51F1E71 /* Pods_AegiSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4265850CBD3DDA93F9EC33 /* Pods_AegiSTests.framework */; };
 		ED64881B241247F000EDD3D3 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED64881A241247F000EDD3D3 /* RegisterViewController.swift */; };
 		ED64881F2415345400EDD3D3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED64881E2415345400EDD3D3 /* GoogleService-Info.plist */; };
 		EDCD0DD62411A30300FC6524 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCD0DD52411A30300FC6524 /* AppDelegate.swift */; };
@@ -20,6 +21,8 @@
 		EDCD0DFB2411A30500FC6524 /* AegiSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCD0DFA2411A30500FC6524 /* AegiSUITests.swift */; };
 		EDCD0E0B2411AC9300FC6524 /* 58793365_435065583733969_1080487310656536576_n.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EDCD0E092411AC9300FC6524 /* 58793365_435065583733969_1080487310656536576_n.jpg */; };
 		EDCD0E0C2411AC9300FC6524 /* 88184721_197303188163976_3523993075498090496_n.png in Resources */ = {isa = PBXBuildFile; fileRef = EDCD0E0A2411AC9300FC6524 /* 88184721_197303188163976_3523993075498090496_n.png */; };
+		F8E7C9D2D050738D0FBFE9D1 /* Pods_AegiS_AegiSUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63616588F2F43A15453C93AB /* Pods_AegiS_AegiSUITests.framework */; };
+		FDDA074C42D0D858FF4DFDFF /* Pods_AegiS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9B7C7DD9558CFC5E1B246D1 /* Pods_AegiS.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +43,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		63616588F2F43A15453C93AB /* Pods_AegiS_AegiSUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AegiS_AegiSUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		87BA9FCA0808D16821FE1DF4 /* Pods-AegiS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AegiS.release.xcconfig"; path = "Target Support Files/Pods-AegiS/Pods-AegiS.release.xcconfig"; sourceTree = "<group>"; };
+		B3739DBCABEAD5E7DD697388 /* Pods-AegiSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AegiSTests.release.xcconfig"; path = "Target Support Files/Pods-AegiSTests/Pods-AegiSTests.release.xcconfig"; sourceTree = "<group>"; };
+		B763898BBFC59D3E11D2B174 /* Pods-AegiS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AegiS.debug.xcconfig"; path = "Target Support Files/Pods-AegiS/Pods-AegiS.debug.xcconfig"; sourceTree = "<group>"; };
+		B9B7C7DD9558CFC5E1B246D1 /* Pods_AegiS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AegiS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C0DB5E911A0E70F97C9C7950 /* Pods-AegiSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AegiSTests.debug.xcconfig"; path = "Target Support Files/Pods-AegiSTests/Pods-AegiSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		CEA4752195F6BA40FA5E6C2B /* Pods-AegiS-AegiSUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AegiS-AegiSUITests.release.xcconfig"; path = "Target Support Files/Pods-AegiS-AegiSUITests/Pods-AegiS-AegiSUITests.release.xcconfig"; sourceTree = "<group>"; };
+		DF4265850CBD3DDA93F9EC33 /* Pods_AegiSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AegiSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED64881A241247F000EDD3D3 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		ED64881E2415345400EDD3D3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EDCD0DD22411A30300FC6524 /* AegiS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AegiS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -59,6 +70,7 @@
 		EDCD0DFC2411A30500FC6524 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EDCD0E092411AC9300FC6524 /* 58793365_435065583733969_1080487310656536576_n.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 58793365_435065583733969_1080487310656536576_n.jpg; sourceTree = "<group>"; };
 		EDCD0E0A2411AC9300FC6524 /* 88184721_197303188163976_3523993075498090496_n.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 88184721_197303188163976_3523993075498090496_n.png; sourceTree = "<group>"; };
+		F5124A8DF89F9649BF1C888F /* Pods-AegiS-AegiSUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AegiS-AegiSUITests.debug.xcconfig"; path = "Target Support Files/Pods-AegiS-AegiSUITests/Pods-AegiS-AegiSUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDDA074C42D0D858FF4DFDFF /* Pods_AegiS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8AB64031E07ADB63D51F1E71 /* Pods_AegiSTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,12 +94,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F8E7C9D2D050738D0FBFE9D1 /* Pods_AegiS_AegiSUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1200881C1CF89F38FE95B2F7 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B763898BBFC59D3E11D2B174 /* Pods-AegiS.debug.xcconfig */,
+				87BA9FCA0808D16821FE1DF4 /* Pods-AegiS.release.xcconfig */,
+				F5124A8DF89F9649BF1C888F /* Pods-AegiS-AegiSUITests.debug.xcconfig */,
+				CEA4752195F6BA40FA5E6C2B /* Pods-AegiS-AegiSUITests.release.xcconfig */,
+				C0DB5E911A0E70F97C9C7950 /* Pods-AegiSTests.debug.xcconfig */,
+				B3739DBCABEAD5E7DD697388 /* Pods-AegiSTests.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		EDCD0DC92411A30300FC6524 = {
 			isa = PBXGroup;
 			children = (
@@ -94,6 +123,8 @@
 				EDCD0DF92411A30500FC6524 /* AegiSUITests */,
 				EDCD0E082411AC6800FC6524 /* Images */,
 				EDCD0DD32411A30300FC6524 /* Products */,
+				1200881C1CF89F38FE95B2F7 /* Pods */,
+				F36A8EDB311250E5395A6631 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -151,6 +182,16 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
+		F36A8EDB311250E5395A6631 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B9B7C7DD9558CFC5E1B246D1 /* Pods_AegiS.framework */,
+				63616588F2F43A15453C93AB /* Pods_AegiS_AegiSUITests.framework */,
+				DF4265850CBD3DDA93F9EC33 /* Pods_AegiSTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -158,9 +199,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EDCD0DFF2411A30500FC6524 /* Build configuration list for PBXNativeTarget "AegiS" */;
 			buildPhases = (
+				9DE151778FC1D429B108F6CD /* [CP] Check Pods Manifest.lock */,
 				EDCD0DCE2411A30300FC6524 /* Sources */,
 				EDCD0DCF2411A30300FC6524 /* Frameworks */,
 				EDCD0DD02411A30300FC6524 /* Resources */,
+				AF580D3FE81FA1627C1A4162 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -175,6 +218,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EDCD0E022411A30500FC6524 /* Build configuration list for PBXNativeTarget "AegiSTests" */;
 			buildPhases = (
+				34046107BAFBBA7FCE6BC828 /* [CP] Check Pods Manifest.lock */,
 				EDCD0DE72411A30500FC6524 /* Sources */,
 				EDCD0DE82411A30500FC6524 /* Frameworks */,
 				EDCD0DE92411A30500FC6524 /* Resources */,
@@ -193,9 +237,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EDCD0E052411A30500FC6524 /* Build configuration list for PBXNativeTarget "AegiSUITests" */;
 			buildPhases = (
+				2049AD4C02018D322F748073 /* [CP] Check Pods Manifest.lock */,
 				EDCD0DF22411A30500FC6524 /* Sources */,
 				EDCD0DF32411A30500FC6524 /* Frameworks */,
 				EDCD0DF42411A30500FC6524 /* Resources */,
+				69FC81CF9FEA83CA0900B1BB /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -279,6 +325,109 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2049AD4C02018D322F748073 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AegiS-AegiSUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		34046107BAFBBA7FCE6BC828 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AegiSTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		69FC81CF9FEA83CA0900B1BB /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AegiS-AegiSUITests/Pods-AegiS-AegiSUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AegiS-AegiSUITests/Pods-AegiS-AegiSUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AegiS-AegiSUITests/Pods-AegiS-AegiSUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9DE151778FC1D429B108F6CD /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AegiS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AF580D3FE81FA1627C1A4162 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AegiS/Pods-AegiS-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AegiS/Pods-AegiS-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AegiS/Pods-AegiS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		EDCD0DCE2411A30300FC6524 /* Sources */ = {
@@ -460,6 +609,7 @@
 		};
 		EDCD0E002411A30500FC6524 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B763898BBFC59D3E11D2B174 /* Pods-AegiS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -477,6 +627,7 @@
 		};
 		EDCD0E012411A30500FC6524 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 87BA9FCA0808D16821FE1DF4 /* Pods-AegiS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -494,6 +645,7 @@
 		};
 		EDCD0E032411A30500FC6524 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C0DB5E911A0E70F97C9C7950 /* Pods-AegiSTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -515,6 +667,7 @@
 		};
 		EDCD0E042411A30500FC6524 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B3739DBCABEAD5E7DD697388 /* Pods-AegiSTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -536,6 +689,7 @@
 		};
 		EDCD0E062411A30500FC6524 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F5124A8DF89F9649BF1C888F /* Pods-AegiS-AegiSUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -555,6 +709,7 @@
 		};
 		EDCD0E072411A30500FC6524 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CEA4752195F6BA40FA5E6C2B /* Pods-AegiS-AegiSUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
