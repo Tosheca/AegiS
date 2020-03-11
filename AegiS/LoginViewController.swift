@@ -73,6 +73,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             
         }
         else {
+            let nc = UINavigationController(rootViewController: MainTabBarViewController())
+            nc.modalPresentationStyle = .fullScreen
+            nc.view.backgroundColor = .white
+            self.present(nc, animated: true, completion: nil)
             //Error
             emailMark.isHidden = false
             passwordMark.isHidden = false

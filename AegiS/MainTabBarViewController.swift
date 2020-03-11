@@ -28,7 +28,7 @@ class MainTabBarViewController: UITabBarController {
         vc1.view.backgroundColor = .blue
         
         vc2.title = "Home"
-        vc2.view.backgroundColor = .red
+        //vc2.view.backgroundColor = .red
         
         vc3.title = "Clients"
         vc3.view.backgroundColor = .yellow
