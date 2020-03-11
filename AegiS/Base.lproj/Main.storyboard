@@ -124,7 +124,7 @@
                                         </state>
                                         <connections>
                                             <action selector="goToRegister:" destination="BYZ-38-t0r" eventType="touchUpInside" id="55e-DU-Vlx"/>
-                                            <segue destination="8iN-cT-vW0" kind="show" animates="NO" id="beg-eB-quD"/>
+                                            <segue destination="8iN-cT-vW0" kind="show" id="beg-eB-quD"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hp9-aw-5JR">
@@ -236,13 +236,12 @@
         <!--Main Tab Bar View Controller-->
         <scene sceneID="afy-gT-ePA">
             <objects>
-                <tabBarController modalPresentationStyle="fullScreen" id="vMI-ou-h90" customClass="MainTabBarViewController" customModule="AegiS" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController wantsFullScreenLayout="YES" modalPresentationStyle="fullScreen" id="vMI-ou-h90" customClass="MainTabBarViewController" customModule="AegiS" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="zDk-a4-B44"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="W0s-th-oQ5">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
                         <segue destination="ict-tf-vST" kind="relationship" relationship="viewControllers" id="flf-Y9-EOM"/>
@@ -380,7 +379,7 @@
                                         </state>
                                         <connections>
                                             <action selector="register:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hRN-0h-rDB"/>
-                                            <segue destination="BYZ-38-t0r" kind="show" animates="NO" id="S4L-WT-tvg"/>
+                                            <segue destination="BYZ-38-t0r" kind="show" id="S4L-WT-tvg"/>
                                         </connections>
                                     </button>
                                 </subviews>
