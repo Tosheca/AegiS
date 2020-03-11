@@ -34,6 +34,7 @@ class MainTabBarViewController: UITabBarController {
         vc3.view.backgroundColor = .yellow
         
         self.edgesForExtendedLayout = []
+        
     }
     
 

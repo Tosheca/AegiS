@@ -135,6 +135,16 @@
                                             <color key="titleColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                     </button>
+                                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="exclamationmark.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="HJ0-Le-fHU">
+                                        <rect key="frame" x="311" y="133.5" width="20" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </imageView>
+                                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="exclamationmark.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="91D-mx-Q1U">
+                                        <rect key="frame" x="311" y="203.5" width="20" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
@@ -144,8 +154,10 @@
                     </view>
                     <navigationItem key="navigationItem" id="Oau-Q3-I5l"/>
                     <connections>
+                        <outlet property="emailMark" destination="HJ0-Le-fHU" id="jeK-w2-ld0"/>
                         <outlet property="loginBtn" destination="FuI-QL-wkL" id="Wmb-wt-20n"/>
                         <outlet property="loginView" destination="rg9-5F-XpG" id="tGQ-K6-W62"/>
+                        <outlet property="passwordMark" destination="91D-mx-Q1U" id="r4W-kn-Fux"/>
                         <outlet property="passwordTextField" destination="eKX-ID-rKl" id="x25-B1-oWX"/>
                         <outlet property="registerBtn" destination="1XC-cw-yQw" id="cIo-3D-BhA"/>
                         <outlet property="titleBackground" destination="wCA-Fx-9Qw" id="1qZ-Xo-LUJ"/>
@@ -269,6 +281,11 @@
                                 <rect key="frame" x="15" y="164" width="384" height="625"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
+                                    <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cAH-Oh-mFc">
+                                        <rect key="frame" x="52" y="417" width="251" height="1"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </view>
                                     <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="44R-EK-BZx">
                                         <rect key="frame" x="53" y="240" width="279" height="34"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -379,8 +396,41 @@
                                         </state>
                                         <connections>
                                             <action selector="register:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hRN-0h-rDB"/>
-                                            <segue destination="BYZ-38-t0r" kind="show" id="S4L-WT-tvg"/>
+                                            <segue destination="BYZ-38-t0r" kind="show" identifier="backToLogin" id="S4L-WT-tvg"/>
                                         </connections>
+                                    </button>
+                                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="exclamationmark.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="rB6-Bu-Tro">
+                                        <rect key="frame" x="311" y="115.5" width="20" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </imageView>
+                                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="exclamationmark.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="dhA-x3-wgt">
+                                        <rect key="frame" x="311" y="164.5" width="20" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </imageView>
+                                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="exclamationmark.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="9Ea-Po-c9T">
+                                        <rect key="frame" x="311" y="250.5" width="20" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </imageView>
+                                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="exclamationmark.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="P44-O6-5AN">
+                                        <rect key="frame" x="311" y="322.5" width="20" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </imageView>
+                                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="exclamationmark.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="noY-ZG-UxN">
+                                        <rect key="frame" x="311" y="372.5" width="20" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </imageView>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BFY-7s-E7L">
+                                        <rect key="frame" x="52" y="395" width="251" height="27"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="italicSystem" pointSize="12"/>
+                                        <state key="normal" title="Password must be at least 6 characters long">
+                                            <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -392,12 +442,19 @@
                     <navigationItem key="navigationItem" id="PFE-WG-jKH"/>
                     <connections>
                         <outlet property="backToLoginButton" destination="1dJ-oY-ckA" id="kqD-N8-dD2"/>
+                        <outlet property="confirmPassMark" destination="noY-ZG-UxN" id="OAz-t9-S2y"/>
                         <outlet property="confirmPasswordTextField" destination="nPD-la-zB0" id="cBw-b4-3gK"/>
+                        <outlet property="emailMark" destination="9Ea-Po-c9T" id="IKS-XF-G2V"/>
                         <outlet property="emailTextField" destination="44R-EK-BZx" id="xnH-IW-piV"/>
+                        <outlet property="firstNameMark" destination="rB6-Bu-Tro" id="cvz-lc-eWM"/>
                         <outlet property="firstNameTextField" destination="Lts-vQ-gUF" id="jkw-3f-bo8"/>
+                        <outlet property="passwordInfoLine" destination="cAH-Oh-mFc" id="R3s-Sc-0JT"/>
+                        <outlet property="passwordInfoMark" destination="BFY-7s-E7L" id="6ic-k8-rfe"/>
+                        <outlet property="passwordMark" destination="P44-O6-5AN" id="tHX-8c-TG7"/>
                         <outlet property="passwordTextField" destination="G7b-Gf-cOH" id="9y0-px-UBz"/>
                         <outlet property="registerButton" destination="rtX-Gb-Ldn" id="1z1-el-A7s"/>
                         <outlet property="registerView" destination="Pnv-8w-xgN" id="5p0-AZ-iJ4"/>
+                        <outlet property="surnameMark" destination="dhA-x3-wgt" id="liZ-4U-vu0"/>
                         <outlet property="surnameTextField" destination="SCS-bl-KY9" id="c9t-FC-T05"/>
                     </connections>
                 </viewController>
@@ -409,6 +466,7 @@
     <resources>
         <image name="58793365_435065583733969_1080487310656536576_n.jpg" width="1280" height="720"/>
         <image name="88184721_197303188163976_3523993075498090496_n.png" width="1328" height="311"/>
+        <image name="exclamationmark.circle" catalog="system" width="64" height="60"/>
         <image name="lock.fill" catalog="system" width="64" height="64"/>
         <image name="person.fill" catalog="system" width="64" height="60"/>
     </resources>

@@ -16,9 +16,14 @@ class HomeViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         self.edgesForExtendedLayout = []
+        
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+    }
     /*
     // MARK: - Navigation
 

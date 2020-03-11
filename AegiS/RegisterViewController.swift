@@ -10,7 +10,7 @@ import UIKit
 import FirebaseAuth
 import Firebase
 
-class RegisterViewController: UIViewController {
+class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var registerView: UIView!
     
@@ -28,6 +28,13 @@ class RegisterViewController: UIViewController {
     
     @IBOutlet weak var backToLoginButton: UIButton!
     
+    @IBOutlet weak var firstNameMark: UIImageView!
+    @IBOutlet weak var surnameMark: UIImageView!
+    @IBOutlet weak var emailMark: UIImageView!
+    @IBOutlet weak var passwordMark: UIImageView!
+    @IBOutlet weak var confirmPassMark: UIImageView!
+    @IBOutlet weak var passwordInfoMark: UIButton!
+    @IBOutlet weak var passwordInfoLine: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -42,6 +49,15 @@ class RegisterViewController: UIViewController {
         
         backToLoginButton.clipsToBounds = true
         backToLoginButton.layer.cornerRadius = 10
+        
+        emailTextField.textContentType = .emailAddress
+        
+        firstNameTextField.delegate = self
+        surnameTextField.delegate = self
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
+        confirmPasswordTextField.delegate = self
+        passwordInfoMark.isEnabled = false
     }
     
     @IBAction func register(_ sender: Any) {
@@ -53,6 +69,15 @@ class RegisterViewController: UIViewController {
                     if err != nil {
                         print("Error in creating user")
                         print("Error \(err.debugDescription)")
+                        if err?.localizedDescription == "The email address is badly formatted." {
+                            self.emailMark.isHidden = false
+                        }
+                        else if err?.localizedDescription == "The password must be 6 characters long or more." {
+                            self.passwordMark.isHidden = false
+                            self.confirmPassMark.isHidden = false
+                            self.passwordInfoMark.isHidden = false
+                            self.passwordInfoLine.isHidden = false
+                        }
                     }
                     else {
                         print("Successfully created user")
@@ -64,7 +89,7 @@ class RegisterViewController: UIViewController {
                                 
                             }
                             else {
-                                
+                                self.performSegue(withIdentifier: "backToLogin", sender: nil)
                             }
                         }
                     }
@@ -72,12 +97,42 @@ class RegisterViewController: UIViewController {
             }
             else {
                 print("Passwords doesn't match")
+                passwordMark.isHidden = false
+                confirmPassMark.isHidden = false
             }
         }
         else {
-            
+            if passwordTextField.text != confirmPasswordTextField.text {
+                print("Passwords doesn't match")
+                passwordMark.isHidden = false
+                confirmPassMark.isHidden = false
+            }
+            if firstNameTextField.text == "" {
+                firstNameMark.isHidden = false
+            }
+            if surnameTextField.text == "" {
+                surnameMark.isHidden = false
+            }
+            if emailTextField.text == "" {
+                emailMark.isHidden = false
+            }
+            if passwordTextField.text == "" {
+                passwordMark.isHidden = false
+            }
+            if confirmPasswordTextField.text == "" {
+                confirmPassMark.isHidden = false
+            }
         }
-        
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        firstNameMark.isHidden = true
+        surnameMark.isHidden = true
+        emailMark.isHidden = true
+        passwordMark.isHidden = true
+        confirmPassMark.isHidden = true
+        passwordInfoMark.isHidden = true
+        passwordInfoLine.isHidden = true
     }
     
     /*

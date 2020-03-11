@@ -10,7 +10,7 @@ import UIKit
 import FirebaseAuth
 import Firebase
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var titleBackground: UIView!
     
@@ -23,7 +23,9 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var loginBtn: UIButton!
     
     @IBOutlet weak var registerBtn: UIButton!
+    @IBOutlet weak var emailMark: UIImageView!
     
+    @IBOutlet weak var passwordMark: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -43,6 +45,9 @@ class LoginViewController: UIViewController {
         
         registerBtn.clipsToBounds = true
         registerBtn.layer.cornerRadius = 10
+        
+        usernameTextField.delegate = self
+        passwordTextField.delegate = self
     }
 
     @IBAction func login(_ sender: Any) {
@@ -51,6 +56,9 @@ class LoginViewController: UIViewController {
             Auth.auth().signIn(withEmail: usernameTextField.text!, password: passwordTextField.text!) { (result, error) in
                 if error != nil {
                     print("wrong user")
+                    //Error
+                    self.emailMark.isHidden = false
+                    self.passwordMark.isHidden = false
                 }
                 else {
                     print("logged in successfully")
@@ -66,7 +74,14 @@ class LoginViewController: UIViewController {
         }
         else {
             //Error
+            emailMark.isHidden = false
+            passwordMark.isHidden = false
         }
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        emailMark.isHidden = true
+        passwordMark.isHidden = true
     }
     
     @IBAction func goToRegister(_ sender: Any) {

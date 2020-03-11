@@ -14,8 +14,8 @@ class MainNavigationViewController: UINavigationController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
-    
 
     /*
     // MARK: - Navigation
