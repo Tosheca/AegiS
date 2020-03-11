@@ -226,7 +226,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PTC-pc-Ubg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2693" y="854"/>
+            <point key="canvasLocation" x="2693" y="867"/>
         </scene>
         <!--Securities-->
         <scene sceneID="cXj-Yi-4V1">
@@ -424,14 +424,13 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </imageView>
-                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BFY-7s-E7L">
-                                        <rect key="frame" x="52" y="395" width="251" height="27"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Password must be at least 6 characters long" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xKP-ZA-h7W">
+                                        <rect key="frame" x="52" y="403" width="251" height="15"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="italicSystem" pointSize="12"/>
-                                        <state key="normal" title="Password must be at least 6 characters long">
-                                            <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </state>
-                                    </button>
+                                        <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
@@ -449,7 +448,6 @@
                         <outlet property="firstNameMark" destination="rB6-Bu-Tro" id="cvz-lc-eWM"/>
                         <outlet property="firstNameTextField" destination="Lts-vQ-gUF" id="jkw-3f-bo8"/>
                         <outlet property="passwordInfoLine" destination="cAH-Oh-mFc" id="R3s-Sc-0JT"/>
-                        <outlet property="passwordInfoMark" destination="BFY-7s-E7L" id="6ic-k8-rfe"/>
                         <outlet property="passwordMark" destination="P44-O6-5AN" id="tHX-8c-TG7"/>
                         <outlet property="passwordTextField" destination="G7b-Gf-cOH" id="9y0-px-UBz"/>
                         <outlet property="registerButton" destination="rtX-Gb-Ldn" id="1z1-el-A7s"/>
