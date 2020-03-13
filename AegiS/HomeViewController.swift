@@ -8,24 +8,37 @@
 
 import UIKit
 
-class HomeViewController: UIViewController, UIScrollViewDelegate {
+class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource {
     
     var mainView = UIView()
     var myClientsLabel = UILabel()
     var clientsScrollView = UIScrollView()
     var clientViews = [UIView]()
-    var securitiesOfCLientsLabel = UILabel()
+    var securitiesOfClientsLabel = UILabel()
     var backgroundImage = UIImageView(image: UIImage(named: "49054316_356857088449911_3489275029483421696_n.jpg"))
     var infoButton = UIButton()
+    var helloLabel = UILabel()
+    var managerNameLabel = UILabel()
+    var securitiesTableView = UITableView()
+    var managerImage = UIButton()
+    var logoTitle = UILabel()
+    var dotsLabel = UIPageControl()
+    var clientsSeeAll = UIButton()
+    var securitiesSeeAll = UIButton()
+    
+    var securities = [String]()
+    var securityPrices = [Double]()
+    var securityPercentages = [Double]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
+        //for disabling dark mode
+        //self.overrideUserInterfaceStyle = .light
         self.edgesForExtendedLayout = []
         
-        self.view.backgroundColor = UIColor(red: 10/255, green: 22/255, blue: 46/255, alpha: 1.0)
+        //self.view.backgroundColor = UIColor(red: 10/255, green: 22/255, blue: 46/255, alpha: 1.0)
         
         backgroundImage.frame.size = self.view.frame.size
         backgroundImage.contentMode = .scaleAspectFill
@@ -45,11 +58,13 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
         myClientsLabel.frame.origin.y = 30
         myClientsLabel.font = UIFont.boldSystemFont(ofSize: 25)
         
-        clientsScrollView.frame.size.width = mainView.frame.width - 25
+        clientsScrollView.frame.size.width = mainView.frame.width
         clientsScrollView.frame.size.height = mainView.frame.height/3 + 15
-        clientsScrollView.frame.origin.x = 25
-        clientsScrollView.frame.origin.y = 30 + myClientsLabel.frame.height + 20
+        clientsScrollView.frame.origin.y = 30 + myClientsLabel.frame.height + 10
         clientsScrollView.backgroundColor = .clear
+        clientsScrollView.showsHorizontalScrollIndicator = false
+        clientsScrollView.delegate = self
+        clientsScrollView.contentInset.left = 25
         
         setupClientViews()
         
@@ -60,12 +75,12 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
             clientsScrollView.addSubview(clientViews[client])
         }
         
-        securitiesOfCLientsLabel.frame.size.width = mainView.frame.width/1.5
-        securitiesOfCLientsLabel.frame.size.height = mainView.frame.height/15
-        securitiesOfCLientsLabel.text = "Securities of my clients"
-        securitiesOfCLientsLabel.frame.origin.x = 25
-        securitiesOfCLientsLabel.frame.origin.y = clientsScrollView.frame.origin.y + clientsScrollView.frame.height + 20
-        securitiesOfCLientsLabel.font = UIFont.boldSystemFont(ofSize: 25)
+        securitiesOfClientsLabel.frame.size.width = mainView.frame.width/1.5
+        securitiesOfClientsLabel.frame.size.height = mainView.frame.height/15
+        securitiesOfClientsLabel.text = "Securities of my clients"
+        securitiesOfClientsLabel.frame.origin.x = 25
+        securitiesOfClientsLabel.frame.origin.y = clientsScrollView.frame.origin.y + clientsScrollView.frame.height + 20
+        securitiesOfClientsLabel.font = UIFont.boldSystemFont(ofSize: 25)
         
         infoButton.frame.size.width = self.view.frame.width/6
         infoButton.frame.size.height = infoButton.frame.width
@@ -75,12 +90,165 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
         infoButton.setImage(UIImage(named: "unnamed.png"), for: .normal)
         infoButton.imageView?.contentMode = .scaleAspectFill
         
+        helloLabel.frame.size.width = self.view.frame.width/3
+        helloLabel.frame.size.height = infoButton.frame.height/2
+        helloLabel.frame.origin.y = infoButton.frame.origin.y + infoButton.frame.height + 20
+        helloLabel.frame.origin.x = 30
+        helloLabel.textColor = .white
+        helloLabel.text = "Hello!"
+        helloLabel.font = UIFont.systemFont(ofSize: 22)
+        
+        managerNameLabel.frame.size.width = self.view.frame.width
+        managerNameLabel.frame.size.height = infoButton.frame.height/2
+        managerNameLabel.frame.origin.y = helloLabel.frame.origin.y + helloLabel.frame.height
+        managerNameLabel.frame.origin.x = 30
+        managerNameLabel.textColor = .white
+        managerNameLabel.text = "John James"
+        managerNameLabel.font = UIFont.boldSystemFont(ofSize: 28)
+        
+        securitiesTableView.frame.size.width = self.view.frame.width - 50
+        securitiesTableView.frame.size.height = clientsScrollView.frame.height + 10
+        securitiesTableView.frame.origin.x = 25
+        securitiesTableView.frame.origin.y = securitiesOfClientsLabel.frame.origin.y + securitiesOfClientsLabel.frame.height + 10
+        securitiesTableView.backgroundColor = .clear
+        securitiesTableView.delegate = self
+        securitiesTableView.dataSource = self
+        securitiesTableView.register(SecuritiesTableViewCell.self, forCellReuseIdentifier: "security")
+        securitiesTableView.layer.cornerRadius = 10
+        securitiesTableView.clipsToBounds = true
+        
+        managerImage.frame.size = infoButton.frame.size
+        managerImage.frame.origin.x = 20
+        managerImage.frame.origin.y = infoButton.frame.origin.y
+        managerImage.setImage(UIImage(named: "89762769_223800988749873_7596640348722429952_n.jpg"), for: .normal)
+        managerImage.imageView?.contentMode = .scaleAspectFill
+        managerImage.layer.cornerRadius = managerImage.frame.width/2
+        managerImage.clipsToBounds = true
+        managerImage.layer.borderWidth = 1
+        managerImage.layer.borderColor = UIColor.white.cgColor
+        
+        logoTitle.frame.size.height = infoButton.frame.height
+        logoTitle.frame.size.width = self.view.frame.width/2
+        logoTitle.frame.origin.y = infoButton.frame.origin.y
+        logoTitle.center.x = self.view.center.x
+        logoTitle.textColor = .white
+        logoTitle.text = "AegiS"
+        logoTitle.textAlignment = .center
+        logoTitle.font = UIFont(name: "BodoniSvtyTwoITCTT-Bold", size: 55)
+        
+        dotsLabel.frame.size.height = 40
+        dotsLabel.frame.size.width = mainView.frame.width/3
+        dotsLabel.frame.origin.y = clientsScrollView.frame.origin.y + clientsScrollView.frame.height - 10
+        dotsLabel.center.x = mainView.center.x
+        dotsLabel.numberOfPages = Int(round(Double(clientsScrollView.contentSize.width/clientsScrollView.frame.width)))
+        dotsLabel.currentPageIndicatorTintColor = .darkGray
+        dotsLabel.pageIndicatorTintColor = .lightGray
+        
+        
+        clientsSeeAll.titleLabel?.textAlignment = .center
+        clientsSeeAll.setTitleColor(.systemBlue, for: .normal)
+        clientsSeeAll.setTitle("SEE ALL", for: .normal)
+        clientsSeeAll.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15.0)
+        clientsSeeAll.sizeToFit()
+        clientsSeeAll.frame.origin.x = mainView.frame.width - 25 - clientsSeeAll.frame.width
+        clientsSeeAll.center.y = myClientsLabel.center.y + 2
+        clientsSeeAll.addTarget(self, action: #selector(goToCients), for: .touchUpInside)
+        
+        let underlineView1 = UIView()
+        underlineView1.frame.size.width = clientsSeeAll.frame.width
+        underlineView1.frame.size.height = 1.0
+        underlineView1.backgroundColor = .systemBlue
+        underlineView1.frame.origin.y = clientsSeeAll.frame.height - 5
+        clientsSeeAll.addSubview(underlineView1)
+        
+        securitiesSeeAll.titleLabel?.textAlignment = .center
+        securitiesSeeAll.setTitleColor(.systemBlue, for: .normal)
+        securitiesSeeAll.setTitle("SEE ALL", for: .normal)
+        securitiesSeeAll.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15.0)
+        securitiesSeeAll.sizeToFit()
+        securitiesSeeAll.frame.origin.x = mainView.frame.width - 25 - securitiesSeeAll.frame.width
+        securitiesSeeAll.center.y = securitiesOfClientsLabel.center.y + 2
+        securitiesSeeAll.addTarget(self, action: #selector(goToSecurities), for: .touchUpInside)
+        
+        let underlineView2 = UIView()
+        underlineView2.frame.size.width = securitiesSeeAll.frame.width
+        underlineView2.frame.size.height = 1.0
+        underlineView2.backgroundColor = .systemBlue
+        underlineView2.frame.origin.y = securitiesSeeAll.frame.height - 5
+        securitiesSeeAll.addSubview(underlineView2)
+        
         self.view.addSubview(backgroundImage)
         self.view.addSubview(mainView)
         self.view.addSubview(infoButton)
+        self.view.addSubview(helloLabel)
+        self.view.addSubview(managerNameLabel)
+        self.view.addSubview(managerImage)
+        self.view.addSubview(logoTitle)
         mainView.addSubview(myClientsLabel)
         mainView.addSubview(clientsScrollView)
-        mainView.addSubview(securitiesOfCLientsLabel)
+        mainView.addSubview(securitiesOfClientsLabel)
+        mainView.addSubview(securitiesTableView)
+        mainView.addSubview(dotsLabel)
+        mainView.addSubview(clientsSeeAll)
+        mainView.addSubview(securitiesSeeAll)
+        
+        securities = ["David Jones Ltd Shs AUD NPV", "Allied Dunbar North Am Gth A/c R", "Schroder Global Emer Mtks Acc Uts A", "Schroder Retail Global Emer Inc Uts", "Barnes & Noble Inc Shs USD NPV"]
+        securityPrices = [1234.25, 5234.56, 2131.67, 3242.56, 3242.89]
+        securityPercentages = [0.7, 2.7, 4.3, 7.8, 1.1]
+    }
+    
+    @objc func goToSecurities(){
+        (self.parent as! MainTabBarViewController).selectedIndex = 0
+    }
+    
+    @objc func goToCients(){
+        (self.parent as! MainTabBarViewController).selectedIndex = 2
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "security", for: indexPath) as! SecuritiesTableViewCell
+        cell.title.frame.size.height = cell.frame.height
+        cell.title.frame.size.width = cell.frame.width*3/5
+        cell.title.frame.origin.x = 15
+        cell.title.text = securities[indexPath.row]
+        cell.title.font = UIFont.boldSystemFont(ofSize: 15)
+        
+        cell.arrow.frame.size.height = cell.frame.height
+        cell.arrow.frame.size.width = 30
+        cell.arrow.frame.origin.x = cell.frame.width - 40
+        cell.arrow.image = UIImage(systemName: "arrow.up")
+        cell.arrow.tintColor = .red
+        cell.arrow.contentMode = .scaleAspectFit
+        
+        cell.price.frame.size.height = cell.frame.height/3
+        cell.price.frame.size.width = cell.frame.width - cell.arrow.frame.width - 10 - cell.title.frame.width - 15
+        cell.price.frame.origin.x = cell.title.frame.origin.x + cell.title.frame.width
+        cell.price.frame.origin.y = 15
+        cell.price.textAlignment = .center
+        cell.price.text = "\(securityPrices[indexPath.row])"
+        cell.price.font = UIFont.boldSystemFont(ofSize: 20)
+        
+        cell.percentage.frame.size = cell.price.frame.size
+        cell.percentage.frame.origin.x = cell.price.frame.origin.x
+        cell.percentage.frame.origin.y = cell.price.frame.origin.y + cell.price.frame.height
+        cell.percentage.textColor = .red
+        cell.percentage.textAlignment = .center
+        cell.percentage.text = "-\(securityPercentages[indexPath.row])%"
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let pageNumber = scrollView.contentOffset.x/scrollView.frame.width
+        dotsLabel.currentPage = Int(round(pageNumber))
     }
     
     override func viewWillAppear(_ animated: Bool) {

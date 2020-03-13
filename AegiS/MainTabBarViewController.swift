@@ -25,16 +25,25 @@ class MainTabBarViewController: UITabBarController {
         self.selectedViewController = vc2
         
         vc1.title = "Securities"
-        vc1.view.backgroundColor = .blue
         
         vc2.title = "Home"
-        //vc2.view.backgroundColor = .red
+        let item2 = UITabBarItem()
+        item2.title = "Home"
+        item2.image = UIImage(systemName: "house")
+        item2.selectedImage = UIImage(systemName: "house.fill")
+        vc2.tabBarItem = item2
         
         vc3.title = "Clients"
-        vc3.view.backgroundColor = .yellow
-        
+        let item3 = UITabBarItem()
+        item3.title = "Clients"
+        item3.image = UIImage(systemName: "person.3")
+        item3.selectedImage = UIImage(systemName: "person.3.fill")
+        vc3.tabBarItem = item3
+
         self.edgesForExtendedLayout = []
         
+        self.tabBar.barStyle = .black
+        self.tabBar.tintColor = .white
     }
     
 

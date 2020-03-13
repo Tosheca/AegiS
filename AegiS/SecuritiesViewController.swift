@@ -10,11 +10,18 @@ import UIKit
 
 class SecuritiesViewController: UIViewController {
 
+    var backgroundImage = UIImageView(image: UIImage(named: "49054316_356857088449911_3489275029483421696_n.jpg"))
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         self.edgesForExtendedLayout = []
+        
+        backgroundImage.frame.size = self.view.frame.size
+        backgroundImage.contentMode = .scaleAspectFill
+        
+        self.view.addSubview(backgroundImage)
     }
     
 
