@@ -82,10 +82,10 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
         securitiesOfClientsLabel.frame.origin.y = clientsScrollView.frame.origin.y + clientsScrollView.frame.height + 20
         securitiesOfClientsLabel.font = UIFont.boldSystemFont(ofSize: 25)
         
-        infoButton.frame.size.width = self.view.frame.width/6
+        infoButton.frame.size.width = self.view.frame.width/5
         infoButton.frame.size.height = infoButton.frame.width
-        infoButton.frame.origin.y = 40
-        infoButton.frame.origin.x = self.view.frame.width - infoButton.frame.width - 20
+        infoButton.frame.origin.y = 35
+        infoButton.frame.origin.x = self.view.frame.width - infoButton.frame.width - 15
         //infoButton.backgroundColor = .yellow
         infoButton.setImage(UIImage(named: "unnamed.png"), for: .normal)
         infoButton.imageView?.contentMode = .scaleAspectFill
