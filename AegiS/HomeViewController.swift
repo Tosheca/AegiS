@@ -82,9 +82,9 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
         securitiesOfClientsLabel.frame.origin.y = clientsScrollView.frame.origin.y + clientsScrollView.frame.height + 20
         securitiesOfClientsLabel.font = UIFont.boldSystemFont(ofSize: 25)
         
-        infoButton.frame.size.width = self.view.frame.width/5
+        infoButton.frame.size.width = self.view.frame.width/6
         infoButton.frame.size.height = infoButton.frame.width
-        infoButton.frame.origin.y = 35
+        infoButton.frame.origin.y = 25
         infoButton.frame.origin.x = self.view.frame.width - infoButton.frame.width - 15
         //infoButton.backgroundColor = .yellow
         infoButton.setImage(UIImage(named: "unnamed.png"), for: .normal)
@@ -92,8 +92,8 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
         
         helloLabel.frame.size.width = self.view.frame.width/3
         helloLabel.frame.size.height = infoButton.frame.height/2
-        helloLabel.frame.origin.y = infoButton.frame.origin.y + infoButton.frame.height + 20
-        helloLabel.frame.origin.x = 30
+        helloLabel.frame.origin.y = infoButton.frame.origin.y + infoButton.frame.height + 10
+        helloLabel.frame.origin.x = 20
         helloLabel.textColor = .white
         helloLabel.text = "Hello!"
         helloLabel.font = UIFont.systemFont(ofSize: 22)
@@ -101,7 +101,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
         managerNameLabel.frame.size.width = self.view.frame.width
         managerNameLabel.frame.size.height = infoButton.frame.height/2
         managerNameLabel.frame.origin.y = helloLabel.frame.origin.y + helloLabel.frame.height
-        managerNameLabel.frame.origin.x = 30
+        managerNameLabel.frame.origin.x = 20
         managerNameLabel.textColor = .white
         managerNameLabel.text = "John James"
         managerNameLabel.font = UIFont.boldSystemFont(ofSize: 28)
@@ -117,9 +117,10 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
         securitiesTableView.layer.cornerRadius = 10
         securitiesTableView.clipsToBounds = true
         
-        managerImage.frame.size = infoButton.frame.size
+        managerImage.frame.size.width = infoButton.frame.width/1.3
+        managerImage.frame.size.height = infoButton.frame.height/1.3
         managerImage.frame.origin.x = 20
-        managerImage.frame.origin.y = infoButton.frame.origin.y
+        managerImage.frame.origin.y = 35
         managerImage.setImage(UIImage(named: "89762769_223800988749873_7596640348722429952_n.jpg"), for: .normal)
         managerImage.imageView?.contentMode = .scaleAspectFill
         managerImage.layer.cornerRadius = managerImage.frame.width/2
@@ -129,7 +130,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
         
         logoTitle.frame.size.height = infoButton.frame.height
         logoTitle.frame.size.width = self.view.frame.width/2
-        logoTitle.frame.origin.y = infoButton.frame.origin.y
+        logoTitle.frame.origin.y = 30
         logoTitle.center.x = self.view.center.x
         logoTitle.textColor = .white
         logoTitle.text = "AegiS"
