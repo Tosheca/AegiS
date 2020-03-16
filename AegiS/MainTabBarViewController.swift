@@ -28,16 +28,16 @@ class MainTabBarViewController: UITabBarController {
         
         vc2.title = "Home"
         let item2 = UITabBarItem()
-        item2.title = "Home"
-        item2.image = UIImage(systemName: "house")
-        item2.selectedImage = UIImage(systemName: "house.fill")
+        //item2.title = "Home"
+        item2.image = UIImage(systemName: "house")?.withAlignmentRectInsets(UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0))
+        item2.selectedImage = UIImage(systemName: "house.fill")?.withAlignmentRectInsets(UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0))
         vc2.tabBarItem = item2
         
         vc3.title = "Clients"
         let item3 = UITabBarItem()
-        item3.title = "Clients"
-        item3.image = UIImage(systemName: "person.3")
-        item3.selectedImage = UIImage(systemName: "person.3.fill")
+        //item3.title = "Clients"
+        item3.image = UIImage(systemName: "person.3")?.withAlignmentRectInsets(UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0))
+        item3.selectedImage = UIImage(systemName: "person.3.fill")?.withAlignmentRectInsets(UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0))
         vc3.tabBarItem = item3
 
         self.edgesForExtendedLayout = []
