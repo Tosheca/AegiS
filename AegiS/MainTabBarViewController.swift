@@ -25,6 +25,11 @@ class MainTabBarViewController: UITabBarController {
         self.selectedViewController = vc2
         
         vc1.title = "Securities"
+        let item1 = UITabBarItem()
+        //item2.title = "Home"
+        item1.image = UIImage(systemName: "chart.bar")?.withAlignmentRectInsets(UIEdgeInsets(top: 10, left: 0, bottom: -10, right: 0))
+        item1.selectedImage = UIImage(systemName: "chart.bar.fill")?.withAlignmentRectInsets(UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0))
+        vc1.tabBarItem = item1
         
         vc2.title = "Home"
         let item2 = UITabBarItem()
