@@ -58,6 +58,7 @@ class SecuritiesViewController: UIViewController, UITableViewDelegate, UITableVi
         securitiesTableView.separatorColor = .clear
         securitiesTableView.layer.cornerRadius = 10
         securitiesTableView.clipsToBounds = true
+        securitiesTableView.showsVerticalScrollIndicator = false
         
         titleLabel.frame.size.width = self.view.frame.width
         titleLabel.frame.size.height = self.view.frame.height/15
