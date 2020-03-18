@@ -126,6 +126,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
         managerImage.clipsToBounds = true
         managerImage.layer.borderWidth = 1
         managerImage.layer.borderColor = UIColor.white.cgColor
+        managerImage.addTarget(self, action: #selector(managerDetails), for: .touchUpInside)
         
         logoTitle.frame.size.height = infoButton.frame.height
         logoTitle.frame.size.width = self.view.frame.width/2
@@ -203,6 +204,15 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
     
     @objc func goToCients(){
         (self.parent as! MainTabBarViewController).selectedIndex = 2
+    }
+    
+    @objc func managerDetails() {
+        UIView.animate(withDuration: 1, animations: {
+            self.mainView.frame.origin.y = self.view.frame.height
+            self.mainView.alpha = 0
+        }) {_ in
+            self.mainView.isHidden = true
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
