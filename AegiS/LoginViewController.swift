@@ -26,6 +26,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var emailMark: UIImageView!
     
     @IBOutlet weak var passwordMark: UIImageView!
+    @IBOutlet weak var forgotPasswordButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -92,6 +93,34 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
     }
     
+    @IBAction func forgotPassword(_ sender: Any) {
+        let alertView = UIAlertController(title: "Forgot Password", message: "Enter your email", preferredStyle: .alert)
+        
+        alertView.addTextField(configurationHandler: {(textField) in
+            textField.placeholder = "Email"
+        })
+        
+        alertView.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {(action) in
+            
+        }))
+        
+        alertView.addAction(UIAlertAction(title: "Send email", style: .default, handler: {(action) in
+            let email = alertView.textFields![0].text!
+            
+            print(email)
+            
+            Auth.auth().sendPasswordReset(withEmail: email, completion: {error in
+                if error != nil {
+                    print(error)
+                }
+                else {
+                    
+                }
+            })
+        }))
+        
+        self.present(alertView, animated: true, completion: nil)
+    }
     
     @objc func dismissKeyboard() {
         //Causes the view (or one of its embedded text fields) to resign the first responder status.

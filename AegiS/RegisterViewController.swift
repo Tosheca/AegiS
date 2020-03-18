@@ -33,7 +33,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var emailMark: UIImageView!
     @IBOutlet weak var passwordMark: UIImageView!
     @IBOutlet weak var confirmPassMark: UIImageView!
-    @IBOutlet weak var passwordInfoMark: UIButton!
+    @IBOutlet weak var passwordInfoMark: UILabel!
     @IBOutlet weak var passwordInfoLine: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()

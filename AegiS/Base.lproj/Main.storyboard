@@ -134,6 +134,9 @@
                                         <state key="normal" title="Forgot password?">
                                             <color key="titleColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="forgotPassword:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BLC-f4-UzI"/>
+                                        </connections>
                                     </button>
                                     <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="exclamationmark.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="HJ0-Le-fHU">
                                         <rect key="frame" x="311" y="133.5" width="20" height="20"/>
@@ -155,6 +158,7 @@
                     <navigationItem key="navigationItem" id="Oau-Q3-I5l"/>
                     <connections>
                         <outlet property="emailMark" destination="HJ0-Le-fHU" id="jeK-w2-ld0"/>
+                        <outlet property="forgotPasswordButton" destination="hp9-aw-5JR" id="6Ig-iO-m8a"/>
                         <outlet property="loginBtn" destination="FuI-QL-wkL" id="Wmb-wt-20n"/>
                         <outlet property="loginView" destination="rg9-5F-XpG" id="tGQ-K6-W62"/>
                         <outlet property="passwordMark" destination="91D-mx-Q1U" id="r4W-kn-Fux"/>
@@ -441,7 +445,8 @@
                         <outlet property="firstNameMark" destination="rB6-Bu-Tro" id="cvz-lc-eWM"/>
                         <outlet property="firstNameTextField" destination="Lts-vQ-gUF" id="jkw-3f-bo8"/>
                         <outlet property="passwordInfoLine" destination="cAH-Oh-mFc" id="R3s-Sc-0JT"/>
-                        <outlet property="passwordMark" destination="P44-O6-5AN" id="tHX-8c-TG7"/>
+                        <outlet property="passwordInfoMark" destination="xKP-ZA-h7W" id="hrP-ov-EwV"/>
+                        <outlet property="passwordMark" destination="P44-O6-5AN" id="LT8-kc-jcX"/>
                         <outlet property="passwordTextField" destination="G7b-Gf-cOH" id="9y0-px-UBz"/>
                         <outlet property="registerButton" destination="rtX-Gb-Ldn" id="1z1-el-A7s"/>
                         <outlet property="registerView" destination="Pnv-8w-xgN" id="5p0-AZ-iJ4"/>

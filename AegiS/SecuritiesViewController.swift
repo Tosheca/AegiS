@@ -65,7 +65,6 @@ class SecuritiesViewController: UIViewController, UITableViewDelegate, UITableVi
         titleLabel.text = "SECURITIES"
         titleLabel.textColor = .white
         titleLabel.textAlignment = .center
-        //titleLabel.backgroundColor = .green
         titleLabel.font = UIFont.boldSystemFont(ofSize: 25)
         titleLabel.frame.origin.y = 40
         
@@ -74,7 +73,6 @@ class SecuritiesViewController: UIViewController, UITableViewDelegate, UITableVi
         dateLabel.text = "date"
         dateLabel.textColor = .lightText
         dateLabel.textAlignment = .center
-        //dateLabel.backgroundColor = .red
         dateLabel.font = UIFont.boldSystemFont(ofSize: 15)
         dateLabel.frame.origin.y = titleLabel.frame.origin.y + dateLabel.frame.height - 10
         

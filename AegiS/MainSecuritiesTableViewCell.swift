@@ -15,6 +15,7 @@ class MainSecuritiesTableViewCell: UITableViewCell {
     var arrow = UIImageView()
     var percentage = UILabel()
     var bcView = UIView()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
