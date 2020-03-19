@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseDatabase
 
 class SecuritiesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
 
@@ -18,6 +20,10 @@ class SecuritiesViewController: UIViewController, UITableViewDelegate, UITableVi
     var dateLabel = UILabel()
     var securitiesTableView = UITableView()
     var searchBar = UISearchBar()
+        
+    var securities = [[String: AnyObject]]()
+    var searchSecurities = [[String: AnyObject]]()
+    var isSearching = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -114,11 +120,26 @@ class SecuritiesViewController: UIViewController, UITableViewDelegate, UITableVi
         
         self.view.addGestureRecognizer(tap)
         
+        let ref = Database.database().reference()
+        
+        ref.child("securities").observeSingleEvent(of: .value, with: {(snapshot) in
+            let s = snapshot.value as! [AnyObject]
+            
+            for sec in s {
+                self.securities.append(sec as! [String : AnyObject])
+            }
+            
+            print(self.securities)
+            self.securitiesTableView.reloadData()
+        })
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText != "" {
             searchBar.showsCancelButton = true
+            self.isSearching = true
+            searchSecurities = securities.filter({($0["Short description"] as! String).prefix(searchText.count) == searchText})
+            self.securitiesTableView.reloadData()
         }
     }
     
@@ -126,10 +147,18 @@ class SecuritiesViewController: UIViewController, UITableViewDelegate, UITableVi
         searchBar.endEditing(true)
         searchBar.text = ""
         searchBar.showsCancelButton = false
+        isSearching = false
+        securitiesTableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        
+        if isSearching {
+            return searchSecurities.count
+        }
+        else {
+            return securities.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -152,7 +181,6 @@ class SecuritiesViewController: UIViewController, UITableViewDelegate, UITableVi
         cell.title.frame.size.height = cell.bcView.frame.height
         cell.title.frame.size.width = cell.bcView.frame.width*3/5
         cell.title.frame.origin.x = 15
-        cell.title.text = "title"
         cell.title.font = UIFont.boldSystemFont(ofSize: 15)
         
         cell.arrow.frame.size.height = cell.bcView.frame.height
@@ -177,27 +205,19 @@ class SecuritiesViewController: UIViewController, UITableViewDelegate, UITableVi
         cell.percentage.textAlignment = .center
         cell.percentage.text = "-%"
         
+        if isSearching {
+            cell.title.text = searchSecurities[indexPath.row]["Short description"] as? String
+        }
+        else {
+            cell.title.text = securities[indexPath.row]["Short description"] as? String
+        }
+        
         return cell
     }
-    
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return 20
-//    }
-//
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let headerView = UIView()
-//        headerView.backgroundColor = .clear
-//        headerView.frame.size.width = securitiesTableView.frame.width
-//        headerView.frame.size.height = 20
-//        return headerView
-//    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
     }
-    
-    
-    
     
     @objc func dismissKeyboard() {
         //Causes the view (or one of its embedded text fields) to resign the first responder status.

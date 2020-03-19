@@ -148,7 +148,6 @@ class ClientsViewController: UIViewController, UICollectionViewDataSource, UICol
         cell.bcView.frame.size.height = cell.frame.height - 25
         cell.bcView.frame.origin.x = 10
         
-        print(cell.bcView.layer.sublayers?.count)
         if cell.bcView.layer.sublayers?.count == 3 {
             cell.bcView.addShadow(shadowColor: .darkGray, offSet: CGSize(width: 0, height: 7.5), opacity: 0.8, shadowRadius: 5, cornerRadius: 10.0, corners: [.allCorners], fillColor: .white)
         }

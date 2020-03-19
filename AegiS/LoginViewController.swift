@@ -111,7 +111,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             
             Auth.auth().sendPasswordReset(withEmail: email, completion: {error in
                 if error != nil {
-                    print(error)
+                    print(error!)
                 }
                 else {
                     

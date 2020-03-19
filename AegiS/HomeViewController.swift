@@ -29,6 +29,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
     var securities = [String]()
     var securityPrices = [Double]()
     var securityPercentages = [Double]()
+    var managerView = UIView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -207,12 +208,77 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
     }
     
     @objc func managerDetails() {
-        UIView.animate(withDuration: 1, animations: {
-            self.mainView.frame.origin.y = self.view.frame.height
-            self.mainView.alpha = 0
-        }) {_ in
-            self.mainView.isHidden = true
+        
+        if mainView.isHidden == false {
+            managerView.frame.size.width = mainView.frame.width
+            managerView.frame.size.height = mainView.frame.height
+            managerView.backgroundColor = .red
+            managerView.frame.origin.y = self.view.frame.height
+            managerView.isHidden = true
+            managerView.clipsToBounds = true
+            managerView.layer.cornerRadius = 40
+            managerView.backgroundColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1.0)
+            managerView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+            managerView.alpha = 0
+            self.view.addSubview(managerView)
+            
+            let managerDetailsTitle = UILabel()
+            managerDetailsTitle.frame.size.width = myClientsLabel.frame.width*1.5
+            managerDetailsTitle.frame.size.height = myClientsLabel.frame.height
+            managerDetailsTitle.frame.origin.x = myClientsLabel.frame.origin.x
+            managerDetailsTitle.frame.origin.y = myClientsLabel.frame.origin.y
+            managerDetailsTitle.font = UIFont.boldSystemFont(ofSize: 25)
+            managerDetailsTitle.text = "Manager details"
+            managerView.addSubview(managerDetailsTitle)
+            
+            let doneButton = UIButton()
+            doneButton.titleLabel?.textAlignment = .center
+            doneButton.setTitleColor(.systemBlue, for: .normal)
+            doneButton.setTitle("DONE", for: .normal)
+            doneButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+            doneButton.sizeToFit()
+            doneButton.frame.origin.x = managerView.frame.width - 25 - doneButton.frame.width
+            doneButton.center.y = managerDetailsTitle.center.y + 2
+            doneButton.addTarget(self, action: #selector(closeManagerDetails), for: .touchUpInside)
+            managerView.addSubview(doneButton)
+            
+            UIView.animate(withDuration: 0.5, animations: {
+                
+                self.mainView.frame.origin.y = self.view.frame.height
+                self.mainView.alpha = 0
+                
+            }, completion: {(value) in
+                
+                self.mainView.isHidden = true
+                UIView.animate(withDuration: 0.5, animations: {
+                    self.managerView.isHidden = false
+                    self.managerView.alpha = 1.0
+                    self.managerView.frame.origin.y = self.view.frame.height - self.managerView.frame.height
+                }, completion: {(value) in
+                    
+                })
+            })
         }
+    }
+    
+    @objc func closeManagerDetails(){
+        UIView.animate(withDuration: 0.5, animations: {
+            
+            self.managerView.frame.origin.y = self.view.frame.height
+            self.managerView.alpha = 0
+            
+        }, completion: {(value) in
+            
+            self.managerView.isHidden = true
+            self.managerView.removeFromSuperview()
+            UIView.animate(withDuration: 0.5, animations: {
+                self.mainView.isHidden = false
+                self.mainView.alpha = 1.0
+                self.mainView.frame.origin.y = self.view.frame.height - self.managerView.frame.height
+            }, completion: {(value) in
+                
+            })
+        })
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -267,7 +333,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
     }
     
     func setupClientViews() {
-        var client1 = clientView()
+        let client1 = clientView()
         client1.imageView.image = UIImage(named: "89930680_198473048089654_6530749024859848704_n.jpg")
         client1.imageView.contentMode = .scaleAspectFill
         client1.imageView.clipsToBounds = true
@@ -283,7 +349,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
         client1.imageView.center.y = client1.frame.height*0.5/5
         client1.addShadow(shadowColor: .darkGray, offSet: CGSize(width: 10, height: 5), opacity: 1.0, shadowRadius: 3, cornerRadius: 10.0, corners: [.allCorners], fillColor: .white)
         
-        var client2 = clientView()
+        let client2 = clientView()
         client2.imageView.image = UIImage(named: "89762769_223800988749873_7596640348722429952_n.jpg")
         client2.imageView.contentMode = .scaleAspectFill
         client2.imageView.clipsToBounds = true
@@ -299,7 +365,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
         client2.imageView.center.y = client2.frame.height*0.5/5
         client2.addShadow(shadowColor: .darkGray, offSet: CGSize(width: 10, height: 5), opacity: 1.0, shadowRadius: 3, cornerRadius: 10.0, corners: [.allCorners], fillColor: .white)
         
-        var client3 = clientView()
+        let client3 = clientView()
         client3.imageView.image = UIImage(named: "89854406_814414002390551_1132090573918830592_n.jpg")
         client3.imageView.contentMode = .scaleAspectFill
         client3.imageView.clipsToBounds = true
@@ -315,7 +381,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
         client3.imageView.center.y = client3.frame.height*0.5/5
         client3.addShadow(shadowColor: .darkGray, offSet: CGSize(width: 10, height: 5), opacity: 1.0, shadowRadius: 3, cornerRadius: 10.0, corners: [.allCorners], fillColor: .white)
         
-        var client4 = clientView()
+        let client4 = clientView()
         
         client4.frame.size.height = clientsScrollView.frame.height - 15
         client4.frame.size.width = clientsScrollView.frame.width/2.75

@@ -16,6 +16,7 @@ target 'AegiS' do
   pod 'Firebase/Analytics'
   pod 'Firebase/Core'
   pod 'Firebase/Firestore'
+  pod 'Firebase/Database'
 
   target 'AegiSTests' do
     inherit! :search_paths
