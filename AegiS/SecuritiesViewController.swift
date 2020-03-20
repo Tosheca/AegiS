@@ -138,7 +138,11 @@ class SecuritiesViewController: UIViewController, UITableViewDelegate, UITableVi
         if searchText != "" {
             searchBar.showsCancelButton = true
             self.isSearching = true
-            searchSecurities = securities.filter({($0["Short description"] as! String).prefix(searchText.count) == searchText})
+            searchSecurities = securities.filter({($0["Short description"] as! String).lowercased().contains(searchText.lowercased())})
+            self.securitiesTableView.reloadData()
+        }
+        else {
+            self.isSearching = false
             self.securitiesTableView.reloadData()
         }
     }

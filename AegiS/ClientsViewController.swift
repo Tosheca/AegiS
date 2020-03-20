@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseDatabase
 
 class ClientsViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
     
@@ -19,8 +21,15 @@ class ClientsViewController: UIViewController, UICollectionViewDataSource, UICol
     var clientsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     var searchBar = UISearchBar()
     
+    var isSearching = false
+    
     var clientNames = [String]()
     var clientImages = [String]()
+    
+    var clients = [[String: AnyObject]]()
+    var searchClients = [[String: AnyObject]]()
+    
+    ///3478
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,7 +81,7 @@ class ClientsViewController: UIViewController, UICollectionViewDataSource, UICol
         
         totalClientsLabel.frame.size.width = self.view.frame.width
         totalClientsLabel.frame.size.height = self.view.frame.height/20
-        totalClientsLabel.text = "Total clients: 4"
+        totalClientsLabel.text = "Total clients: 0"
         totalClientsLabel.textColor = .lightText
         totalClientsLabel.textAlignment = .center
         totalClientsLabel.font = UIFont.boldSystemFont(ofSize: 15)
@@ -112,11 +121,20 @@ class ClientsViewController: UIViewController, UICollectionViewDataSource, UICol
         self.view.addSubview(clientsCollectionView)
         self.view.addSubview(totalClientsLabel)
         self.view.addSubview(searchBar)
+        
+        fetchClients()
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText != "" {
             searchBar.showsCancelButton = true
+            self.isSearching = true
+            searchClients = clients.filter({(($0["Name"] as! String)+" "+($0["Surname"] as! String)).lowercased().contains(searchText.lowercased())})
+            self.clientsCollectionView.reloadData()
+        }
+        else {
+            self.isSearching = false
+            self.clientsCollectionView.reloadData()
         }
     }
     
@@ -124,6 +142,8 @@ class ClientsViewController: UIViewController, UICollectionViewDataSource, UICol
         searchBar.endEditing(true)
         searchBar.text = ""
         searchBar.showsCancelButton = false
+        isSearching = false
+        clientsCollectionView.reloadData()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -135,7 +155,12 @@ class ClientsViewController: UIViewController, UICollectionViewDataSource, UICol
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        if isSearching {
+            return searchClients.count + 1
+        }
+        else {
+            return clients.count + 1
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -157,10 +182,12 @@ class ClientsViewController: UIViewController, UICollectionViewDataSource, UICol
         cell.bcView.addSubview(cell.imageView)
         
         cell.nameLabel.frame.size.width = cell.bcView.frame.size.width - 10
-        cell.nameLabel.frame.size.height = cell.bcView.frame.height / 7
+        cell.nameLabel.frame.size.height = cell.bcView.frame.height / 4
         //cell.nameLabel.backgroundColor = .red
         cell.nameLabel.textAlignment = .center
         cell.nameLabel.font = UIFont.systemFont(ofSize: 20)
+        cell.nameLabel.numberOfLines = 2
+        cell.nameLabel.lineBreakMode = .byWordWrapping
         
         cell.emailLabel.frame.size.width = cell.bcView.frame.size.width - 10
         cell.emailLabel.frame.size.height = cell.bcView.frame.height / 7
@@ -173,15 +200,14 @@ class ClientsViewController: UIViewController, UICollectionViewDataSource, UICol
         cell.imageView.frame.size.height = cell.imageView.frame.width
         //cell.imageView.backgroundColor = .green
         
-        cell.imageView.image = UIImage(named: "\(clientImages[indexPath.row])")
+        cell.imageView.image = UIImage(named: "89762769_223800988749873_7596640348722429952_n.jpg")
         cell.imageView.contentMode = .scaleAspectFill
         cell.imageView.clipsToBounds = true
         
         cell.nameLabel.frame.origin.x = 5
         cell.nameLabel.center.y = cell.bcView.frame.height*3.6/5
-        cell.nameLabel.text = "\(clientNames[indexPath.row])"
         cell.emailLabel.frame.origin.x = 5
-        cell.emailLabel.center.y = cell.bcView.frame.height*4.20/5
+        cell.emailLabel.center.y = cell.bcView.frame.height*4.5/5
         cell.emailLabel.text = "sample@gmail.com"
         cell.imageView.frame.origin.x = 20
         cell.imageView.center.y = cell.bcView.frame.height*1.5/5
@@ -193,14 +219,39 @@ class ClientsViewController: UIViewController, UICollectionViewDataSource, UICol
             cell.emailLabel.isHidden = true
             cell.nameLabel.text = "Add client"
             cell.nameLabel.center.y = cell.bcView.frame.height*4/5
+            
             cell.imageView.frame.size.width = cell.bcView.frame.size.width - 50
             cell.imageView.frame.size.height = cell.imageView.frame.width
             cell.imageView.frame.origin.x = 25
         }
+        else {
             
+            if isSearching {
+                cell.nameLabel.text = "\((searchClients[indexPath.row-1]["Name"] as! String) + " " + (searchClients[indexPath.row-1]["Surname"] as! String))"
+            }
+            else {
+                cell.nameLabel.text = "\((clients[indexPath.row-1]["Name"] as! String) + " " + (clients[indexPath.row-1]["Surname"] as! String))"
+            }
+        }
+      
         return cell
     }
 
+    func fetchClients() {
+        let ref = Database.database().reference()
+        
+        ref.child("clients").observeSingleEvent(of: .value, with: {(snapshot) in
+            let fetchedData = snapshot.value as! [AnyObject]
+            for value in fetchedData {
+                if value.value(forKey: "RM ID") as! Int == 3478 {
+                    self.clients.append(value as! [String : AnyObject])
+                }
+            }
+            self.clientsCollectionView.reloadData()
+            self.totalClientsLabel.text = "Total clients: \(self.clients.count)"
+        })
+    }
+    
     @objc func dismissKeyboard() {
         //Causes the view (or one of its embedded text fields) to resign the first responder status.
         view.endEditing(true)

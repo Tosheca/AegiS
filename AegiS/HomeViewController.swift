@@ -29,7 +29,14 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
     var securities = [String]()
     var securityPrices = [Double]()
     var securityPercentages = [Double]()
+    
     var managerView = UIView()
+    let managerDetailsTitle = UILabel()
+    let doneButton = UIButton()
+    let emailTitle = UILabel()
+    let emailTextField = UITextField()
+    let editEmailButton = UIButton()
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -210,7 +217,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
     @objc func managerDetails() {
         
         if mainView.isHidden == false {
-            managerView.frame.size.width = mainView.frame.width
+            managerView.frame.size.width = mainView.frame.width 
             managerView.frame.size.height = mainView.frame.height
             managerView.backgroundColor = .red
             managerView.frame.origin.y = self.view.frame.height
@@ -222,25 +229,55 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
             managerView.alpha = 0
             self.view.addSubview(managerView)
             
-            let managerDetailsTitle = UILabel()
             managerDetailsTitle.frame.size.width = myClientsLabel.frame.width*1.5
             managerDetailsTitle.frame.size.height = myClientsLabel.frame.height
             managerDetailsTitle.frame.origin.x = myClientsLabel.frame.origin.x
             managerDetailsTitle.frame.origin.y = myClientsLabel.frame.origin.y
             managerDetailsTitle.font = UIFont.boldSystemFont(ofSize: 25)
-            managerDetailsTitle.text = "Manager details"
+            managerDetailsTitle.text = "My details"
             managerView.addSubview(managerDetailsTitle)
             
-            let doneButton = UIButton()
             doneButton.titleLabel?.textAlignment = .center
             doneButton.setTitleColor(.systemBlue, for: .normal)
             doneButton.setTitle("DONE", for: .normal)
-            doneButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+            doneButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
             doneButton.sizeToFit()
             doneButton.frame.origin.x = managerView.frame.width - 25 - doneButton.frame.width
             doneButton.center.y = managerDetailsTitle.center.y + 2
             doneButton.addTarget(self, action: #selector(closeManagerDetails), for: .touchUpInside)
             managerView.addSubview(doneButton)
+            
+            emailTitle.frame.size.width = managerView.frame.width/2
+            emailTitle.frame.size.height = myClientsLabel.frame.height
+            emailTitle.frame.origin.x = myClientsLabel.frame.origin.x
+            emailTitle.frame.origin.y = managerDetailsTitle.frame.origin.y + managerDetailsTitle.frame.height + 40
+            emailTitle.textColor = .gray
+            emailTitle.text = "Email"
+            managerView.addSubview(emailTitle)
+            
+            emailTextField.frame.size.width = managerView.frame.width*2/3
+            emailTextField.frame.size.height = myClientsLabel.frame.height
+            emailTextField.frame.origin.x = myClientsLabel.frame.origin.x
+            emailTextField.frame.origin.y = emailTitle.frame.origin.y + emailTitle.frame.height
+            emailTextField.text = "sample@gmail.com"
+            //emailTextField.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
+            //emailTextField.clipsToBounds = true
+            emailTextField.layer.cornerRadius = 10
+            emailTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: emailTextField.frame.height))
+            emailTextField.leftViewMode = .always
+            emailTextField.isEnabled = false
+            emailTextField.addShadow(shadowColor: .darkGray, offSet: CGSize(width: 7.5, height: 5), opacity: 1.0, shadowRadius: 3, cornerRadius: 10, corners: .allCorners, fillColor: UIColor.white)
+            managerView.addSubview(emailTextField)
+            
+            editEmailButton.titleLabel?.textAlignment = .center
+            editEmailButton.setTitleColor(.systemBlue, for: .normal)
+            editEmailButton.setTitle("EDIT", for: .normal)
+            editEmailButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
+            editEmailButton.sizeToFit()
+            editEmailButton.frame.origin.x = managerView.frame.width - 25 - editEmailButton.frame.width
+            editEmailButton.center.y = emailTextField.center.y
+            editEmailButton.addTarget(self, action: #selector(editEmail), for: .touchUpInside)
+            managerView.addSubview(editEmailButton)
             
             UIView.animate(withDuration: 0.5, animations: {
                 
@@ -279,6 +316,26 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
                 
             })
         })
+    }
+    
+    @objc func editEmail(sender: UIButton) {
+        if sender.titleLabel?.text == "SAVE" {
+            sender.setTitle("EDIT", for: .normal)
+            editEmailButton.sizeToFit()
+            editEmailButton.frame.origin.x = managerView.frame.width - 25 - editEmailButton.frame.width
+            editEmailButton.center.y = emailTextField.center.y
+            emailTextField.isEnabled = false
+            emailTextField.resignFirstResponder()
+        }
+        else {
+            sender.setTitle("SAVE", for: .normal)
+            editEmailButton.sizeToFit()
+            editEmailButton.frame.origin.x = managerView.frame.width - 25 - editEmailButton.frame.width
+            editEmailButton.center.y = emailTextField.center.y
+            
+            emailTextField.isEnabled = true
+            emailTextField.becomeFirstResponder()
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
