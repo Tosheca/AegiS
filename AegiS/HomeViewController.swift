@@ -31,12 +31,14 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
     var securityPercentages = [Double]()
     
     var managerView = UIView()
-    let managerDetailsTitle = UILabel()
-    let doneButton = UIButton()
-    let emailTitle = UILabel()
-    let emailTextField = UITextField()
-    let editEmailButton = UIButton()
-
+    var managerDetailsTitle = UILabel()
+    var doneButton = UIButton()
+    var emailTitle = UILabel()
+    var emailTextField = UITextField()
+    var editEmailButton = UIButton()
+    var clientsTitle = UILabel()
+    var numberOfClientsLabel = UILabel()
+    var managerDetailsImage = UIImageView(image: UIImage(named: "89762769_223800988749873_7596640348722429952_n.jpg"))
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -243,14 +245,40 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
             doneButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
             doneButton.sizeToFit()
             doneButton.frame.origin.x = managerView.frame.width - 25 - doneButton.frame.width
-            doneButton.center.y = managerDetailsTitle.center.y + 2
+            doneButton.center.y = managerDetailsTitle.frame.origin.y + 5
             doneButton.addTarget(self, action: #selector(closeManagerDetails), for: .touchUpInside)
             managerView.addSubview(doneButton)
+            
+            managerDetailsImage.frame.size.width = managerView.frame.width/2.5
+            managerDetailsImage.frame.size.height = managerDetailsImage.frame.width
+            managerDetailsImage.center.x = managerView.center.x
+            managerDetailsImage.frame.origin.y = managerDetailsTitle.frame.origin.y + managerDetailsTitle.frame.height + 20
+            managerDetailsImage.contentMode = .scaleAspectFill
+            managerDetailsImage.clipsToBounds = true
+            managerDetailsImage.layer.cornerRadius = 10
+            managerView.addSubview(managerDetailsImage)
+            
+            clientsTitle.frame.size.width = managerView.frame.width/2
+            clientsTitle.frame.size.height = myClientsLabel.frame.height
+            clientsTitle.frame.origin.x = myClientsLabel.frame.origin.x
+            clientsTitle.frame.origin.y = managerDetailsImage.frame.origin.y + managerDetailsImage.frame.height + 20
+            clientsTitle.textColor = .gray
+            clientsTitle.text = "Clients"
+            managerView.addSubview(clientsTitle)
+            
+            numberOfClientsLabel.frame.size.width = managerView.frame.width/2
+            numberOfClientsLabel.frame.size.height = myClientsLabel.frame.height
+            numberOfClientsLabel.frame.origin.x = myClientsLabel.frame.origin.x
+            numberOfClientsLabel.frame.origin.y = clientsTitle.frame.origin.y + clientsTitle.frame.height - 5
+            numberOfClientsLabel.textColor = .black
+            numberOfClientsLabel.font = UIFont.boldSystemFont(ofSize: 25)
+            numberOfClientsLabel.text = "6"
+            managerView.addSubview(numberOfClientsLabel)
             
             emailTitle.frame.size.width = managerView.frame.width/2
             emailTitle.frame.size.height = myClientsLabel.frame.height
             emailTitle.frame.origin.x = myClientsLabel.frame.origin.x
-            emailTitle.frame.origin.y = managerDetailsTitle.frame.origin.y + managerDetailsTitle.frame.height + 40
+            emailTitle.frame.origin.y = numberOfClientsLabel.frame.origin.y + numberOfClientsLabel.frame.height
             emailTitle.textColor = .gray
             emailTitle.text = "Email"
             managerView.addSubview(emailTitle)
@@ -260,13 +288,12 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
             emailTextField.frame.origin.x = myClientsLabel.frame.origin.x
             emailTextField.frame.origin.y = emailTitle.frame.origin.y + emailTitle.frame.height
             emailTextField.text = "sample@gmail.com"
-            //emailTextField.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
-            //emailTextField.clipsToBounds = true
+            emailTextField.backgroundColor = UIColor.white
+            emailTextField.clipsToBounds = true
             emailTextField.layer.cornerRadius = 10
             emailTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: emailTextField.frame.height))
             emailTextField.leftViewMode = .always
             emailTextField.isEnabled = false
-            emailTextField.addShadow(shadowColor: .darkGray, offSet: CGSize(width: 7.5, height: 5), opacity: 1.0, shadowRadius: 3, cornerRadius: 10, corners: .allCorners, fillColor: UIColor.white)
             managerView.addSubview(emailTextField)
             
             editEmailButton.titleLabel?.textAlignment = .center
