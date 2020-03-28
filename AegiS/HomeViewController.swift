@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
+import FirebaseDatabase
 
 class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource {
     
@@ -39,6 +42,10 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
     var clientsTitle = UILabel()
     var numberOfClientsLabel = UILabel()
     var managerDetailsImage = UIImageView(image: UIImage(named: "89762769_223800988749873_7596640348722429952_n.jpg"))
+    var passwordTitle = UILabel()
+    var passwordButton = UIButton()
+    
+    var clients = [[String: AnyObject]]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,13 +84,6 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
         clientsScrollView.contentInset.left = 25
         
         setupClientViews()
-        
-        clientsScrollView.contentSize = CGSize(width: (clientsScrollView.frame.width/2.75+30)*CGFloat(clientViews.count), height: clientsScrollView.frame.height)
-        
-        for client in 0..<(clientViews.count) {
-            clientViews[client].frame.origin.x = (clientsScrollView.frame.width/2.75)*CGFloat(client) + CGFloat(30*client)
-            clientsScrollView.addSubview(clientViews[client])
-        }
         
         securitiesOfClientsLabel.frame.size.width = mainView.frame.width/1.5
         securitiesOfClientsLabel.frame.size.height = mainView.frame.height/15
@@ -155,7 +155,6 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
         dotsLabel.currentPageIndicatorTintColor = .darkGray
         dotsLabel.pageIndicatorTintColor = .lightGray
         
-        
         clientsSeeAll.titleLabel?.textAlignment = .center
         clientsSeeAll.setTitleColor(.systemBlue, for: .normal)
         clientsSeeAll.setTitle("SEE ALL", for: .normal)
@@ -206,6 +205,8 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
         securities = ["David Jones Ltd Shs AUD NPV", "Allied Dunbar North Am Gth A/c R", "Schroder Global Emer Mtks Acc Uts A", "Schroder Retail Global Emer Inc Uts", "Barnes & Noble Inc Shs USD NPV"]
         securityPrices = [1234.25, 5234.56, 2131.67, 3242.56, 3242.89]
         securityPercentages = [0.7, 2.7, 4.3, 7.8, 1.1]
+        
+        fetchClients()
     }
     
     @objc func goToSecurities(){
@@ -272,7 +273,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
             numberOfClientsLabel.frame.origin.y = clientsTitle.frame.origin.y + clientsTitle.frame.height - 5
             numberOfClientsLabel.textColor = .black
             numberOfClientsLabel.font = UIFont.boldSystemFont(ofSize: 25)
-            numberOfClientsLabel.text = "6"
+            numberOfClientsLabel.text = "\(clients.count)"
             managerView.addSubview(numberOfClientsLabel)
             
             emailTitle.frame.size.width = managerView.frame.width/2
@@ -306,6 +307,35 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
             editEmailButton.addTarget(self, action: #selector(editEmail), for: .touchUpInside)
             managerView.addSubview(editEmailButton)
             
+            let underlineView1 = UIView()
+            underlineView1.frame.size.width = editEmailButton.frame.width
+            underlineView1.frame.size.height = 1.0
+            underlineView1.backgroundColor = .systemBlue
+            underlineView1.frame.origin.y = editEmailButton.frame.height - 5
+            editEmailButton.addSubview(underlineView1)
+            
+            passwordTitle.frame.size.width = managerView.frame.width/2
+            passwordTitle.frame.size.height = myClientsLabel.frame.height
+            passwordTitle.frame.origin.x = myClientsLabel.frame.origin.x
+            passwordTitle.frame.origin.y = emailTextField.frame.origin.y + emailTextField.frame.height + 5
+            passwordTitle.textColor = .gray
+            passwordTitle.text = "Password"
+            managerView.addSubview(passwordTitle)
+            
+            passwordButton.frame.size.width = emailTextField.frame.width
+            passwordButton.frame.size.height = emailTextField.frame.height
+            passwordButton.frame.origin.x = myClientsLabel.frame.origin.x
+            passwordButton.frame.origin.y = passwordTitle.frame.origin.y + passwordTitle.frame.height
+            
+            if passwordButton.layer.sublayers?.count == nil {
+                passwordButton.addShadow(shadowColor: .darkGray, offSet: CGSize(width: 5, height: 5), opacity: 1.0, shadowRadius: 3, cornerRadius: 10, corners: .allCorners, fillColor: .white)
+
+            }
+            passwordButton.setTitle("Send email to change password", for: .normal)
+            passwordButton.setTitleColor(.black, for: .normal)
+            passwordButton.addTarget(self, action: #selector(resetPassword), for: .touchUpInside)
+            managerView.addSubview(passwordButton)
+            
             UIView.animate(withDuration: 0.5, animations: {
                 
                 self.mainView.frame.origin.y = self.view.frame.height
@@ -334,7 +364,9 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
         }, completion: {(value) in
             
             self.managerView.isHidden = true
-            self.managerView.removeFromSuperview()
+            for view in self.managerView.subviews {
+                view.removeFromSuperview()
+            }
             UIView.animate(withDuration: 0.5, animations: {
                 self.mainView.isHidden = false
                 self.mainView.alpha = 1.0
@@ -343,6 +375,35 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
                 
             })
         })
+    }
+    
+    @objc func resetPassword() {
+        let alertView = UIAlertController(title: "Reset Password", message: "Enter your email", preferredStyle: .alert)
+        
+        alertView.addTextField(configurationHandler: {(textField) in
+            textField.placeholder = "Email"
+        })
+        
+        alertView.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {(action) in
+            
+        }))
+        
+        alertView.addAction(UIAlertAction(title: "Send email", style: .default, handler: {(action) in
+            let email = alertView.textFields![0].text!
+            
+            print(email)
+            
+            Auth.auth().sendPasswordReset(withEmail: email, completion: {error in
+                if error != nil {
+                    print(error!)
+                }
+                else {
+                    
+                }
+            })
+        }))
+        
+        self.present(alertView, animated: true, completion: nil)
     }
     
     @objc func editEmail(sender: UIButton) {
@@ -417,72 +478,48 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
     }
     
     func setupClientViews() {
-        let client1 = clientView()
-        client1.imageView.image = UIImage(named: "89930680_198473048089654_6530749024859848704_n.jpg")
-        client1.imageView.contentMode = .scaleAspectFill
-        client1.imageView.clipsToBounds = true
-        client1.frame.size.height = clientsScrollView.frame.height - 15
-        client1.frame.size.width = clientsScrollView.frame.width/2.75
-        client1.nameLabel.frame.origin.x = 5
-        client1.nameLabel.center.y = client1.frame.height*3.6/5
-        client1.nameLabel.text = "Boris Simple"
-        client1.emailLabel.frame.origin.x = 5
-        client1.emailLabel.center.y = client1.frame.height*4.20/5
-        client1.emailLabel.text = "boris@gmail.com"
-        client1.imageView.frame.origin.x = 20
-        client1.imageView.center.y = client1.frame.height*0.5/5
-        client1.addShadow(shadowColor: .darkGray, offSet: CGSize(width: 10, height: 5), opacity: 1.0, shadowRadius: 3, cornerRadius: 10.0, corners: [.allCorners], fillColor: .white)
         
-        let client2 = clientView()
-        client2.imageView.image = UIImage(named: "89762769_223800988749873_7596640348722429952_n.jpg")
-        client2.imageView.contentMode = .scaleAspectFill
-        client2.imageView.clipsToBounds = true
-        client2.frame.size.height = clientsScrollView.frame.height - 15
-        client2.frame.size.width = clientsScrollView.frame.width/2.75
-        client2.nameLabel.frame.origin.x = 5
-        client2.nameLabel.center.y = client2.frame.height*3.6/5
-        client2.nameLabel.text = "Mona Simple"
-        client2.emailLabel.frame.origin.x = 5
-        client2.emailLabel.center.y = client2.frame.height*4.20/5
-        client2.emailLabel.text = "boris@gmail.com"
-        client2.imageView.frame.origin.x = 20
-        client2.imageView.center.y = client2.frame.height*0.5/5
-        client2.addShadow(shadowColor: .darkGray, offSet: CGSize(width: 10, height: 5), opacity: 1.0, shadowRadius: 3, cornerRadius: 10.0, corners: [.allCorners], fillColor: .white)
+        for client in 0..<(clients.count) {
+            let cview = clientView()
+            cview.imageView.image = UIImage(named: "89930680_198473048089654_6530749024859848704_n.jpg")
+            cview.imageView.contentMode = .scaleAspectFill
+            cview.imageView.clipsToBounds = true
+            cview.frame.size.height = clientsScrollView.frame.height - 15
+            cview.frame.size.width = clientsScrollView.frame.width/2.75
+            cview.nameLabel.frame.origin.x = 5
+            cview.nameLabel.center.y = cview.frame.height*3.6/5
+            cview.nameLabel.text = "\((clients[client]["Name"] as! String) + " " + (clients[client]["Surname"] as! String))"
+            cview.nameLabel.adjustsFontSizeToFitWidth = true
+            cview.emailLabel.text = "\(clients[client]["Email"] as! String)"
+            cview.emailLabel.adjustsFontSizeToFitWidth = true
+            cview.emailLabel.frame.origin.x = 5
+            cview.emailLabel.center.y = cview.frame.height*4.20/5
+            cview.imageView.frame.origin.x = 20
+            cview.imageView.center.y = cview.frame.height*0.5/5
+            cview.addShadow(shadowColor: .darkGray, offSet: CGSize(width: 10, height: 5), opacity: 1.0, shadowRadius: 3, cornerRadius: 10.0, corners: [.allCorners], fillColor: .white)
+            clientViews.append(cview)
+        }
         
-        let client3 = clientView()
-        client3.imageView.image = UIImage(named: "89854406_814414002390551_1132090573918830592_n.jpg")
-        client3.imageView.contentMode = .scaleAspectFill
-        client3.imageView.clipsToBounds = true
-        client3.frame.size.height = clientsScrollView.frame.height - 15
-        client3.frame.size.width = clientsScrollView.frame.width/2.75
-        client3.nameLabel.frame.origin.x = 5
-        client3.nameLabel.center.y = client3.frame.height*3.6/5
-        client3.nameLabel.text = "Zhilber Baev"
-        client3.emailLabel.frame.origin.x = 5
-        client3.emailLabel.center.y = client3.frame.height*4.20/5
-        client3.emailLabel.text = "boris@gmail.com"
-        client3.imageView.frame.origin.x = 20
-        client3.imageView.center.y = client3.frame.height*0.5/5
-        client3.addShadow(shadowColor: .darkGray, offSet: CGSize(width: 10, height: 5), opacity: 1.0, shadowRadius: 3, cornerRadius: 10.0, corners: [.allCorners], fillColor: .white)
+        clientsScrollView.contentSize = CGSize(width: (clientsScrollView.frame.width/2.75+30)*CGFloat(clientViews.count), height: clientsScrollView.frame.height)
         
-        let client4 = clientView()
+        for client in 0..<(clientViews.count) {
+            clientViews[client].frame.origin.x = (clientsScrollView.frame.width/2.75)*CGFloat(client) + CGFloat(30*client)
+            clientsScrollView.addSubview(clientViews[client])
+        }
+    }
+    
+    func fetchClients() {
+        let ref = Database.database().reference()
         
-        client4.frame.size.height = clientsScrollView.frame.height - 15
-        client4.frame.size.width = clientsScrollView.frame.width/2.75
-        client4.nameLabel.frame.origin.x = 5
-        client4.nameLabel.center.y = client4.frame.height*3.6/5
-        client4.nameLabel.text = "Teodor Pavlov"
-        client4.emailLabel.frame.origin.x = 5
-        client4.emailLabel.center.y = client4.frame.height*4.20/5
-        client4.emailLabel.text = "boris@gmail.com"
-        client4.imageView.frame.origin.x = 20
-        client4.imageView.center.y = client4.frame.height*0.5/5
-        client4.addShadow(shadowColor: .darkGray, offSet: CGSize(width: 10, height: 5), opacity: 1.0, shadowRadius: 3, cornerRadius: 10.0, corners: [.allCorners], fillColor: .white)
-        
-        clientViews.append(client1)
-        clientViews.append(client2)
-        clientViews.append(client3)
-        clientViews.append(client4)
+        ref.child("clients").observeSingleEvent(of: .value, with: {(snapshot) in
+            let fetchedData = snapshot.value as! [AnyObject]
+            for value in fetchedData {
+                if value.value(forKey: "RM ID") as! Int == 3478 {
+                    self.clients.append(value as! [String : AnyObject])
+                }
+            }
+            self.setupClientViews()
+        })
     }
     
     /*

@@ -208,7 +208,7 @@ class ClientsViewController: UIViewController, UICollectionViewDataSource, UICol
         cell.nameLabel.center.y = cell.bcView.frame.height*3.6/5
         cell.emailLabel.frame.origin.x = 5
         cell.emailLabel.center.y = cell.bcView.frame.height*4.5/5
-        cell.emailLabel.text = "sample@gmail.com"
+        cell.emailLabel.adjustsFontSizeToFitWidth = true
         cell.imageView.frame.origin.x = 20
         cell.imageView.center.y = cell.bcView.frame.height*1.5/5
         
@@ -225,12 +225,14 @@ class ClientsViewController: UIViewController, UICollectionViewDataSource, UICol
             cell.imageView.frame.origin.x = 25
         }
         else {
-            
+            cell.emailLabel.isHidden = false
             if isSearching {
                 cell.nameLabel.text = "\((searchClients[indexPath.row-1]["Name"] as! String) + " " + (searchClients[indexPath.row-1]["Surname"] as! String))"
+                cell.emailLabel.text = "\(searchClients[indexPath.row-1]["Email"] as! String)"
             }
             else {
                 cell.nameLabel.text = "\((clients[indexPath.row-1]["Name"] as! String) + " " + (clients[indexPath.row-1]["Surname"] as! String))"
+                cell.emailLabel.text = "\(clients[indexPath.row-1]["Email"] as! String)"
             }
         }
       
