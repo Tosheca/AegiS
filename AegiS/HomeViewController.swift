@@ -192,13 +192,13 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
         underlineView2.frame.origin.y = securitiesSeeAll.frame.height - 5
         securitiesSeeAll.addSubview(underlineView2)
         
-        line1.frame.size.width = mainView.frame.width/3
+        line1.frame.size.width = mainView.frame.width/2.5
         line1.frame.size.height = 2
         line1.frame.origin.y = mainView.frame.origin.y - 35
         line1.frame.origin.x = 0
         line1.backgroundColor = .white
         
-        line2.frame.size.width = mainView.frame.width/3
+        line2.frame.size.width = mainView.frame.width/2.5
         line2.frame.size.height = 2
         line2.frame.origin.y = mainView.frame.origin.y - 35
         line2.frame.origin.x = self.view.frame.width - line2.frame.width
@@ -271,7 +271,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
             
             managerDetailsImage.frame.size.width = managerView.frame.width/2.5
             managerDetailsImage.frame.size.height = managerDetailsImage.frame.width
-            managerDetailsImage.center.x = managerView.center.x
+            managerDetailsImage.frame.origin.x = managerView.frame.origin.x  + 20
             managerDetailsImage.frame.origin.y = managerDetailsTitle.frame.origin.y + managerDetailsTitle.frame.height + 20
             managerDetailsImage.contentMode = .scaleAspectFill
             managerDetailsImage.clipsToBounds = true
@@ -359,21 +359,21 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
             managerLine1.frame.size.height = 2
             managerLine1.frame.origin.y = clientsTitle.frame.origin.y
             managerLine1.frame.origin.x = myClientsLabel.frame.origin.x
-            managerLine1.backgroundColor = .black
+            managerLine1.backgroundColor = .lightGray
             managerView.addSubview(managerLine1)
             
             managerLine2.frame.size.width = managerView.frame.width/3
             managerLine2.frame.size.height = 2
             managerLine2.frame.origin.y = numberOfClientsLabel.frame.origin.y + numberOfClientsLabel.frame.height
             managerLine2.frame.origin.x = myClientsLabel.frame.origin.x
-            managerLine2.backgroundColor = .black
+            managerLine2.backgroundColor = .lightGray
             managerView.addSubview(managerLine2)
             
             managerLine3.frame.size.width = managerView.frame.width/3
             managerLine3.frame.size.height = 2
             managerLine3.frame.origin.y = emailTextField.frame.origin.y + emailTextField.frame.height + 12.5
             managerLine3.frame.origin.x = myClientsLabel.frame.origin.x
-            managerLine3.backgroundColor = .black
+            managerLine3.backgroundColor = .lightGray
             managerView.addSubview(managerLine3)
             
             UIView.animate(withDuration: 0.5, animations: {

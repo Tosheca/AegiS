@@ -191,8 +191,9 @@ class SecuritiesViewController: UIViewController, UITableViewDelegate, UITableVi
         cell.title.textAlignment = .left
         
         cell.arrow.frame.size.height = cell.bcView.frame.height
-        cell.arrow.frame.size.width = 30
-        cell.arrow.frame.origin.x = cell.bcView.frame.width - 40
+        cell.arrow.frame.size.width = 15
+        cell.arrow.frame.origin.x = cell.title.frame.origin.x + cell.title.frame.width + cell.percentage.frame.origin.x + cell.percentage.frame.width
+        cell.arrow.frame.origin.y = cell.title.frame.origin.y + 5
         cell.arrow.image = UIImage(systemName: "arrow.up")
         cell.arrow.tintColor = .red
         cell.arrow.contentMode = .scaleAspectFit
