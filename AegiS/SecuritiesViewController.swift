@@ -173,7 +173,7 @@ class SecuritiesViewController: UIViewController, UITableViewDelegate, UITableVi
         cell.bcView.frame.size.height = cell.frame.height - 25
         cell.bcView.frame.origin.x = 10
         
-        if cell.bcView.layer.sublayers?.count == 4 {
+        if cell.bcView.layer.sublayers?.count == 5 {
             cell.bcView.addShadow(shadowColor: .darkGray, offSet: CGSize(width: 0, height: 7.5), opacity: 0.8, shadowRadius: 5, cornerRadius: 10.0, corners: [.allCorners], fillColor: .white)
         }
         
@@ -181,11 +181,14 @@ class SecuritiesViewController: UIViewController, UITableViewDelegate, UITableVi
         cell.bcView.addSubview(cell.arrow)
         cell.bcView.addSubview(cell.price)
         cell.bcView.addSubview(cell.percentage)
+        cell.bcView.addSubview(cell.graphView)
         
-        cell.title.frame.size.height = cell.bcView.frame.height
+        cell.title.frame.size.height = cell.bcView.frame.height/2 - 15
         cell.title.frame.size.width = cell.bcView.frame.width*3/5
         cell.title.frame.origin.x = 15
+        cell.title.frame.origin.y = cell.bcView.frame.height/2
         cell.title.font = UIFont.boldSystemFont(ofSize: 15)
+        cell.title.textAlignment = .left
         
         cell.arrow.frame.size.height = cell.bcView.frame.height
         cell.arrow.frame.size.width = 30
@@ -194,20 +197,26 @@ class SecuritiesViewController: UIViewController, UITableViewDelegate, UITableVi
         cell.arrow.tintColor = .red
         cell.arrow.contentMode = .scaleAspectFit
         
-        cell.price.frame.size.height = cell.bcView.frame.height/3
+        cell.price.frame.size.height = cell.bcView.frame.height/2 - 15
         cell.price.frame.size.width = cell.bcView.frame.width - cell.arrow.frame.width - 10 - cell.title.frame.width - 15
-        cell.price.frame.origin.x = cell.title.frame.origin.x + cell.title.frame.width
+        cell.price.frame.origin.x = 15
         cell.price.frame.origin.y = 15
-        cell.price.textAlignment = .center
+        cell.price.textAlignment = .left
         cell.price.text = "price"
         cell.price.font = UIFont.boldSystemFont(ofSize: 20)
         
         cell.percentage.frame.size = cell.price.frame.size
-        cell.percentage.frame.origin.x = cell.price.frame.origin.x
-        cell.percentage.frame.origin.y = cell.price.frame.origin.y + cell.price.frame.height
+        cell.percentage.frame.origin.x = cell.title.frame.origin.x + cell.title.frame.width
+        cell.percentage.frame.origin.y = cell.title.frame.origin.y
         cell.percentage.textColor = .red
         cell.percentage.textAlignment = .center
         cell.percentage.text = "-%"
+        
+        cell.graphView.frame.size.width = cell.title.frame.width
+        cell.graphView.frame.size.height = cell.title.frame.height
+        cell.graphView.frame.origin.y = 15
+        cell.graphView.frame.origin.x = cell.price.frame.origin.x + cell.price.frame.width
+        cell.graphView.backgroundColor = .green
         
         if isSearching {
             cell.title.text = searchSecurities[indexPath.row]["Short description"] as? String

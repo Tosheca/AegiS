@@ -15,6 +15,7 @@ class MainSecuritiesTableViewCell: UITableViewCell {
     var arrow = UIImageView()
     var percentage = UILabel()
     var bcView = UIView()
+    var graphView = UIView()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,6 +30,7 @@ class MainSecuritiesTableViewCell: UITableViewCell {
         bcView.addSubview(arrow)
         bcView.addSubview(price)
         bcView.addSubview(percentage)
+        bcView.addSubview(graphView)
         self.addSubview(bcView)
     }
     

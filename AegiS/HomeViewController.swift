@@ -28,6 +28,8 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
     var dotsLabel = UIPageControl()
     var clientsSeeAll = UIButton()
     var securitiesSeeAll = UIButton()
+    var line1 = UIView()
+    var line2 = UIView()
     
     var securities = [String]()
     var securityPrices = [Double]()
@@ -44,6 +46,9 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
     var managerDetailsImage = UIImageView(image: UIImage(named: "89762769_223800988749873_7596640348722429952_n.jpg"))
     var passwordTitle = UILabel()
     var passwordButton = UIButton()
+    var managerLine1 = UIView()
+    var managerLine2 = UIView()
+    var managerLine3 = UIView()
     
     var clients = [[String: AnyObject]]()
 
@@ -187,6 +192,18 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
         underlineView2.frame.origin.y = securitiesSeeAll.frame.height - 5
         securitiesSeeAll.addSubview(underlineView2)
         
+        line1.frame.size.width = mainView.frame.width/3
+        line1.frame.size.height = 2
+        line1.frame.origin.y = mainView.frame.origin.y - 35
+        line1.frame.origin.x = 0
+        line1.backgroundColor = .white
+        
+        line2.frame.size.width = mainView.frame.width/3
+        line2.frame.size.height = 2
+        line2.frame.origin.y = mainView.frame.origin.y - 35
+        line2.frame.origin.x = self.view.frame.width - line2.frame.width
+        line2.backgroundColor = .white
+        
         self.view.addSubview(backgroundImage)
         self.view.addSubview(mainView)
         self.view.addSubview(infoButton)
@@ -194,6 +211,8 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
         self.view.addSubview(managerNameLabel)
         self.view.addSubview(managerImage)
         self.view.addSubview(logoTitle)
+        self.view.addSubview(line1)
+        self.view.addSubview(line2)
         mainView.addSubview(myClientsLabel)
         mainView.addSubview(clientsScrollView)
         mainView.addSubview(securitiesOfClientsLabel)
@@ -317,7 +336,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
             passwordTitle.frame.size.width = managerView.frame.width/2
             passwordTitle.frame.size.height = myClientsLabel.frame.height
             passwordTitle.frame.origin.x = myClientsLabel.frame.origin.x
-            passwordTitle.frame.origin.y = emailTextField.frame.origin.y + emailTextField.frame.height + 5
+            passwordTitle.frame.origin.y = emailTextField.frame.origin.y + emailTextField.frame.height + 10
             passwordTitle.textColor = .gray
             passwordTitle.text = "Password"
             managerView.addSubview(passwordTitle)
@@ -335,6 +354,27 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
             passwordButton.setTitleColor(.black, for: .normal)
             passwordButton.addTarget(self, action: #selector(resetPassword), for: .touchUpInside)
             managerView.addSubview(passwordButton)
+            
+            managerLine1.frame.size.width = managerView.frame.width/3
+            managerLine1.frame.size.height = 2
+            managerLine1.frame.origin.y = clientsTitle.frame.origin.y
+            managerLine1.frame.origin.x = myClientsLabel.frame.origin.x
+            managerLine1.backgroundColor = .black
+            managerView.addSubview(managerLine1)
+            
+            managerLine2.frame.size.width = managerView.frame.width/3
+            managerLine2.frame.size.height = 2
+            managerLine2.frame.origin.y = numberOfClientsLabel.frame.origin.y + numberOfClientsLabel.frame.height
+            managerLine2.frame.origin.x = myClientsLabel.frame.origin.x
+            managerLine2.backgroundColor = .black
+            managerView.addSubview(managerLine2)
+            
+            managerLine3.frame.size.width = managerView.frame.width/3
+            managerLine3.frame.size.height = 2
+            managerLine3.frame.origin.y = emailTextField.frame.origin.y + emailTextField.frame.height + 12.5
+            managerLine3.frame.origin.x = myClientsLabel.frame.origin.x
+            managerLine3.backgroundColor = .black
+            managerView.addSubview(managerLine3)
             
             UIView.animate(withDuration: 0.5, animations: {
                 

@@ -228,7 +228,7 @@ class ClientsViewController: UIViewController, UICollectionViewDataSource, UICol
             cell.emailLabel.isHidden = false
             if isSearching {
                 cell.nameLabel.text = "\((searchClients[indexPath.row-1]["Name"] as! String) + " " + (searchClients[indexPath.row-1]["Surname"] as! String))"
-                cell.emailLabel.text = "\(searchClients[indexPath.row-1]["Email"] as! String)"
+            cell.emailLabel.text = "\(searchClients[indexPath.row-1]["Email"] as! String)"
             }
             else {
                 cell.nameLabel.text = "\((clients[indexPath.row-1]["Name"] as! String) + " " + (clients[indexPath.row-1]["Surname"] as! String))"
