@@ -16,6 +16,8 @@ class MainSecuritiesTableViewCell: UITableViewCell {
     var percentage = UILabel()
     var bcView = UIView()
     var graphView = UIView()
+    var alert = UILabel()
+    var alertIcon = UIImageView(image: UIImage(systemName: "flag.fill"))
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -25,12 +27,13 @@ class MainSecuritiesTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        
         bcView.addSubview(title)
         bcView.addSubview(arrow)
         bcView.addSubview(price)
         bcView.addSubview(percentage)
         bcView.addSubview(graphView)
+        bcView.addSubview(alert)
+        bcView.addSubview(alertIcon)
         self.addSubview(bcView)
     }
     

@@ -173,7 +173,7 @@ class SecuritiesViewController: UIViewController, UITableViewDelegate, UITableVi
         cell.bcView.frame.size.height = cell.frame.height - 25
         cell.bcView.frame.origin.x = 10
         
-        if cell.bcView.layer.sublayers?.count == 5 {
+        if cell.bcView.layer.sublayers?.count == 7 { // change if new views are added to bcView!
             cell.bcView.addShadow(shadowColor: .darkGray, offSet: CGSize(width: 0, height: 7.5), opacity: 0.8, shadowRadius: 5, cornerRadius: 10.0, corners: [.allCorners], fillColor: .white)
         }
         
@@ -182,6 +182,8 @@ class SecuritiesViewController: UIViewController, UITableViewDelegate, UITableVi
         cell.bcView.addSubview(cell.price)
         cell.bcView.addSubview(cell.percentage)
         cell.bcView.addSubview(cell.graphView)
+        cell.bcView.addSubview(cell.alert)
+        cell.bcView.addSubview(cell.alertIcon)
         
         cell.title.frame.size.height = cell.bcView.frame.height/2 - 15
         cell.title.frame.size.width = cell.bcView.frame.width*3/5
@@ -190,40 +192,133 @@ class SecuritiesViewController: UIViewController, UITableViewDelegate, UITableVi
         cell.title.font = UIFont.boldSystemFont(ofSize: 15)
         cell.title.textAlignment = .left
         
-        cell.arrow.frame.size.height = cell.bcView.frame.height
-        cell.arrow.frame.size.width = 15
-        cell.arrow.frame.origin.x = cell.title.frame.origin.x + cell.title.frame.width + cell.percentage.frame.origin.x + cell.percentage.frame.width
-        cell.arrow.frame.origin.y = cell.title.frame.origin.y + 5
-        cell.arrow.image = UIImage(systemName: "arrow.up")
-        cell.arrow.tintColor = .red
-        cell.arrow.contentMode = .scaleAspectFit
-        
-        cell.price.frame.size.height = cell.bcView.frame.height/2 - 15
-        cell.price.frame.size.width = cell.bcView.frame.width - cell.arrow.frame.width - 10 - cell.title.frame.width - 15
-        cell.price.frame.origin.x = 15
-        cell.price.frame.origin.y = 15
-        cell.price.textAlignment = .left
-        cell.price.text = "price"
-        cell.price.font = UIFont.boldSystemFont(ofSize: 20)
-        
-        cell.percentage.frame.size = cell.price.frame.size
+        cell.percentage.frame.size.height = cell.title.frame.size.height
+        cell.percentage.frame.size.width = cell.bcView.frame.width - 15 - 30 - cell.title.frame.width
         cell.percentage.frame.origin.x = cell.title.frame.origin.x + cell.title.frame.width
         cell.percentage.frame.origin.y = cell.title.frame.origin.y
         cell.percentage.textColor = .red
         cell.percentage.textAlignment = .center
         cell.percentage.text = "-%"
         
-        cell.graphView.frame.size.width = cell.title.frame.width
+        cell.arrow.frame.size.height = cell.percentage.frame.height
+        cell.arrow.frame.size.width = 15
+        cell.arrow.frame.origin.x = cell.percentage.frame.origin.x + cell.percentage.frame.width
+        cell.arrow.frame.origin.y = cell.percentage.frame.origin.y
+        cell.arrow.image = UIImage(systemName: "arrow.up")
+        cell.arrow.tintColor = .red
+        cell.arrow.contentMode = .scaleAspectFit
+        
+        cell.price.frame.size.height = cell.bcView.frame.height/2 - 15
+        cell.price.frame.size.width = cell.percentage.frame.width + cell.arrow.frame.width
+        cell.price.frame.origin.x = 15
+        cell.price.frame.origin.y = 15
+        cell.price.textAlignment = .left
+        cell.price.text = "price"
+        cell.price.font = UIFont.boldSystemFont(ofSize: 20)
+        
+        cell.graphView.frame.size.width = cell.bcView.frame.width - cell.price.frame.width - 30
         cell.graphView.frame.size.height = cell.title.frame.height
         cell.graphView.frame.origin.y = 15
         cell.graphView.frame.origin.x = cell.price.frame.origin.x + cell.price.frame.width
         cell.graphView.backgroundColor = .green
         
+        cell.alert.frame.size.height = cell.title.frame.height/2
+        cell.alert.frame.size.width = cell.title.frame.width
+        cell.alert.text = "Hold on this stock"
+        cell.alert.sizeToFit()
+        cell.alert.frame.origin.x = cell.bcView.frame.width - cell.alert.frame.size.width - 15
+        cell.alert.frame.origin.y = cell.bcView.frame.height - cell.alert.frame.height - 5
+        cell.alert.textAlignment = .right
+        cell.alert.textColor = .lightGray
+        cell.alert.font = UIFont.systemFont(ofSize: 15)
+        
+        cell.alertIcon.tintColor = UIColor.lightGray.withAlphaComponent(0.8)
+        cell.alertIcon.frame.size.height = cell.alert.frame.height/1.5
+        cell.alertIcon.frame.size.width = cell.alertIcon.frame.height
+        cell.alertIcon.center.y = cell.alert.center.y
+        cell.alertIcon.frame.origin.x = cell.alert.frame.origin.x - cell.alertIcon.frame.width - 5
+        
         if isSearching {
             cell.title.text = searchSecurities[indexPath.row]["Short description"] as? String
+            cell.price.text = "£\((searchSecurities[indexPath.row]["Price 5"] as! Int))"
+            let percentageChange = ((searchSecurities[indexPath.row]["Price 5"] as! Double) - (searchSecurities[indexPath.row]["Price 4"] as! Double))/(searchSecurities[indexPath.row]["Price 4"] as! Double)*100
+            cell.percentage.text = "\(String(format: "%.2f", percentageChange))%"
+            
+            if percentageChange >= 0 {
+                cell.percentage.textColor = .green
+            }
+            else {
+                cell.percentage.textColor = .red
+            }
+            
+            if percentageChange > 10.00 || percentageChange < -10 {
+                if percentageChange > 10.00 {
+                    cell.alert.text = "Best time to sell"
+                }
+                else {
+                    cell.alert.text = "Best time to buy"
+                }
+            }
+            else {
+                cell.alert.text = "Hold on this stock"
+            }
+            cell.alert.sizeToFit()
+            cell.alert.frame.origin.x = cell.bcView.frame.width - cell.alert.frame.size.width - 15
+            cell.alert.frame.origin.y = cell.bcView.frame.height - cell.alert.frame.height - 5
+            
+            cell.alertIcon.frame.size.height = cell.alert.frame.height/1.5
+            cell.alertIcon.frame.size.width = cell.alertIcon.frame.height
+            cell.alertIcon.center.y = cell.alert.center.y
+            cell.alertIcon.frame.origin.x = cell.alert.frame.origin.x - cell.alertIcon.frame.width - 5
+            
+            if (searchSecurities[indexPath.row]["Price 5"] as! Int) >= (searchSecurities[indexPath.row]["Price 4"] as! Int) { // price going up
+                cell.arrow.tintColor = .green
+            }
+            else {
+                cell.arrow.tintColor = .red
+            }
+            
         }
         else {
             cell.title.text = securities[indexPath.row]["Short description"] as? String
+            cell.price.text = "£\((securities[indexPath.row]["Price 5"] as! Int))"
+            let percentageChange = ((securities[indexPath.row]["Price 5"] as! Double) - (securities[indexPath.row]["Price 4"] as! Double))/(securities[indexPath.row]["Price 4"] as! Double)*100
+            cell.percentage.text = "\(String(format: "%.2f", percentageChange))%"
+            
+            if percentageChange >= 0 {
+                cell.percentage.textColor = .green
+            }
+            else {
+                cell.percentage.textColor = .red
+            }
+            
+            if percentageChange > 10.00 || percentageChange < -10 {
+                if percentageChange > 10.00 {
+                    cell.alert.text = "Best time to sell"
+                }
+                else {
+                    cell.alert.text = "Best time to buy"
+                }
+            }
+            else {
+                cell.alert.text = "Hold on this stock"
+            }
+            cell.alert.sizeToFit()
+            cell.alert.frame.origin.x = cell.bcView.frame.width - cell.alert.frame.size.width - 15
+            cell.alert.frame.origin.y = cell.bcView.frame.height - cell.alert.frame.height - 5
+            
+            cell.alertIcon.frame.size.height = cell.alert.frame.height/1.5
+            cell.alertIcon.frame.size.width = cell.alertIcon.frame.height
+            cell.alertIcon.center.y = cell.alert.center.y
+            cell.alertIcon.frame.origin.x = cell.alert.frame.origin.x - cell.alertIcon.frame.width - 5
+            
+            if (securities[indexPath.row]["Price 5"] as! Int) >= (securities[indexPath.row]["Price 4"] as! Int) { // price going up
+                cell.arrow.tintColor = .green
+            }
+            else {
+                cell.arrow.tintColor = .red
+                cell.arrow.transform = CGAffineTransform(rotationAngle: .pi)
+            }
         }
         
         return cell

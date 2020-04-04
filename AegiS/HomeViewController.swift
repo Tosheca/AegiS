@@ -31,7 +31,6 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
     var line1 = UIView()
     var line2 = UIView()
     
-    var securities = [String]()
     var securityPrices = [Double]()
     var securityPercentages = [Double]()
     
@@ -51,6 +50,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
     var managerLine3 = UIView()
     
     var clients = [[String: AnyObject]]()
+    var securities = [[String: AnyObject]]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -220,10 +220,6 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
         mainView.addSubview(dotsLabel)
         mainView.addSubview(clientsSeeAll)
         mainView.addSubview(securitiesSeeAll)
-        
-        securities = ["David Jones Ltd Shs AUD NPV", "Allied Dunbar North Am Gth A/c R", "Schroder Global Emer Mtks Acc Uts A", "Schroder Retail Global Emer Inc Uts", "Barnes & Noble Inc Shs USD NPV"]
-        securityPrices = [1234.25, 5234.56, 2131.67, 3242.56, 3242.89]
-        securityPercentages = [0.7, 2.7, 4.3, 7.8, 1.1]
         
         fetchClients()
     }
@@ -475,7 +471,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
         cell.title.frame.size.height = cell.frame.height
         cell.title.frame.size.width = cell.frame.width*3/5
         cell.title.frame.origin.x = 15
-        cell.title.text = securities[indexPath.row]
+        cell.title.text = securities[indexPath.row]["Short description"] as? String
         cell.title.font = UIFont.boldSystemFont(ofSize: 15)
         
         cell.arrow.frame.size.height = cell.frame.height
@@ -485,12 +481,20 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
         cell.arrow.tintColor = .red
         cell.arrow.contentMode = .scaleAspectFit
         
+        if (securities[indexPath.row]["Price 5"] as! Int) >= (securities[indexPath.row]["Price 4"] as! Int) { // price going up
+            cell.arrow.tintColor = .green
+        }
+        else {
+            cell.arrow.tintColor = .red
+            cell.arrow.transform = CGAffineTransform(rotationAngle: .pi)
+        }
+        
         cell.price.frame.size.height = cell.frame.height/3
         cell.price.frame.size.width = cell.frame.width - cell.arrow.frame.width - 10 - cell.title.frame.width - 15
         cell.price.frame.origin.x = cell.title.frame.origin.x + cell.title.frame.width
         cell.price.frame.origin.y = 15
         cell.price.textAlignment = .center
-        cell.price.text = "\(securityPrices[indexPath.row])"
+        cell.price.text = "£\((securities[indexPath.row]["Price 5"] as! Int))"
         cell.price.font = UIFont.boldSystemFont(ofSize: 20)
         
         cell.percentage.frame.size = cell.price.frame.size
@@ -498,13 +502,22 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
         cell.percentage.frame.origin.y = cell.price.frame.origin.y + cell.price.frame.height
         cell.percentage.textColor = .red
         cell.percentage.textAlignment = .center
-        cell.percentage.text = "-\(securityPercentages[indexPath.row])%"
+        
+        let percentageChange = ((securities[indexPath.row]["Price 5"] as! Double) - (securities[indexPath.row]["Price 4"] as! Double))/(securities[indexPath.row]["Price 4"] as! Double)*100
+        cell.percentage.text = "\(String(format: "%.2f", percentageChange))%"
+        
+        if percentageChange >= 0 {
+            cell.percentage.textColor = .green
+        }
+        else {
+            cell.percentage.textColor = .red
+        }
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return securities.count
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -559,6 +572,58 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
                 }
             }
             self.setupClientViews()
+            self.fetchSecurities()
+        })
+    }
+    
+    func fetchSecurities() {
+        var clientIDs = [Int]()
+        for client in clients {
+            clientIDs.append(client["Customer ID"] as! Int)
+        }
+        print("HERE")
+        print(clientIDs)
+        
+        var portfolios = [String]()
+        
+        let ref = Database.database().reference()
+        ref.child("portfolios").observeSingleEvent(of: .value, with: {(snapshot) in
+            let fetchedData = snapshot.value as! [AnyObject]
+            for value in fetchedData {
+                if clientIDs.contains(value.value(forKey: "CUSTOMER ID") as! Int) {
+                    portfolios.append(value.value(forKey: "PORTFOLIO ID") as! String)
+                }
+            }
+            print("HERE1111")
+            print(portfolios.count)
+            print(portfolios)
+            
+            var fetchedSecuritiesIDs = [String]()
+            ref.child("trades").observeSingleEvent(of: .value, with: {(snapshot) in
+                let fetchedData = snapshot.value as! [AnyObject]
+                for value in fetchedData {
+                    if portfolios.contains(value.value(forKey: "Portfolio ID") as! String) {
+                        if fetchedSecuritiesIDs.contains(value.value(forKey: "Security ID") as! String) == false {
+                            fetchedSecuritiesIDs.append(value.value(forKey: "Security ID") as! String)
+                        }
+                    }
+                }
+                
+                print("HERE2222222")
+                print(fetchedSecuritiesIDs.count)
+                
+                ref.child("securities").observeSingleEvent(of: .value, with: {(snapshot) in
+                    let fetchedData = snapshot.value as! [AnyObject]
+                    for value in fetchedData {
+                        if fetchedSecuritiesIDs.contains(value.value(forKey: "Security code") as! String) {
+                            self.securities.append(value as! [String : AnyObject])
+                        }
+                    }
+                    
+                    print(self.securities.count)
+                    self.securitiesTableView.reloadData()
+                })
+            })
         })
     }
     
