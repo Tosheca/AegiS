@@ -534,7 +534,22 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
         
         for client in 0..<(clients.count) {
             let cview = clientView()
-            cview.imageView.image = UIImage(named: "89930680_198473048089654_6530749024859848704_n.jpg")
+            
+            let imageName = clients[client]["Image"] as! String
+            // Create a reference to the file you want to download
+            let imageRef = Storage.storage().reference().child("images/\(imageName)")
+
+            // Download in memory with a maximum allowed size of 1MB (1 * 1024 * 1024 bytes)
+            imageRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
+              if let error = error {
+                // Uh-oh, an error occurred!
+                print("Error")
+                print(error)
+              } else {
+                // Data for thee image is returned
+                cview.imageView.image = UIImage(data: data!)
+              }
+            }
             cview.imageView.contentMode = .scaleAspectFill
             cview.imageView.clipsToBounds = true
             cview.frame.size.height = clientsScrollView.frame.height - 15
@@ -559,6 +574,8 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
             clientViews[client].frame.origin.x = (clientsScrollView.frame.width/2.75)*CGFloat(client) + CGFloat(30*client)
             clientsScrollView.addSubview(clientViews[client])
         }
+        
+        dotsLabel.numberOfPages = Int(round(Double(clientsScrollView.contentSize.width/clientsScrollView.frame.width)))
     }
     
     func fetchClients() {

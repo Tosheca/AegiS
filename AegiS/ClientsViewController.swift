@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import FirebaseDatabase
+import FirebaseStorage
 
 class ClientsViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
     
@@ -198,9 +199,6 @@ class ClientsViewController: UIViewController, UICollectionViewDataSource, UICol
         
         cell.imageView.frame.size.width = cell.bcView.frame.size.width - 40
         cell.imageView.frame.size.height = cell.imageView.frame.width
-        //cell.imageView.backgroundColor = .green
-        
-        cell.imageView.image = UIImage(named: "89762769_223800988749873_7596640348722429952_n.jpg")
         cell.imageView.contentMode = .scaleAspectFill
         cell.imageView.clipsToBounds = true
         
@@ -226,13 +224,33 @@ class ClientsViewController: UIViewController, UICollectionViewDataSource, UICol
         }
         else {
             cell.emailLabel.isHidden = false
+            
+            var imageName = String()
+            
             if isSearching {
                 cell.nameLabel.text = "\((searchClients[indexPath.row-1]["Name"] as! String) + " " + (searchClients[indexPath.row-1]["Surname"] as! String))"
-            cell.emailLabel.text = "\(searchClients[indexPath.row-1]["Email"] as! String)"
+                cell.emailLabel.text = "\(searchClients[indexPath.row-1]["Email"] as! String)"
+                imageName = searchClients[indexPath.row-1]["Image"] as! String
             }
             else {
                 cell.nameLabel.text = "\((clients[indexPath.row-1]["Name"] as! String) + " " + (clients[indexPath.row-1]["Surname"] as! String))"
                 cell.emailLabel.text = "\(clients[indexPath.row-1]["Email"] as! String)"
+                imageName = clients[indexPath.row-1]["Image"] as! String
+            }
+            
+            // Create a reference to the file you want to download
+            let imageRef = Storage.storage().reference().child("images/\(imageName)")
+
+            // Download in memory with a maximum allowed size of 1MB (1 * 1024 * 1024 bytes)
+            imageRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
+              if let error = error {
+                // Uh-oh, an error occurred!
+                print("Error")
+                print(error)
+              } else {
+                // Data for thee image is returned
+                cell.imageView.image = UIImage(data: data!)
+              }
             }
         }
       
