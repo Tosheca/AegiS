@@ -224,34 +224,19 @@ class ClientsViewController: UIViewController, UICollectionViewDataSource, UICol
         }
         else {
             cell.emailLabel.isHidden = false
-            
-            var imageName = String()
-            
+                        
             if isSearching {
                 cell.nameLabel.text = "\((searchClients[indexPath.row-1]["Name"] as! String) + " " + (searchClients[indexPath.row-1]["Surname"] as! String))"
                 cell.emailLabel.text = "\(searchClients[indexPath.row-1]["Email"] as! String)"
-                imageName = searchClients[indexPath.row-1]["Image"] as! String
+                cell.imageView.image = searchClients[indexPath.row-1]["Image"] as? UIImage
             }
             else {
                 cell.nameLabel.text = "\((clients[indexPath.row-1]["Name"] as! String) + " " + (clients[indexPath.row-1]["Surname"] as! String))"
                 cell.emailLabel.text = "\(clients[indexPath.row-1]["Email"] as! String)"
-                imageName = clients[indexPath.row-1]["Image"] as! String
+                cell.imageView.image = clients[indexPath.row-1]["Image"] as? UIImage
             }
             
-            // Create a reference to the file you want to download
-            let imageRef = Storage.storage().reference().child("images/\(imageName)")
-
-            // Download in memory with a maximum allowed size of 1MB (1 * 1024 * 1024 bytes)
-            imageRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
-              if let error = error {
-                // Uh-oh, an error occurred!
-                print("Error")
-                print(error)
-              } else {
-                // Data for thee image is returned
-                cell.imageView.image = UIImage(data: data!)
-              }
-            }
+            
         }
       
         return cell
@@ -267,8 +252,38 @@ class ClientsViewController: UIViewController, UICollectionViewDataSource, UICol
                     self.clients.append(value as! [String : AnyObject])
                 }
             }
+            self.fetchClientImages()
             self.clientsCollectionView.reloadData()
             self.totalClientsLabel.text = "Total clients: \(self.clients.count)"
+        })
+    }
+    
+    func fetchClientImages() {
+        
+        let dispGroup = DispatchGroup()
+        
+        for client in 0..<clients.count {
+            dispGroup.enter()
+            let imageName = clients[client]["Image"] as! String
+            // Create a reference to the file you want to download
+            let imageRef = Storage.storage().reference().child("images/\(imageName)")
+
+            // Download in memory with a maximum allowed size of 1MB (1 * 1024 * 1024 bytes)
+            imageRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
+              if let error = error {
+                // Uh-oh, an error occurred!
+                print("Error")
+                print(error)
+              } else {
+                // Data for the image is returned
+                self.clients[client]["Image"] = UIImage(data: data!)
+                dispGroup.leave()
+              }
+            }
+        }
+        
+        dispGroup.notify(queue: .main, execute: {
+            self.clientsCollectionView.reloadData()
         })
     }
     
