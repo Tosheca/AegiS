@@ -118,7 +118,7 @@ class SecuritiesViewController: UIViewController, UITableViewDelegate, UITableVi
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
         
-        self.view.addGestureRecognizer(tap)
+        //self.view.addGestureRecognizer(tap)
         
         let ref = Database.database().reference()
         
@@ -246,6 +246,7 @@ class SecuritiesViewController: UIViewController, UITableViewDelegate, UITableVi
             
             if percentageChange >= 0 {
                 cell.percentage.textColor = .green
+                cell.percentage.text = "+" + cell.percentage.text!
             }
             else {
                 cell.percentage.textColor = .red
@@ -277,7 +278,6 @@ class SecuritiesViewController: UIViewController, UITableViewDelegate, UITableVi
             else {
                 cell.arrow.tintColor = .red
             }
-            
         }
         else {
             cell.title.text = securities[indexPath.row]["Short description"] as? String
@@ -287,6 +287,7 @@ class SecuritiesViewController: UIViewController, UITableViewDelegate, UITableVi
             
             if percentageChange >= 0 {
                 cell.percentage.textColor = .green
+                cell.percentage.text = "+" + cell.percentage.text!
             }
             else {
                 cell.percentage.textColor = .red
@@ -321,11 +322,27 @@ class SecuritiesViewController: UIViewController, UITableViewDelegate, UITableVi
             }
         }
         
+        cell.selectionStyle = .none
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let securityVC = SecurityViewController()
+        
+        if isSearching {
+            securityVC.security = searchSecurities[indexPath.row]
+        }
+        else {
+            securityVC.security = securities[indexPath.row]
+        }
+        
+        securityVC.modalPresentationStyle = .fullScreen
+        self.present(securityVC, animated: true, completion: nil)
     }
     
     @objc func dismissKeyboard() {

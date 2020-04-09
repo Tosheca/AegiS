@@ -509,6 +509,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
         
         if percentageChange >= 0 {
             cell.percentage.textColor = .green
+            cell.percentage.text = "+" + cell.percentage.text!
         }
         else {
             cell.percentage.textColor = .red
@@ -541,7 +542,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
             let imageRef = Storage.storage().reference().child("images/\(imageName)")
 
             // Download in memory with a maximum allowed size of 1MB (1 * 1024 * 1024 bytes)
-            imageRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
+            imageRef.getData(maxSize: 1 * 1256 * 1256) { data, error in
               if let error = error {
                 // Uh-oh, an error occurred!
                 print("Error")
