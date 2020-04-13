@@ -19,6 +19,8 @@
 		ED51622A2419AE8E0008C621 /* 49054316_356857088449911_3489275029483421696_n.jpg in Resources */ = {isa = PBXBuildFile; fileRef = ED5162292419AE8E0008C621 /* 49054316_356857088449911_3489275029483421696_n.jpg */; };
 		ED51622E2419B1960008C621 /* unnamed.png in Resources */ = {isa = PBXBuildFile; fileRef = ED51622D2419B1960008C621 /* unnamed.png */; };
 		ED516230241AD20D0008C621 /* SecuritiesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED51622F241AD20D0008C621 /* SecuritiesTableViewCell.swift */; };
+		ED59B01724407BCB00CE4AC9 /* SingleSecurityInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED59B01624407BCB00CE4AC9 /* SingleSecurityInfoTableViewCell.swift */; };
+		ED59B019244380D100CE4AC9 /* SingleClientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED59B018244380D100CE4AC9 /* SingleClientViewController.swift */; };
 		ED5DAEDD2417B4480085F08A /* MainNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5DAEDC2417B4480085F08A /* MainNavigationViewController.swift */; };
 		ED5DAEDF2417B6BA0085F08A /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5DAEDE2417B6BA0085F08A /* MainTabBarViewController.swift */; };
 		ED5DAEE12417BEEE0085F08A /* SecuritiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5DAEE02417BEEE0085F08A /* SecuritiesViewController.swift */; };
@@ -77,6 +79,8 @@
 		ED5162292419AE8E0008C621 /* 49054316_356857088449911_3489275029483421696_n.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 49054316_356857088449911_3489275029483421696_n.jpg; sourceTree = "<group>"; };
 		ED51622D2419B1960008C621 /* unnamed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unnamed.png; sourceTree = "<group>"; };
 		ED51622F241AD20D0008C621 /* SecuritiesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecuritiesTableViewCell.swift; sourceTree = "<group>"; };
+		ED59B01624407BCB00CE4AC9 /* SingleSecurityInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleSecurityInfoTableViewCell.swift; sourceTree = "<group>"; };
+		ED59B018244380D100CE4AC9 /* SingleClientViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleClientViewController.swift; sourceTree = "<group>"; };
 		ED5DAEDC2417B4480085F08A /* MainNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigationViewController.swift; sourceTree = "<group>"; };
 		ED5DAEDE2417B6BA0085F08A /* MainTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
 		ED5DAEE02417BEEE0085F08A /* SecuritiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecuritiesViewController.swift; sourceTree = "<group>"; };
@@ -179,9 +183,11 @@
 				ED5DAEE22417BEFA0085F08A /* HomeViewController.swift */,
 				ED51622F241AD20D0008C621 /* SecuritiesTableViewCell.swift */,
 				ED5DAEE42417BF6D0085F08A /* ClientsViewController.swift */,
+				ED59B018244380D100CE4AC9 /* SingleClientViewController.swift */,
 				ED516218241988540008C621 /* clientView.swift */,
 				ED5DAEE02417BEEE0085F08A /* SecuritiesViewController.swift */,
 				ED8CD4DE243DC4150064861C /* SecurityViewController.swift */,
+				ED59B01624407BCB00CE4AC9 /* SingleSecurityInfoTableViewCell.swift */,
 				ED13A82F2420193A00A6FE82 /* MainSecuritiesTableViewCell.swift */,
 				ED13A8312422AB6B00A6FE82 /* ClientsCollectionViewCell.swift */,
 				EDCD0DDB2411A30300FC6524 /* Main.storyboard */,
@@ -483,6 +489,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED59B019244380D100CE4AC9 /* SingleClientViewController.swift in Sources */,
 				ED5DAEE12417BEEE0085F08A /* SecuritiesViewController.swift in Sources */,
 				EDCD0DDA2411A30300FC6524 /* LoginViewController.swift in Sources */,
 				ED5DAEDD2417B4480085F08A /* MainNavigationViewController.swift in Sources */,
@@ -492,6 +499,7 @@
 				ED64881B241247F000EDD3D3 /* RegisterViewController.swift in Sources */,
 				ED5DAEDF2417B6BA0085F08A /* MainTabBarViewController.swift in Sources */,
 				ED8CD4DF243DC4150064861C /* SecurityViewController.swift in Sources */,
+				ED59B01724407BCB00CE4AC9 /* SingleSecurityInfoTableViewCell.swift in Sources */,
 				ED5DAEE32417BEFA0085F08A /* HomeViewController.swift in Sources */,
 				EDCD0DD62411A30300FC6524 /* AppDelegate.swift in Sources */,
 				EDCD0DD82411A30300FC6524 /* SceneDelegate.swift in Sources */,

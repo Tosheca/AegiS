@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftChart
 
 class MainSecuritiesTableViewCell: UITableViewCell {
 
@@ -15,7 +16,7 @@ class MainSecuritiesTableViewCell: UITableViewCell {
     var arrow = UIImageView()
     var percentage = UILabel()
     var bcView = UIView()
-    var graphView = UIView()
+    var graphView = Chart()
     var alert = UILabel()
     var alertIcon = UIImageView(image: UIImage(systemName: "flag.fill"))
     

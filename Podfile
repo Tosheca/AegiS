@@ -18,6 +18,9 @@ target 'AegiS' do
   pod 'Firebase/Firestore'
   pod 'Firebase/Database'
   pod 'Firebase/Storage'
+  
+  # Add pods for Charts
+  pod 'SwiftChart'
 
   target 'AegiSTests' do
     inherit! :search_paths

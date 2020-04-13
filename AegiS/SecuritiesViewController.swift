@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import FirebaseDatabase
+import SwiftChart
 
 class SecuritiesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
 
@@ -220,7 +221,14 @@ class SecuritiesViewController: UIViewController, UITableViewDelegate, UITableVi
         cell.graphView.frame.size.height = cell.title.frame.height
         cell.graphView.frame.origin.y = 15
         cell.graphView.frame.origin.x = cell.price.frame.origin.x + cell.price.frame.width
-        cell.graphView.backgroundColor = .green
+        
+        cell.graphView.gridColor = .clear
+        cell.graphView.axesColor = .clear
+        cell.graphView.xLabelsSkipLast = false
+        cell.graphView.bottomInset = 0
+        cell.graphView.showXLabelsAndGrid = false
+        cell.graphView.showYLabelsAndGrid = false
+        cell.graphView.highlightLineColor = .clear
         
         cell.alert.frame.size.height = cell.title.frame.height/2
         cell.alert.frame.size.width = cell.title.frame.width
@@ -278,6 +286,30 @@ class SecuritiesViewController: UIViewController, UITableViewDelegate, UITableVi
             else {
                 cell.arrow.tintColor = .red
             }
+            
+            var dates = [String]()
+            var xValues = [Double]()
+            let months = [0, 31, 61, 92, 122]
+            for date in 1...5 {
+                let testDate = searchSecurities[indexPath.row]["Price \(date) Date"] as! String
+                dates.append(testDate)
+                print(testDate)
+                let firstIndex = testDate.index(after: testDate.firstIndex(of: "/")!)
+                let lastIndex = testDate.lastIndex(of: "/")!
+                let range = firstIndex..<lastIndex
+                let day = Int(testDate[range])
+                xValues.append(Double((day! + months[date-1])))
+            }
+            
+            cell.graphView.xLabels = xValues
+            
+            let data = [(x: xValues[0], y: searchSecurities[indexPath.row]["Price 1"] as! Double), (x: xValues[1], y: searchSecurities[indexPath.row]["Price 2"] as! Double), (x: xValues[2], y: searchSecurities[indexPath.row]["Price 3"] as! Double), (x: xValues[3], y: searchSecurities[indexPath.row]["Price 4"] as! Double), (x: xValues[4], y: searchSecurities[indexPath.row]["Price 5"] as! Double)]
+            let series = ChartSeries(data: data)
+            series.area = true
+            series.color = cell.arrow.tintColor
+            cell.graphView.removeAllSeries()
+            cell.graphView.add(series)
+            cell.graphView.minY = 0
         }
         else {
             cell.title.text = securities[indexPath.row]["Short description"] as? String
@@ -320,6 +352,30 @@ class SecuritiesViewController: UIViewController, UITableViewDelegate, UITableVi
                 cell.arrow.tintColor = .red
                 cell.arrow.transform = CGAffineTransform(rotationAngle: .pi)
             }
+            
+            var dates = [String]()
+            var xValues = [Double]()
+            let months = [0, 31, 61, 92, 122]
+            for date in 1...5 {
+                let testDate = securities[indexPath.row]["Price \(date) Date"] as! String
+                dates.append(testDate)
+                print(testDate)
+                let firstIndex = testDate.index(after: testDate.firstIndex(of: "/")!)
+                let lastIndex = testDate.lastIndex(of: "/")!
+                let range = firstIndex..<lastIndex
+                let day = Int(testDate[range])
+                xValues.append(Double((day! + months[date-1])))
+            }
+            
+            cell.graphView.xLabels = xValues
+            
+            let data = [(x: xValues[0], y: securities[indexPath.row]["Price 1"] as! Double), (x: xValues[1], y: securities[indexPath.row]["Price 2"] as! Double), (x: xValues[2], y: securities[indexPath.row]["Price 3"] as! Double), (x: xValues[3], y: securities[indexPath.row]["Price 4"] as! Double), (x: xValues[4], y: securities[indexPath.row]["Price 5"] as! Double)]
+            let series = ChartSeries(data: data)
+            series.area = true
+            series.color = cell.arrow.tintColor
+            cell.graphView.removeAllSeries()
+            cell.graphView.add(series)
+            cell.graphView.minY = 0
         }
         
         cell.selectionStyle = .none

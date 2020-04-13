@@ -79,6 +79,9 @@ class ClientsViewController: UIViewController, UICollectionViewDataSource, UICol
         clientsCollectionView.dataSource = self
         clientsCollectionView.register(ClientsCollectionViewCell.self, forCellWithReuseIdentifier: "client")
         clientsCollectionView.showsVerticalScrollIndicator = false
+        clientsCollectionView.allowsSelection = true
+        clientsCollectionView.isUserInteractionEnabled = true
+        clientsCollectionView.allowsMultipleSelection = true
         
         totalClientsLabel.frame.size.width = self.view.frame.width
         totalClientsLabel.frame.size.height = self.view.frame.height/20
@@ -112,17 +115,17 @@ class ClientsViewController: UIViewController, UICollectionViewDataSource, UICol
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
         
-        self.view.addGestureRecognizer(tap)
+        //self.view.addGestureRecognizer(tap)
         
         self.view.addSubview(topBackgroundView)
         topBackgroundView.addSubview(backgroundImage)
         self.view.addSubview(bottomBackgroundView)
         bottomBackgroundView.addSubview(backgroundImage1)
-        self.view.addSubview(titleLabel)
         self.view.addSubview(clientsCollectionView)
-        self.view.addSubview(totalClientsLabel)
         self.view.addSubview(searchBar)
-        
+        self.view.addSubview(titleLabel)
+        self.view.addSubview(totalClientsLabel)
+
         fetchClients()
     }
     
@@ -164,11 +167,14 @@ class ClientsViewController: UIViewController, UICollectionViewDataSource, UICol
         }
     }
     
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "client", for: indexPath) as! ClientsCollectionViewCell
         //cell.backgroundColor = .green
-        
         cell.backgroundColor = .clear
         cell.bcView.frame.size.width = cell.frame.width - 20
         cell.bcView.frame.size.height = cell.frame.height - 25
@@ -240,6 +246,22 @@ class ClientsViewController: UIViewController, UICollectionViewDataSource, UICol
         }
       
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        print("cell clicked")
+        let clientVC = SingleClientViewController()
+        
+        if isSearching {
+            clientVC.client = searchClients[indexPath.row]
+        }
+        else {
+            clientVC.client = clients[indexPath.row]
+        }
+        
+        clientVC.modalPresentationStyle = .fullScreen
+        self.present(clientVC, animated: true, completion: nil)
     }
 
     func fetchClients() {
