@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 import FirebaseStorage
 
 class SingleClientViewController: UIViewController {
@@ -34,6 +35,9 @@ class SingleClientViewController: UIViewController {
     var addressTitle = UILabel()
     var addressLabel = UILabel()
     var viewOnMapButton = UIButton()
+    var mapView = UIView()
+    var map = MKMapView()
+    var location = CLLocationCoordinate2D()
     
     var client = [String: AnyObject]()
 
@@ -41,7 +45,7 @@ class SingleClientViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
+        self.overrideUserInterfaceStyle = .light
         self.edgesForExtendedLayout = []
         self.view.backgroundColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1.0)
         
@@ -74,11 +78,19 @@ class SingleClientViewController: UIViewController {
         let homeImage = UIImage(systemName: "arrow.uturn.left", withConfiguration: homeSymbolConfiguration)
         backButton.setImage(homeImage, for: .normal)
         
+        mainView.translatesAutoresizingMaskIntoConstraints = false
         mainView.frame.size.width = self.view.frame.width - 50 - 20
         mainView.frame.size.height = self.view.frame.height*3/7
         mainView.frame.origin.x = 35
         mainView.center.y = topBackgroundView.frame.origin.y + topBackgroundView.frame.height
         mainView.addShadow(shadowColor: .darkGray, offSet: CGSize(width: 0, height: 7.5), opacity: 0.8, shadowRadius: 5, cornerRadius: 10.0, corners: [.allCorners], fillColor: .white)
+        
+        mapView.frame.size.width = mainView.frame.size.width
+        mapView.frame.size.height = mapView.frame.width
+        mapView.frame.origin.x = 35
+        mapView.frame.origin.y = mainView.frame.origin.y + mainView.frame.height/2
+        mapView.addShadow(shadowColor: .darkGray, offSet: CGSize(width: 0, height: 7.5), opacity: 0.8, shadowRadius: 5, cornerRadius: 10.0, corners: [.bottomLeft, .bottomRight], fillColor: .white)
+        mapView.alpha = 0
         
         image.frame.size.width = mainView.frame.width/4
         image.frame.size.height = image.frame.width
@@ -92,17 +104,19 @@ class SingleClientViewController: UIViewController {
         image.image = client["Image"] as? UIImage
         
         nameLabel.frame.size.width = mainView.frame.width*2/3
-        nameLabel.frame.size.height = mainView.frame.height/8
+        nameLabel.frame.size.height = mainView.frame.height/10
         nameLabel.frame.origin.x = 25
         nameLabel.frame.origin.y = 25
         nameLabel.text = "\((client["Name"] as! String) + " " + (client["Surname"] as! String))"
         nameLabel.font = UIFont.boldSystemFont(ofSize: 30)
+        nameLabel.adjustsFontSizeToFitWidth = true
         
         emailLabel.frame.size.width = mainView.frame.width*2/3
         emailLabel.frame.size.height = mainView.frame.height/10
         emailLabel.frame.origin.y = nameLabel.frame.origin.y + nameLabel.frame.height
         emailLabel.textColor = .gray
         emailLabel.text = "\(client["Email"] as! String)"
+        emailLabel.adjustsFontSizeToFitWidth = true
         
         emailIcon.frame.size.height = emailLabel.frame.height/1.5
         emailIcon.frame.size.width = emailIcon.frame.height
@@ -116,7 +130,8 @@ class SingleClientViewController: UIViewController {
         phoneLabel.frame.size.height = mainView.frame.height/10
         phoneLabel.frame.origin.y = emailLabel.frame.origin.y + emailLabel.frame.height
         phoneLabel.textColor = .gray
-        phoneLabel.text = "0888655396"
+        phoneLabel.text = client["Phone"] as? String
+        phoneLabel.adjustsFontSizeToFitWidth = true
         
         phoneIcon.frame.size = emailIcon.frame.size
         phoneIcon.frame.origin.x = 25
@@ -140,7 +155,7 @@ class SingleClientViewController: UIViewController {
         languageLabel.frame.size.width = mainView.frame.width*2/3
         languageLabel.frame.size.height = mainView.frame.height/10
         languageLabel.frame.origin.x = 25
-        languageLabel.frame.origin.y = languageTitle.frame.origin.y + languageTitle.frame.height - 5
+        languageLabel.frame.origin.y = languageTitle.frame.origin.y + languageTitle.frame.height - 10
         languageLabel.text = client["Language of Reporting"] as? String
         languageLabel.textColor = .gray
         
@@ -162,13 +177,13 @@ class SingleClientViewController: UIViewController {
         currencyTitle.frame.size.width = mainView.frame.width*2/3
         currencyTitle.frame.size.height = mainView.frame.height/10
         currencyTitle.frame.origin.x = 25
-        currencyTitle.frame.origin.y = languageLabel.frame.origin.y + languageLabel.frame.height + 10
+        currencyTitle.frame.origin.y = languageLabel.frame.origin.y + languageLabel.frame.height
         currencyTitle.text = "Reporting Currency"
         
         currencyLabel.frame.size.width = mainView.frame.width*2/3
         currencyLabel.frame.size.height = mainView.frame.height/10
         currencyLabel.frame.origin.x = 25
-        currencyLabel.frame.origin.y = currencyTitle.frame.origin.y + currencyTitle.frame.height - 5
+        currencyLabel.frame.origin.y = currencyTitle.frame.origin.y + currencyTitle.frame.height - 10
         currencyLabel.text = client["Reporting Currency"] as? String
         currencyLabel.textColor = .gray
         
@@ -190,14 +205,49 @@ class SingleClientViewController: UIViewController {
         addressTitle.frame.size.width = mainView.frame.width*2/3
         addressTitle.frame.size.height = mainView.frame.height/10
         addressTitle.frame.origin.x = 25
-        addressTitle.frame.origin.y = currencyLabel.frame.origin.y + currencyLabel.frame.height + 10
+        addressTitle.frame.origin.y = currencyLabel.frame.origin.y + currencyLabel.frame.height
         addressTitle.text = "Address"
+        
+        addressLabel.frame.size.width = mainView.frame.width*2/3
+        addressLabel.frame.size.height = mainView.frame.height/10
+        addressLabel.frame.origin.x = 25
+        addressLabel.frame.origin.y = addressTitle.frame.origin.y + addressTitle.frame.height - 10
+        addressLabel.text = client["Domicile"] as? String
+        addressLabel.textColor = .gray
+        
+        viewOnMapButton.frame.size.width = mainView.frame.width*1/5
+        viewOnMapButton.frame.size.height = mainView.frame.height/10
+        viewOnMapButton.frame.origin.x = mainView.frame.width - viewOnMapButton.frame.width - 25
+        viewOnMapButton.center.y = (addressTitle.center.y + addressLabel.center.y)/2
+        viewOnMapButton.titleLabel?.textAlignment = .right
+        viewOnMapButton.setTitleColor(.black, for: .normal)
+        viewOnMapButton.setTitle("View On\nMap", for: .normal)
+        viewOnMapButton.titleLabel?.numberOfLines = 2
+        viewOnMapButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        viewOnMapButton.addTarget(self, action: #selector(openMap), for: .touchUpInside)
+        
+        map.frame.size.width = mapView.frame.width - 50
+        map.frame.size.height = map.frame.width
+        map.frame.origin.x = 25
+        map.frame.origin.y = 25
+        
+        location = CLLocationCoordinate2D(latitude: client["Latitude"] as! CLLocationDegrees, longitude: client["Longitude"] as! CLLocationDegrees)
+        let region = MKCoordinateRegion(center: location, latitudinalMeters: 500, longitudinalMeters: 500)
+        map.setRegion(region, animated: false)
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = location
+        annotation.title = client["Domicile"] as? String
+        annotation.subtitle = "\((client["Name"] as! String) + " " + (client["Surname"] as! String))"
+        map.addAnnotation(annotation)
+        map.isUserInteractionEnabled = true
+        map.isZoomEnabled = true
         
         self.view.addSubview(topBackgroundView)
         topBackgroundView.addSubview(backgroundImage)
         topBackgroundView.addSubview(backButton)
         topBackgroundView.addSubview(titleLabel)
         self.view.addSubview(mainView)
+        self.view.addSubview(mapView)
         mainView.addSubview(image)
         mainView.addSubview(nameLabel)
         mainView.addSubview(emailLabel)
@@ -214,6 +264,31 @@ class SingleClientViewController: UIViewController {
         mainView.addSubview(statusTitle)
         mainView.addSubview(statusLabel)
         mainView.addSubview(addressTitle)
+        mainView.addSubview(addressLabel)
+        mainView.addSubview(viewOnMapButton)
+        mapView.addSubview(map)
+    }
+    
+    @objc func openMap(button: UIButton) {
+        if button.titleLabel?.text == "View On\nMap" {
+            UIView.animate(withDuration: 0.5, animations: {
+                self.mapView.alpha = 1
+                self.mapView.frame.origin.y = self.mainView.frame.origin.y + self.addressLabel.frame.origin.y + self.addressLabel.frame.height
+            }, completion: {(value) in
+                button.setTitle("Done", for: .normal)
+                button.titleLabel?.numberOfLines = 1
+            })
+        }
+        else {
+            UIView.animate(withDuration: 0.5, animations: {
+                self.mapView.alpha = 0
+                self.mapView.frame.origin.y = self.mainView.frame.origin.y + self.mainView.frame.height/2
+            }, completion: {(value) in
+                button.setTitle("View On\nMap", for: .normal)
+                button.titleLabel?.numberOfLines = 2
+            })
+        }
+        
     }
     
     @objc func back() {

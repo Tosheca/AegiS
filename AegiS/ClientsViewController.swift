@@ -36,6 +36,7 @@ class ClientsViewController: UIViewController, UICollectionViewDataSource, UICol
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.overrideUserInterfaceStyle = .light
         self.edgesForExtendedLayout = []
         
         self.view.backgroundColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1.0)
@@ -241,8 +242,6 @@ class ClientsViewController: UIViewController, UICollectionViewDataSource, UICol
                 cell.emailLabel.text = "\(clients[indexPath.row-1]["Email"] as! String)"
                 cell.imageView.image = clients[indexPath.row-1]["Image"] as? UIImage
             }
-            
-            
         }
       
         return cell
@@ -254,10 +253,10 @@ class ClientsViewController: UIViewController, UICollectionViewDataSource, UICol
         let clientVC = SingleClientViewController()
         
         if isSearching {
-            clientVC.client = searchClients[indexPath.row]
+            clientVC.client = searchClients[indexPath.row-1]
         }
         else {
-            clientVC.client = clients[indexPath.row]
+            clientVC.client = clients[indexPath.row-1]
         }
         
         clientVC.modalPresentationStyle = .fullScreen
