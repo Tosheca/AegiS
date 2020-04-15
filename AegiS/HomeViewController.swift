@@ -352,21 +352,21 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
             passwordButton.addTarget(self, action: #selector(resetPassword), for: .touchUpInside)
             managerView.addSubview(passwordButton)
             
-            managerLine1.frame.size.width = managerView.frame.width/3
+            managerLine1.frame.size.width = managerView.frame.width*2/3
             managerLine1.frame.size.height = 2
             managerLine1.frame.origin.y = clientsTitle.frame.origin.y
             managerLine1.frame.origin.x = myClientsLabel.frame.origin.x
             managerLine1.backgroundColor = .lightGray
             managerView.addSubview(managerLine1)
             
-            managerLine2.frame.size.width = managerView.frame.width/3
+            managerLine2.frame.size.width = managerView.frame.width*2/3
             managerLine2.frame.size.height = 2
             managerLine2.frame.origin.y = numberOfClientsLabel.frame.origin.y + numberOfClientsLabel.frame.height
             managerLine2.frame.origin.x = myClientsLabel.frame.origin.x
             managerLine2.backgroundColor = .lightGray
             managerView.addSubview(managerLine2)
             
-            managerLine3.frame.size.width = managerView.frame.width/3
+            managerLine3.frame.size.width = managerView.frame.width*2/3
             managerLine3.frame.size.height = 2
             managerLine3.frame.origin.y = emailTextField.frame.origin.y + emailTextField.frame.height + 12.5
             managerLine3.frame.origin.x = myClientsLabel.frame.origin.x

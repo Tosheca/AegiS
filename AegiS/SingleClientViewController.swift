@@ -208,22 +208,23 @@ class SingleClientViewController: UIViewController {
         addressTitle.frame.origin.y = currencyLabel.frame.origin.y + currencyLabel.frame.height
         addressTitle.text = "Address"
         
-        addressLabel.frame.size.width = mainView.frame.width*2/3
+        addressLabel.frame.size.width = mainView.frame.width - 20
         addressLabel.frame.size.height = mainView.frame.height/10
         addressLabel.frame.origin.x = 25
         addressLabel.frame.origin.y = addressTitle.frame.origin.y + addressTitle.frame.height - 10
+        addressLabel.numberOfLines = 2
         addressLabel.text = client["Domicile"] as? String
         addressLabel.textColor = .gray
         
-        viewOnMapButton.frame.size.width = mainView.frame.width*1/5
+        
+        viewOnMapButton.frame.size.width = mainView.frame.width*1/2
         viewOnMapButton.frame.size.height = mainView.frame.height/10
-        viewOnMapButton.frame.origin.x = mainView.frame.width - viewOnMapButton.frame.width - 25
-        viewOnMapButton.center.y = (addressTitle.center.y + addressLabel.center.y)/2
-        viewOnMapButton.titleLabel?.textAlignment = .right
-        viewOnMapButton.setTitleColor(.black, for: .normal)
-        viewOnMapButton.setTitle("View On\nMap", for: .normal)
-        viewOnMapButton.titleLabel?.numberOfLines = 2
-        viewOnMapButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        viewOnMapButton.frame.origin.x = mainView.frame.width - viewOnMapButton.frame.width + 20
+        viewOnMapButton.center.y = addressTitle.center.y
+        viewOnMapButton.titleLabel?.textAlignment = .center
+        viewOnMapButton.setTitleColor(.systemBlue, for: .normal)
+        viewOnMapButton.setTitle("View On Map", for: .normal)
+        viewOnMapButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         viewOnMapButton.addTarget(self, action: #selector(openMap), for: .touchUpInside)
         
         map.frame.size.width = mapView.frame.width - 50
@@ -270,13 +271,12 @@ class SingleClientViewController: UIViewController {
     }
     
     @objc func openMap(button: UIButton) {
-        if button.titleLabel?.text == "View On\nMap" {
+        if button.titleLabel?.text == "View On Map" {
             UIView.animate(withDuration: 0.5, animations: {
                 self.mapView.alpha = 1
                 self.mapView.frame.origin.y = self.mainView.frame.origin.y + self.addressLabel.frame.origin.y + self.addressLabel.frame.height
             }, completion: {(value) in
                 button.setTitle("Done", for: .normal)
-                button.titleLabel?.numberOfLines = 1
             })
         }
         else {
@@ -284,8 +284,7 @@ class SingleClientViewController: UIViewController {
                 self.mapView.alpha = 0
                 self.mapView.frame.origin.y = self.mainView.frame.origin.y + self.mainView.frame.height/2
             }, completion: {(value) in
-                button.setTitle("View On\nMap", for: .normal)
-                button.titleLabel?.numberOfLines = 2
+                button.setTitle("View On Map", for: .normal)
             })
         }
         
