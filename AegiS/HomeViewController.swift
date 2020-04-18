@@ -262,7 +262,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
             doneButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
             doneButton.sizeToFit()
             doneButton.frame.origin.x = managerView.frame.width - 25 - doneButton.frame.width
-            doneButton.center.y = managerDetailsTitle.frame.origin.y + 5
+            doneButton.center.y = managerDetailsTitle.center.y
             doneButton.addTarget(self, action: #selector(closeManagerDetails), for: .touchUpInside)
             managerView.addSubview(doneButton)
             
@@ -469,6 +469,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "security", for: indexPath) as! SecuritiesTableViewCell
+        cell.selectionStyle = .none
         cell.title.frame.size.height = cell.frame.height
         cell.title.frame.size.width = cell.frame.width*3/5
         cell.title.frame.origin.x = 15
@@ -522,6 +523,13 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
         return securities.count
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let securityVC = SecurityViewController()
+        securityVC.security = securities[indexPath.row]
+        securityVC.modalPresentationStyle = .fullScreen
+        self.present(securityVC, animated: true, completion: nil)
+    }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let pageNumber = scrollView.contentOffset.x/scrollView.frame.width
         dotsLabel.currentPage = Int(round(pageNumber))
@@ -537,6 +545,11 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
         for client in 0..<(clients.count) {
             let cview = clientView()
             
+            let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didSelectClient(tap:)))
+            tap.accessibilityLabel = "\(client)"
+            
+            cview.addGestureRecognizer(tap)
+            
             let imageName = clients[client]["Image"] as! String
             // Create a reference to the file you want to download
             let imageRef = Storage.storage().reference().child("images/\(imageName)")
@@ -550,6 +563,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
               } else {
                 // Data for thee image is returned
                 cview.imageView.image = UIImage(data: data!)
+                self.clients[client]["Image"] = UIImage(data: data!)
               }
             }
             cview.imageView.contentMode = .scaleAspectFill
@@ -578,6 +592,16 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
         }
         
         dotsLabel.numberOfPages = Int(round(Double(clientsScrollView.contentSize.width/clientsScrollView.frame.width)))
+    }
+    
+    @objc func didSelectClient(tap: UITapGestureRecognizer) {
+        let index = Int(tap.accessibilityLabel! as String)!
+        
+        print("cell clicked")
+        let clientVC = SingleClientViewController()
+        clientVC.client = clients[index]
+        clientVC.modalPresentationStyle = .fullScreen
+        self.present(clientVC, animated: true, completion: nil)
     }
     
     func fetchClients() {
