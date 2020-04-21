@@ -77,7 +77,7 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate {
         
         backButton.frame.size.width = self.view.frame.width/10
         backButton.frame.size.height = backButton.frame.width
-        backButton.frame.origin.y = 50
+        backButton.frame.origin.y = 40
         backButton.frame.origin.x = 10
         backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
         backButton.tintColor = .white
@@ -113,7 +113,8 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate {
         mainScrollView.frame.size.height = self.view.frame.height - 40
         mainScrollView.frame.origin.y = titleLabel.frame.origin.y + titleLabel.frame.height + 10
         mainScrollView.backgroundColor = .clear
-        mainScrollView.contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height*1.1)
+        mainScrollView.contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height*1.05)
+        mainScrollView.showsVerticalScrollIndicator = false
         
         mainView.frame.size.width = self.view.frame.width - 50 - 20
         mainView.frame.size.height = self.view.frame.height*3/7
@@ -491,15 +492,15 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate {
             
             pview.addGestureRecognizer(tap)
             pview.frame.size.height = portfoliosScrollView.frame.height - 15
-            pview.frame.size.width = portfoliosScrollView.frame.width/2.75
+            pview.frame.size.width = mainView.frame.width*1/2
             pview.addShadow(shadowColor: .darkGray, offSet: CGSize(width: 10, height: 5), opacity: 1.0, shadowRadius: 3, cornerRadius: 10.0, corners: [.allCorners], fillColor: .white)
             portfolioViews.append(pview)
         }
         
-        portfoliosScrollView.contentSize = CGSize(width: (portfoliosScrollView.frame.width/2.75)*CGFloat(portfolioViews.count)+30*CGFloat(portfolioViews.count-1), height: portfoliosScrollView.frame.height)
+        portfoliosScrollView.contentSize = CGSize(width: (mainView.frame.width*1/2)*CGFloat(portfolioViews.count)+30*CGFloat(portfolioViews.count-1), height: portfoliosScrollView.frame.height)
         
         for portfolio in 0..<(portfolioViews.count) {
-            portfolioViews[portfolio].frame.origin.x = (portfoliosScrollView.frame.width/2.75)*CGFloat(portfolio) + CGFloat(30*portfolio)
+            portfolioViews[portfolio].frame.origin.x = (mainView.frame.width*1/2)*CGFloat(portfolio) + CGFloat(30*portfolio)
             portfoliosScrollView.addSubview(portfolioViews[portfolio])
         }
         
