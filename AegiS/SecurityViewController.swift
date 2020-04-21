@@ -261,12 +261,7 @@ class SecurityViewController: UIViewController, ChartDelegate, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if editingPrices {
-            return pricesCount + 2
-        }
-        else {
-            return pricesCount + 1
-        }
+        return pricesCount
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

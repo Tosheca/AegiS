@@ -8,32 +8,37 @@
 
 import UIKit
 import MapKit
+import Firebase
 import FirebaseStorage
+import FirebaseDatabase
 
 class SingleClientViewController: UIViewController, UIScrollViewDelegate {
 
     var backgroundImage = UIImageView(image: UIImage(named: "49054316_356857088449911_3489275029483421696_n.jpg"))
     var topBackgroundView = UIView()
     var backButton = UIButton()
+    var editButton = UIButton()
     var titleLabel = UILabel()
+    
+    var mainScrollView = UIScrollView()
     var mainView = UIView()
-    var nameLabel = UILabel()
-    var emailLabel = UILabel()
+    var nameLabel = UITextField()
+    var emailLabel = UITextField()
     var emailIcon = UIImageView(image: UIImage(systemName: "person.fill"))
-    var phoneLabel = UILabel()
+    var phoneLabel = UITextField()
     var phoneIcon = UIImageView(image: UIImage(systemName: "phone.fill"))
     var image = UIImageView()
     var line1 = UIView()
     var languageTitle = UILabel()
-    var languageLabel = UILabel()
+    var languageLabel = UITextField()
     var currencyTitle = UILabel()
-    var currencyLabel = UILabel()
+    var currencyLabel = UITextField()
     var sectorTitle = UILabel()
-    var sectorLabel = UILabel()
+    var sectorLabel = UITextField()
     var statusTitle = UILabel()
-    var statusLabel = UILabel()
+    var statusLabel = UITextField()
     var addressTitle = UILabel()
-    var addressLabel = UILabel()
+    var addressLabel = UITextField()
     var viewOnMapButton = UIButton()
     var mapView = UIView()
     var map = MKMapView()
@@ -46,9 +51,12 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate {
     var portfoliosTitle = UILabel()
     var portfoliosScrollView = UIScrollView()
     var portfolioViews = [UIView]()
+    var dotsLabel = UIPageControl()
     
+    var clientEditing = false
     var client = [String: AnyObject]()
-
+    var changedItems = [UITextField]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -74,23 +82,43 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate {
         backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
         backButton.tintColor = .white
         
-        titleLabel.frame.size.width = self.view.frame.width
-        titleLabel.frame.size.height = self.view.frame.height/15
+        editButton.frame.size.width = self.view.frame.width/8
+        editButton.frame.size.height = backButton.frame.width
+        editButton.frame.origin.y = 40
+        editButton.frame.origin.x = self.view.frame.width - backButton.frame.width - 20
+        if clientEditing {
+            editButton.setTitle("DONE", for: .normal)
+            backButton.isEnabled = false
+        }
+        else {
+            editButton.setTitle("EDIT", for: .normal)
+            backButton.isEnabled = true
+        }
+        editButton.addTarget(self, action: #selector(edit), for: .touchUpInside)
+        editButton.tintColor = .white
+        
         titleLabel.text = "CLIENT"
         titleLabel.textColor = .white
         titleLabel.textAlignment = .center
         titleLabel.font = UIFont.boldSystemFont(ofSize: 25)
+        titleLabel.sizeToFit()
+        titleLabel.center.x = self.view.center.x
         titleLabel.frame.origin.y = 40
         
         let homeSymbolConfiguration = UIImage.SymbolConfiguration(pointSize: 30, weight: .medium)
         let homeImage = UIImage(systemName: "arrow.uturn.left", withConfiguration: homeSymbolConfiguration)
         backButton.setImage(homeImage, for: .normal)
         
-        mainView.translatesAutoresizingMaskIntoConstraints = false
+        mainScrollView.frame.size.width = self.view.frame.width
+        mainScrollView.frame.size.height = self.view.frame.height - 40
+        mainScrollView.frame.origin.y = titleLabel.frame.origin.y + titleLabel.frame.height + 10
+        mainScrollView.backgroundColor = .clear
+        mainScrollView.contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height*1.1)
+        
         mainView.frame.size.width = self.view.frame.width - 50 - 20
         mainView.frame.size.height = self.view.frame.height*3/7
         mainView.frame.origin.x = 35
-        mainView.center.y = topBackgroundView.frame.origin.y + topBackgroundView.frame.height
+        mainView.frame.origin.y = mainView.frame.width/4/2
         mainView.addShadow(shadowColor: .darkGray, offSet: CGSize(width: 0, height: 7.5), opacity: 0.8, shadowRadius: 5, cornerRadius: 10.0, corners: [.allCorners], fillColor: .white)
         
         mapView.frame.size.width = mainView.frame.size.width
@@ -109,22 +137,45 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate {
         image.layer.borderColor = UIColor.white.cgColor
         image.layer.borderWidth = 1
         image.contentMode = .scaleAspectFill
-        image.image = client["Image"] as? UIImage
+        if clientEditing {
+            image.backgroundColor = .lightGray
+        }
+        else {
+            image.image = client["Image"] as? UIImage
+        }
         
         nameLabel.frame.size.width = mainView.frame.width*2/3
         nameLabel.frame.size.height = mainView.frame.height/10
         nameLabel.frame.origin.x = 25
         nameLabel.frame.origin.y = 25
-        nameLabel.text = "\((client["Name"] as! String) + " " + (client["Surname"] as! String))"
+        if clientEditing {
+            nameLabel.placeholder = "Full Name"
+            nameLabel.isEnabled = true
+        }
+        else {
+            nameLabel.text = "\((client["Name"] as! String) + " " + (client["Surname"] as! String))"
+            nameLabel.isEnabled = false
+        }
         nameLabel.font = UIFont.boldSystemFont(ofSize: 30)
         nameLabel.adjustsFontSizeToFitWidth = true
+        nameLabel.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
+        nameLabel.accessibilityLabel = "Full Name"
         
         emailLabel.frame.size.width = mainView.frame.width*2/3
         emailLabel.frame.size.height = mainView.frame.height/10
         emailLabel.frame.origin.y = nameLabel.frame.origin.y + nameLabel.frame.height
         emailLabel.textColor = .gray
-        emailLabel.text = "\(client["Email"] as! String)"
+        if clientEditing {
+            emailLabel.placeholder = "Email"
+            emailLabel.isEnabled = true
+        }
+        else {
+            emailLabel.text = "\(client["Email"] as! String)"
+            emailLabel.isEnabled = false
+        }
         emailLabel.adjustsFontSizeToFitWidth = true
+        emailLabel.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
+        emailLabel.accessibilityLabel = "Email"
         
         emailIcon.frame.size.height = emailLabel.frame.height/1.5
         emailIcon.frame.size.width = emailIcon.frame.height
@@ -138,8 +189,17 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate {
         phoneLabel.frame.size.height = mainView.frame.height/10
         phoneLabel.frame.origin.y = emailLabel.frame.origin.y + emailLabel.frame.height
         phoneLabel.textColor = .gray
-        phoneLabel.text = client["Phone"] as? String
+        if clientEditing {
+            phoneLabel.placeholder = "Phone"
+            phoneLabel.isEnabled = true
+        }
+        else {
+            phoneLabel.text = client["Phone"] as? String
+            phoneLabel.isEnabled = false
+        }
         phoneLabel.adjustsFontSizeToFitWidth = true
+        phoneLabel.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
+        phoneLabel.accessibilityLabel = "Phone"
         
         phoneIcon.frame.size = emailIcon.frame.size
         phoneIcon.frame.origin.x = 25
@@ -164,8 +224,17 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate {
         languageLabel.frame.size.height = mainView.frame.height/10
         languageLabel.frame.origin.x = 25
         languageLabel.frame.origin.y = languageTitle.frame.origin.y + languageTitle.frame.height - 10
-        languageLabel.text = client["Language of Reporting"] as? String
+        if clientEditing {
+            languageLabel.placeholder = "Language"
+            languageLabel.isEnabled = true
+        }
+        else {
+            languageLabel.text = client["Language of Reporting"] as? String
+            languageLabel.isEnabled = false
+        }
         languageLabel.textColor = .gray
+        languageLabel.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
+        languageLabel.accessibilityLabel = "Language of Reporting"
         
         sectorTitle.frame.size.width = mainView.frame.width*1/3
         sectorTitle.frame.size.height = mainView.frame.height/10
@@ -178,9 +247,18 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate {
         sectorLabel.frame.size.height = mainView.frame.height/10
         sectorLabel.frame.origin.x = mainView.frame.width - sectorLabel.frame.width - 25
         sectorLabel.frame.origin.y = languageLabel.frame.origin.y
-        sectorLabel.text = client["Sector"] as? String
+        if clientEditing {
+            sectorLabel.placeholder = "Sector"
+            sectorLabel.isEnabled = true
+        }
+        else {
+            sectorLabel.text = client["Sector"] as? String
+            sectorLabel.isEnabled = false
+        }
         sectorLabel.textColor = .gray
         sectorLabel.textAlignment = .right
+        sectorLabel.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
+        sectorLabel.accessibilityLabel = "Sector"
         
         currencyTitle.frame.size.width = mainView.frame.width*2/3
         currencyTitle.frame.size.height = mainView.frame.height/10
@@ -192,8 +270,17 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate {
         currencyLabel.frame.size.height = mainView.frame.height/10
         currencyLabel.frame.origin.x = 25
         currencyLabel.frame.origin.y = currencyTitle.frame.origin.y + currencyTitle.frame.height - 10
-        currencyLabel.text = client["Reporting Currency"] as? String
+        if clientEditing {
+            currencyLabel.placeholder = "Currency"
+            currencyLabel.isEnabled = true
+        }
+        else {
+            currencyLabel.text = client["Reporting Currency"] as? String
+            currencyLabel.isEnabled = false
+        }
         currencyLabel.textColor = .gray
+        currencyLabel.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
+        currencyLabel.accessibilityLabel = "Reporting Currency"
         
         statusTitle.frame.size.width = mainView.frame.width*1/3
         statusTitle.frame.size.height = mainView.frame.height/10
@@ -206,9 +293,18 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate {
         statusLabel.frame.size.height = mainView.frame.height/10
         statusLabel.frame.origin.x = mainView.frame.width - statusLabel.frame.width - 25
         statusLabel.frame.origin.y = currencyLabel.frame.origin.y
-        statusLabel.text = client["Customer Status"] as? String
+        if clientEditing {
+            statusLabel.placeholder = "Status"
+            statusLabel.isEnabled = true
+        }
+        else {
+            statusLabel.text = client["Customer Status"] as? String
+            statusLabel.isEnabled = false
+        }
         statusLabel.textColor = .gray
         statusLabel.textAlignment = .right
+        statusLabel.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
+        statusLabel.accessibilityLabel = "Customer Status"
         
         addressTitle.frame.size.width = mainView.frame.width*2/3
         addressTitle.frame.size.height = mainView.frame.height/10
@@ -220,9 +316,17 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate {
         addressLabel.frame.size.height = mainView.frame.height/10
         addressLabel.frame.origin.x = 25
         addressLabel.frame.origin.y = addressTitle.frame.origin.y + addressTitle.frame.height - 10
-        addressLabel.numberOfLines = 2
-        addressLabel.text = client["Domicile"] as? String
+        if clientEditing {
+            addressLabel.placeholder = "Address"
+            addressLabel.isEnabled = true
+        }
+        else {
+            addressLabel.text = client["Domicile"] as? String
+            addressLabel.isEnabled = false
+        }
         addressLabel.textColor = .gray
+        addressLabel.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
+        addressLabel.accessibilityLabel = "Domicile"
         
         viewOnMapButton.titleLabel?.textAlignment = .right
         viewOnMapButton.setTitleColor(.systemBlue, for: .normal)
@@ -245,14 +349,16 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate {
         map.frame.origin.x = 25
         map.frame.origin.y = 25
         
-        location = CLLocationCoordinate2D(latitude: client["Latitude"] as! CLLocationDegrees, longitude: client["Longitude"] as! CLLocationDegrees)
-        let region = MKCoordinateRegion(center: location, latitudinalMeters: 500, longitudinalMeters: 500)
-        map.setRegion(region, animated: false)
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = location
-        annotation.title = client["Domicile"] as? String
-        annotation.subtitle = "\((client["Name"] as! String) + " " + (client["Surname"] as! String))"
-        map.addAnnotation(annotation)
+        if clientEditing == false {
+            location = CLLocationCoordinate2D(latitude: client["Latitude"] as! CLLocationDegrees, longitude: client["Longitude"] as! CLLocationDegrees)
+            let region = MKCoordinateRegion(center: location, latitudinalMeters: 500, longitudinalMeters: 500)
+            map.setRegion(region, animated: false)
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = location
+            annotation.title = client["Domicile"] as? String
+            annotation.subtitle = "\((client["Name"] as! String) + " " + (client["Surname"] as! String))"
+            map.addAnnotation(annotation)
+        }
         map.isUserInteractionEnabled = true
         map.isZoomEnabled = true
         
@@ -297,11 +403,18 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate {
         portfoliosScrollView.contentInset.left = 35
         portfoliosScrollView.contentInset.right = 35
         
+        dotsLabel.frame.size.height = 40
+        dotsLabel.frame.size.width = mainView.frame.width/3
+        dotsLabel.frame.origin.y = portfoliosScrollView.frame.origin.y + portfoliosScrollView.frame.height - 10
+        dotsLabel.center.x = mainView.center.x
+        dotsLabel.numberOfPages = Int(round(Double(portfoliosScrollView.contentSize.width/portfoliosScrollView.frame.width)))
+        dotsLabel.currentPageIndicatorTintColor = .darkGray
+        dotsLabel.pageIndicatorTintColor = .lightGray
+        
         setupPortfolios()
         
         self.view.addSubview(topBackgroundView)
         topBackgroundView.addSubview(backgroundImage)
-        topBackgroundView.addSubview(backButton)
         topBackgroundView.addSubview(titleLabel)
         mainView.addSubview(image)
         mainView.addSubview(nameLabel)
@@ -322,14 +435,23 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate {
         mainView.addSubview(addressLabel)
         mainView.addSubview(viewOnMapButton)
         mapView.addSubview(map)
-        self.view.addSubview(summaryTitle)
-        self.view.addSubview(summaryView1)
-        self.view.addSubview(summaryView2)
-        self.view.addSubview(summaryView3)
-        self.view.addSubview(portfoliosTitle)
-        self.view.addSubview(portfoliosScrollView)
-        self.view.addSubview(mainView)
-        self.view.addSubview(mapView)
+        mainScrollView.addSubview(summaryTitle)
+        mainScrollView.addSubview(summaryView1)
+        mainScrollView.addSubview(summaryView2)
+        mainScrollView.addSubview(summaryView3)
+        mainScrollView.addSubview(portfoliosTitle)
+        mainScrollView.addSubview(portfoliosScrollView)
+        mainScrollView.addSubview(dotsLabel)
+        mainScrollView.addSubview(mainView)
+        mainScrollView.addSubview(mapView)
+        
+        self.view.addSubview(mainScrollView)
+        self.view.addSubview(backButton)
+        self.view.addSubview(editButton)
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
+        
+        mainScrollView.addGestureRecognizer(tap)
     }
     
     @objc func openMap(button: UIButton) {
@@ -381,7 +503,7 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate {
             portfoliosScrollView.addSubview(portfolioViews[portfolio])
         }
         
-        //dotsLabel.numberOfPages = Int(round(Double(clientsScrollView.contentSize.width/clientsScrollView.frame.width)))
+        dotsLabel.numberOfPages = Int(round(Double(portfoliosScrollView.contentSize.width/portfoliosScrollView.frame.width)))
     }
     
     @objc func didSelectPortfolio(tap: UITapGestureRecognizer) {
@@ -390,8 +512,131 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate {
         print(index)
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let pageNumber = scrollView.contentOffset.x/scrollView.frame.width
+        dotsLabel.currentPage = Int(round(pageNumber))
+    }
+    
+    @objc func textFieldDidChange(textField: UITextField) {
+        if changedItems.contains(textField) == false {
+            changedItems.append(textField)
+        }
+        
+        if textField.text!.isEmpty {
+            textField.attributedPlaceholder = NSAttributedString(string: textField.accessibilityLabel!, attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
+        }
+    }
+    
+    @objc func edit(button: UIButton) {
+        if button.titleLabel?.text == "EDIT" {
+            clientEditing = true
+            button.setTitle("DONE", for: .normal)
+            
+            nameLabel.isEnabled = true
+            emailLabel.isEnabled = true
+            phoneLabel.isEnabled = true
+            languageLabel.isEnabled = true
+            sectorLabel.isEnabled = true
+            currencyLabel.isEnabled = true
+            statusLabel.isEnabled = true
+            addressLabel.isEnabled = true
+        }
+        else {            
+            var blankFields = false
+            for item in changedItems {
+                if item.text!.isEmpty {
+                    blankFields = true
+                }
+            }
+            
+            if blankFields == false {
+                clientEditing = false
+                button.setTitle("EDIT", for: .normal)
+                
+                nameLabel.isEnabled = false
+                emailLabel.isEnabled = false
+                phoneLabel.isEnabled = false
+                languageLabel.isEnabled = false
+                sectorLabel.isEnabled = false
+                currencyLabel.isEnabled = false
+                statusLabel.isEnabled = false
+                addressLabel.isEnabled = false
+                
+                for item in changedItems {
+                    if item.accessibilityLabel == "Full Name" {
+                        var spaceIndex = nameLabel.text!.firstIndex(of: " ")!
+                        var range = nameLabel.text!.firstIndex(of: nameLabel.text!.first!)!..<spaceIndex
+                        let firstName = nameLabel.text![range]
+                        spaceIndex = nameLabel.text!.index(after: nameLabel.text!.firstIndex(of: " ")!)
+                        range = spaceIndex..<nameLabel.text!.endIndex
+                        let lastName = nameLabel.text![range]
+                        print(firstName)
+                        print(lastName)
+                        
+                        let ref = Database.database().reference()
+                        
+                        ref.child("clients").observeSingleEvent(of: .value, with: {(snapshot) in
+                            
+                            for child in snapshot.children {
+                                let clientKey = (child as AnyObject).key as String
+                                let value = (child as! DataSnapshot)
+                                let fetchedData = value.value as! [String: AnyObject]
+                                if fetchedData["Customer ID"] as! Float == self.client["Customer ID"] as! Float {
+                                    print("FOUND THE CLIENT")
+                                    print(clientKey)
+                                    ref.child("clients").child("\(clientKey)").child("Name").setValue(firstName)
+                                    ref.child("clients").child("\(clientKey)").child("Surname").setValue(lastName)
+                                    break
+                                }
+                            }
+                        })
+                        
+                    }
+                    else {
+                        let ref = Database.database().reference()
+                        
+                        ref.child("clients").observeSingleEvent(of: .value, with: {(snapshot) in
+                            
+                            for child in snapshot.children {
+                                let clientKey = (child as AnyObject).key as String
+                                let value = (child as! DataSnapshot)
+                                let fetchedData = value.value as! [String: AnyObject]
+                                if fetchedData["Customer ID"] as! Float == self.client["Customer ID"] as! Float {
+                                    print("FOUND THE CLIENT")
+                                    print(clientKey)
+                                    ref.child("clients").child("\(clientKey)").child(item.accessibilityLabel!).setValue(item.text)
+                                    break
+                                }
+                            }
+                        })
+                    }
+                }
+            }
+        }
+    }
+    
     @objc func back() {
-        self.dismiss(animated: true, completion: nil)
+        if clientEditing {
+            let alertView = UIAlertController(title: "All changes might be lost!", message: "", preferredStyle: .alert)
+            
+            alertView.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {(action) in
+                
+            }))
+            
+            alertView.addAction(UIAlertAction(title: "Leave", style: .destructive, handler: {(action) in
+                self.dismiss(animated: true, completion: nil)
+            }))
+            
+            self.present(alertView, animated: true, completion: nil)
+        }
+        else {
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    @objc func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        view.endEditing(true)
     }
 
     /*

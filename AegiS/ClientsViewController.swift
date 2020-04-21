@@ -251,13 +251,18 @@ class ClientsViewController: UIViewController, UICollectionViewDataSource, UICol
         
         print("cell clicked")
         let clientVC = SingleClientViewController()
-        
-        if isSearching {
-            clientVC.client = searchClients[indexPath.row-1]
+        if indexPath.row == 0 {
+            clientVC.clientEditing = true
         }
         else {
-            clientVC.client = clients[indexPath.row-1]
+            if isSearching {
+                clientVC.client = searchClients[indexPath.row-1]
+            }
+            else {
+                clientVC.client = clients[indexPath.row-1]
+            }
         }
+        
         
         clientVC.modalPresentationStyle = .fullScreen
         self.present(clientVC, animated: true, completion: nil)
