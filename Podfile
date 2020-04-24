@@ -21,6 +21,7 @@ target 'AegiS' do
   
   # Add pods for Charts
   pod 'SwiftChart'
+  pod 'PieCharts'
 
   target 'AegiSTests' do
     inherit! :search_paths
