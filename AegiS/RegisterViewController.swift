@@ -39,6 +39,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.overrideUserInterfaceStyle = .light
         
         registerView.clipsToBounds = true
         registerView.layer.cornerRadius = 10

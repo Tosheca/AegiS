@@ -104,13 +104,14 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
         backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
         backButton.tintColor = .white
         
-        editButton.frame.size.width = self.view.frame.width/8
+        editButton.frame.size.width = self.view.frame.width/5
         editButton.frame.size.height = backButton.frame.width
         editButton.frame.origin.y = 40
-        editButton.frame.origin.x = self.view.frame.width - backButton.frame.width - 20
+        editButton.frame.origin.x = self.view.frame.width - editButton.frame.size.width
+        editButton.titleLabel?.textAlignment = .right
         if clientEditing {
             editButton.setTitle("DONE", for: .normal)
-            backButton.isEnabled = false
+            //backButton.isEnabled = false
         }
         else {
             editButton.setTitle("EDIT", for: .normal)
@@ -551,7 +552,22 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
         
         //mainScrollView.addGestureRecognizer(tap)
         
-        fetchPortfolios()
+        if clientEditing == false {
+            fetchPortfolios()
+        }
+        else {
+            print("no portfolios available")
+            let info = UILabel()
+            info.frame.size.width = mainView.frame.width
+            info.frame.size.height = portfoliosScrollView.frame.height/4
+            info.center.y = portfoliosScrollView.frame.height/2
+            info.text = "No portfolios available"
+            info.font = UIFont.systemFont(ofSize: 25)
+            info.textAlignment = .center
+            portfoliosScrollView.addSubview(info)
+            
+            portfoliosSegmentedControl.isEnabled = false
+        }
         
         securitiesTableView.delegate = self
         securitiesTableView.dataSource = self

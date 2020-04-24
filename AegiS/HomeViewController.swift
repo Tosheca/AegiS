@@ -59,6 +59,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
         // Do any additional setup after loading the view.
         //for disabling dark mode
         //self.overrideUserInterfaceStyle = .light
+        self.overrideUserInterfaceStyle = .light
         self.edgesForExtendedLayout = []
         
         //self.view.backgroundColor = UIColor(red: 10/255, green: 22/255, blue: 46/255, alpha: 1.0)

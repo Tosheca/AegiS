@@ -30,6 +30,7 @@ class SecuritiesViewController: UIViewController, UITableViewDelegate, UITableVi
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.overrideUserInterfaceStyle = .light
         self.edgesForExtendedLayout = []
         self.view.backgroundColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1.0)
         
