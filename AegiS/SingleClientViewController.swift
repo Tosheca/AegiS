@@ -29,6 +29,7 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
     var phoneLabel = UITextField()
     var phoneIcon = UIImageView(image: UIImage(systemName: "phone.fill"))
     var image = UIImageView()
+    var nationalityImage = UIImageView()
     var line1 = UIView()
     var languageTitle = UILabel()
     var languageLabel = UITextField()
@@ -136,13 +137,13 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
         mainScrollView.frame.size.height = self.view.frame.height - 40
         mainScrollView.frame.origin.y = titleLabel.frame.origin.y + titleLabel.frame.height + 10
         mainScrollView.backgroundColor = .clear
-        mainScrollView.contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height*1.05)
+        mainScrollView.contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height*1.0)
         mainScrollView.showsVerticalScrollIndicator = false
         mainScrollView.delegate = self
         mainScrollView.tag = 0
         
         mainView.frame.size.width = self.view.frame.width - 50 - 20
-        mainView.frame.size.height = self.view.frame.height*3/7
+        mainView.frame.size.height = self.view.frame.height*2.5/7
         mainView.frame.origin.x = 35
         mainView.frame.origin.y = mainView.frame.width/4/2
         mainView.addShadow(shadowColor: .darkGray, offSet: CGSize(width: 0, height: 7.5), opacity: 0.8, shadowRadius: 5, cornerRadius: 10.0, corners: [.allCorners], fillColor: .white)
@@ -171,7 +172,7 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
         }
         
         nameLabel.frame.size.width = mainView.frame.width*2/3
-        nameLabel.frame.size.height = mainView.frame.height/10
+        nameLabel.frame.size.height = mainView.frame.height/8
         nameLabel.frame.origin.x = 25
         nameLabel.frame.origin.y = 25
         if clientEditing {
@@ -234,6 +235,38 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
         
         phoneLabel.frame.origin.x = phoneIcon.frame.origin.x + phoneIcon.frame.width + 5
         
+        nationalityImage.frame.size.width = image.frame.width/2
+        nationalityImage.frame.size.height = nationalityImage.frame.width
+        nationalityImage.center.x = image.center.x
+        nationalityImage.center.y = (emailLabel.center.y + phoneLabel.center.y)/2
+        nationalityImage.layer.cornerRadius = nationalityImage.frame.width/2
+        nationalityImage.clipsToBounds = true
+        nationalityImage.layer.borderColor = UIColor.white.cgColor
+        nationalityImage.layer.borderWidth = 1
+        nationalityImage.contentMode = .scaleAspectFill
+        if clientEditing {
+            nationalityImage.backgroundColor = .lightGray
+        }
+        else {
+            
+            let imageName = client["Nationality"] as! String
+            // Create a reference to the file you want to download
+            let imageRef = Storage.storage().reference().child("flags/\(imageName).png")
+
+            // Download in memory with a maximum allowed size of 1MB (1 * 1024 * 1024 bytes)
+            imageRef.getData(maxSize: 1 * 1256 * 1256) { data, error in
+              if let error = error {
+                // Uh-oh, an error occurred!
+                print("Error")
+                print(error)
+              } else {
+                // Data for the image is returned
+                self.nationalityImage.image = UIImage(data: data!)
+
+              }
+            }
+        }
+        
         line1.frame.size.width = mainView.frame.width/1.5
         line1.frame.size.height = 2
         line1.frame.origin.y = phoneLabel.frame.origin.y + phoneLabel.frame.height + 10
@@ -289,7 +322,7 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
         currencyTitle.frame.size.width = mainView.frame.width*2/3
         currencyTitle.frame.size.height = mainView.frame.height/10
         currencyTitle.frame.origin.x = 25
-        currencyTitle.frame.origin.y = languageLabel.frame.origin.y + languageLabel.frame.height
+        currencyTitle.frame.origin.y = languageLabel.frame.origin.y + languageLabel.frame.height - 5
         currencyTitle.text = "Reporting Currency"
         
         currencyLabel.frame.size.width = mainView.frame.width*2/3
@@ -335,7 +368,7 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
         addressTitle.frame.size.width = mainView.frame.width*2/3
         addressTitle.frame.size.height = mainView.frame.height/10
         addressTitle.frame.origin.x = 25
-        addressTitle.frame.origin.y = currencyLabel.frame.origin.y + currencyLabel.frame.height
+        addressTitle.frame.origin.y = currencyLabel.frame.origin.y + currencyLabel.frame.height - 5
         addressTitle.text = "Address"
         
         addressLabel.frame.size.width = mainView.frame.width - 50
@@ -396,7 +429,7 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
         summaryTitle.font = UIFont.boldSystemFont(ofSize: 20)
         
         summaryView1.frame.size.width = (self.view.frame.width - 70 - 20)/3
-        summaryView1.frame.size.height = mainView.frame.size.height/5
+        summaryView1.frame.size.height = mainView.frame.size.height/4.5
         summaryView1.frame.origin.x = 35
         summaryView1.frame.origin.y = summaryTitle.frame.origin.y + summaryTitle.frame.height
         summaryView1.addShadow(shadowColor: .darkGray, offSet: CGSize(width: 0, height: 7.5), opacity: 0.8, shadowRadius: 5, cornerRadius: 10.0, corners: [.allCorners], fillColor: UIColor(red: 14/255, green: 27/255, blue: 56/255, alpha: 1.0))
@@ -416,12 +449,12 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
         profitabilityLabel.textAlignment = .center
         profitabilityLabel.font = UIFont.boldSystemFont(ofSize: 25)
         summaryView1.addSubview(profitabilityLabel)
-        profitabilityLabel.text = "6.8%"
+        profitabilityLabel.text = "\(client["Profitability"] as! Double)%"
         profitabilityLabel.adjustsFontSizeToFitWidth = true
         profitabilityLabel.textColor = .green
         
         summaryView2.frame.size.width = (self.view.frame.width - 70 - 20)/3
-        summaryView2.frame.size.height = mainView.frame.size.height/5
+        summaryView2.frame.size.height = mainView.frame.size.height/4.5
         summaryView2.frame.origin.x = summaryView1.frame.origin.x + summaryView1.frame.width + 10
         summaryView2.frame.origin.y = summaryTitle.frame.origin.y + summaryTitle.frame.height
         summaryView2.addShadow(shadowColor: .darkGray, offSet: CGSize(width: 0, height: 7.5), opacity: 0.8, shadowRadius: 5, cornerRadius: 10.0, corners: [.allCorners], fillColor: UIColor(red: 14/255, green: 27/255, blue: 56/255, alpha: 1.0))
@@ -446,7 +479,7 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
         totalSecuritiesLabel.textColor = .white
         
         summaryView3.frame.size.width = (self.view.frame.width - 70 - 20)/3
-        summaryView3.frame.size.height = mainView.frame.size.height/5
+        summaryView3.frame.size.height = mainView.frame.size.height/4.5
         summaryView3.frame.origin.x = summaryView2.frame.origin.x + summaryView2.frame.width + 10
         summaryView3.frame.origin.y = summaryTitle.frame.origin.y + summaryTitle.frame.height
         summaryView3.addShadow(shadowColor: .darkGray, offSet: CGSize(width: 0, height: 7.5), opacity: 0.8, shadowRadius: 5, cornerRadius: 10.0, corners: [.allCorners], fillColor: UIColor(red: 14/255, green: 27/255, blue: 56/255, alpha: 1.0))
@@ -460,14 +493,14 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
         recentChangeTitle.font = UIFont.boldSystemFont(ofSize: 13)
         summaryView3.addSubview(recentChangeTitle)
         
-        recentChangeLabel.frame.size.height = summaryView3.frame.height/4
-        recentChangeLabel.frame.size.width = summaryView3.frame.width - recentChangeLabel.frame.size.height - 10
+        recentChangeLabel.frame.size.height = summaryView3.frame.height/2
+        recentChangeLabel.frame.size.width = summaryView3.frame.width - recentChangeLabel.frame.size.height/2 - 10
         recentChangeLabel.center.y = summaryView3.frame.height*3/5
-        recentChangeLabel.frame.origin.x = recentChangeLabel.frame.size.height + 5
+        recentChangeLabel.frame.origin.x = recentChangeLabel.frame.size.height/2 + 5
         recentChangeLabel.textAlignment = .center
         recentChangeLabel.font = UIFont.boldSystemFont(ofSize: 25)
         summaryView3.addSubview(recentChangeLabel)
-        recentChangeLabel.text = "£21235,00"
+        recentChangeLabel.text = "£\("\(client["Recent change"] as! String)")"
         recentChangeLabel.adjustsFontSizeToFitWidth = true
         recentChangeLabel.textColor = .red
         
@@ -495,7 +528,7 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
         portfoliosSegmentedControl.addTarget(self, action: #selector(segmentUpdate), for: .valueChanged)
         
         portfoliosScrollView.frame.size.width = self.view.frame.width
-        portfoliosScrollView.frame.size.height = self.view.frame.height - portfoliosSegmentedControl.frame.origin.y - portfoliosSegmentedControl.frame.height - 10
+        portfoliosScrollView.frame.size.height = mainScrollView.contentSize.height - portfoliosSegmentedControl.frame.origin.y - portfoliosSegmentedControl.frame.height - 10 - 40 - 10
         portfoliosScrollView.frame.origin.y = portfoliosSegmentedControl.frame.origin.y + portfoliosSegmentedControl.frame.height + 10
         portfoliosScrollView.backgroundColor = .clear
         portfoliosScrollView.showsHorizontalScrollIndicator = false
@@ -520,6 +553,7 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
         mainView.addSubview(emailIcon)
         mainView.addSubview(phoneLabel)
         mainView.addSubview(phoneIcon)
+        mainView.addSubview(nationalityImage)
         mainView.addSubview(line1)
         mainView.addSubview(languageTitle)
         mainView.addSubview(languageLabel)
@@ -763,14 +797,14 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
         
         print(index)
         if hasPortfolioGraphView == false {
-            portfoliosScrollView.setContentOffset(CGPoint(x: (mainView.frame.width*1/2)*CGFloat(index) + CGFloat(30*index) - 35, y: 0), animated: true)
+            portfoliosScrollView.setContentOffset(CGPoint(x: (mainView.frame.width*1/2)*CGFloat(index) + CGFloat(30*index), y: 0), animated: true)
             
             let parentView = portfolioViews[index]
             
             for subview in portfolioGraphView.subviews {
                 subview.removeFromSuperview()
             }
-            portfolioGraphView.frame.size.width = parentView.frame.width + 10
+            portfolioGraphView.frame.size.width = parentView.frame.width + 10 + 70
             portfolioGraphView.frame.size.height = parentView.frame.height
             portfolioGraphView.frame.origin.x = parentView.frame.origin.x
             if portfolioGraphView.layer.sublayers?.count == nil {
@@ -787,15 +821,15 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
             }
             
             portfolioGraph = PieChart()
-            portfolioGraph.frame.size.width = portfolioGraphView.frame.width - 10
-            portfolioGraph.frame.size.height = portfolioGraph.frame.width
+            portfolioGraph.frame.size.height = portfolioGraphView.frame.height - 50
+            portfolioGraph.frame.size.width = portfolioGraph.frame.height
             portfolioGraph.center.x = portfolioGraphView.frame.width/2
             portfolioGraph.center.y = portfolioGraphView.frame.height/2
             portfolioGraph.outerRadius = portfolioGraph.frame.width/2
             portfolioGraph.innerRadius = portfolioGraph.frame.width/4
             portfolioGraph.strokeWidth = 1
             portfolioGraph.strokeColor = .white
-            portfolioGraph.selectedOffset = 7
+            portfolioGraph.selectedOffset = 10
             portfolioGraph.delegate = self
             
             var gModels = [PieSliceModel]()
@@ -826,8 +860,8 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
             portfolioGraphTitle.adjustsFontSizeToFitWidth = true
             portfolioGraph.addSubview(portfolioGraphTitle)
             
-            pSecuritiesView.frame.size.width = parentView.frame.width*2
-            pSecuritiesView.frame.size.height = parentView.frame.height + 10
+            pSecuritiesView.frame.size.width = parentView.frame.width*2 + 70
+            pSecuritiesView.frame.size.height = parentView.frame.height*1.25 + 10
             pSecuritiesView.frame.origin.x = parentView.frame.origin.x
             if pSecuritiesView.layer.sublayers?.count == nil {
                 pSecuritiesView.addShadow(shadowColor: .darkGray, offSet: CGSize(width: 10, height: 5), opacity: 1.0, shadowRadius: 3, cornerRadius: 10.0, corners: [.bottomLeft, .bottomRight], fillColor: .white)
@@ -836,17 +870,34 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
             
             let sLabel = UILabel()
             sLabel.frame.size.width = pSecuritiesView.frame.width
-            sLabel.frame.size.height = pSecuritiesView.frame.height/10
+            sLabel.frame.size.height = pSecuritiesView.frame.height/8
             sLabel.textAlignment = .center
             sLabel.center.x = pSecuritiesView.frame.width/2
             sLabel.frame.origin.y = 5
             sLabel.text = "Securities"
+            sLabel.font = UIFont.systemFont(ofSize: 20)
             sLabel.textColor = .black
             pSecuritiesView.addSubview(sLabel)
             
+            let tradingActivityButton = UIButton()
+            tradingActivityButton.setTitle("Show trading activity", for: .normal)
+            tradingActivityButton.setTitleColor(.systemBlue, for: .normal)
+            tradingActivityButton.addTarget(self, action: #selector(showTradingActivity), for: .touchUpInside)
+            tradingActivityButton.sizeToFit()
+            tradingActivityButton.frame.origin.y = pSecuritiesView.frame.height - tradingActivityButton.frame.height - 20
+            tradingActivityButton.center.x = pSecuritiesView.frame.width/2
+            pSecuritiesView.addSubview(tradingActivityButton)
+            
+            let underlineView1 = UIView()
+            underlineView1.frame.size.width = tradingActivityButton.frame.width
+            underlineView1.frame.size.height = 1.0
+            underlineView1.backgroundColor = .systemBlue
+            underlineView1.frame.origin.y = tradingActivityButton.frame.height - 5
+            tradingActivityButton.addSubview(underlineView1)
+            
             securitiesTableView.removeFromSuperview()
             securitiesTableView.frame.size.width = pSecuritiesView.frame.width - 50
-            securitiesTableView.frame.size.height = pSecuritiesView.frame.height - sLabel.frame.height - 20
+            securitiesTableView.frame.size.height = pSecuritiesView.frame.height - sLabel.frame.height - tradingActivityButton.frame.height - 40
             securitiesTableView.frame.origin.y = sLabel.frame.origin.y + sLabel.frame.height + 5
             securitiesTableView.frame.origin.x = 25
             pSecuritiesView.addSubview(securitiesTableView)
@@ -857,8 +908,8 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
             portfoliosScrollView.addSubview(pSecuritiesView)
             portfoliosScrollView.isScrollEnabled = false
             
-            mainScrollView.contentSize = CGSize(width: mainScrollView.contentSize.width, height: mainScrollView.contentSize.height + parentView.frame.height)
-            portfoliosScrollView.frame.size.height = portfoliosScrollView.frame.height + parentView.frame.height
+            mainScrollView.contentSize = CGSize(width: mainScrollView.contentSize.width, height: mainScrollView.contentSize.height + parentView.frame.height*1.25)
+            portfoliosScrollView.frame.size.height = portfoliosScrollView.frame.height + parentView.frame.height*1.25
             dotsLabel.frame.origin.y = portfoliosScrollView.frame.origin.y + portfoliosScrollView.frame.height - 10
             
             hasPortfolioGraphView = true
@@ -877,9 +928,13 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
                 self.pSecuritiesView.frame.origin.y = parentView.frame.height - 10
                 
             }, completion: {(value) in
-                self.mainScrollView.setContentOffset(CGPoint(x: self.mainScrollView.contentOffset.x, y: self.mainScrollView.contentOffset.y + parentView.frame.height), animated: true)
+                self.mainScrollView.setContentOffset(CGPoint(x: self.mainScrollView.contentOffset.x, y: self.mainScrollView.contentOffset.y + parentView.frame.height*1.25), animated: true)
             })
         }
+    }
+    
+    @objc func showTradingActivity(button: UIButton) {
+        print("Show trading activity")
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -894,9 +949,10 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
         }
         
         cell.selectionStyle = .none
-        cell.title.frame.size.height = cell.frame.height
+        cell.title.frame.size.height = cell.frame.height/2
         cell.title.frame.size.width = cell.frame.width*3/5
         cell.title.frame.origin.x = 15
+        cell.title.center.y = cell.frame.height/3
         cell.title.text = currentSecurity["Short description"] as? String
         cell.title.font = UIFont.boldSystemFont(ofSize: 15)
         
@@ -930,6 +986,25 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
         cell.percentage.textAlignment = .center
         cell.percentage.adjustsFontSizeToFitWidth = true
         
+        cell.alert.isHidden = false
+        cell.alert.frame.size.height = cell.title.frame.height/2
+        cell.alert.frame.size.width = cell.title.frame.width
+        cell.alert.text = "Hold on this stock"
+        cell.alert.sizeToFit()
+        cell.alert.frame.origin.x = cell.alert.frame.height/1.5 + 15 + 5
+        cell.alert.center.y = cell.frame.height*2/3
+        cell.alert.textAlignment = .left
+        cell.alert.textColor = .lightGray
+        cell.alert.font = UIFont.systemFont(ofSize: 15)
+        
+        cell.alertIcon.isHidden = false
+        cell.alertIcon.tintColor = UIColor.lightGray.withAlphaComponent(0.8)
+        cell.alertIcon.frame.size.height = cell.alert.frame.height/1.5
+        cell.alertIcon.frame.size.width = cell.alertIcon.frame.height
+        cell.alertIcon.center.y = cell.alert.center.y
+        cell.alertIcon.frame.origin.x = cell.alert.frame.origin.x - cell.alertIcon.frame.width - 5
+        cell.alertIcon.contentMode = .scaleAspectFit
+        
         let percentageChange = ((currentSecurity["Price 5"] as! Double) - (currentSecurity["Price 4"] as! Double))/(currentSecurity["Price 4"] as! Double)*100
         cell.percentage.text = "\(String(format: "%.2f", percentageChange))%"
         
@@ -940,6 +1015,26 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
         else {
             cell.percentage.textColor = .red
         }
+        
+        if percentageChange > 10.00 || percentageChange < -10 {
+            if percentageChange > 10.00 {
+                cell.alert.text = "Best time to sell"
+            }
+            else {
+                cell.alert.text = "Best time to buy"
+            }
+        }
+        else {
+            cell.alert.text = "Hold on this stock"
+        }
+        cell.alert.sizeToFit()
+        cell.alert.frame.origin.x = cell.alert.frame.height/1.5 + 15 + 5
+        cell.alert.center.y = cell.frame.height*2/3
+        
+        cell.alertIcon.frame.size.height = cell.alert.frame.height/1.5
+        cell.alertIcon.frame.size.width = cell.alertIcon.frame.height
+        cell.alertIcon.center.y = cell.alert.center.y
+        cell.alertIcon.frame.origin.x = cell.alert.frame.origin.x - cell.alertIcon.frame.width - 5
         
         return cell
     }
@@ -994,8 +1089,8 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
             self.pSecuritiesView.alpha = 0
             self.pSecuritiesView.frame.origin.y = self.portfolioViews[button.tag].frame.origin.y
             
-            self.mainScrollView.contentSize = CGSize(width: self.mainScrollView.contentSize.width, height: self.mainScrollView.contentSize.height - self.portfolioViews[button.tag].frame.height)
-            self.portfoliosScrollView.frame.size.height = self.portfoliosScrollView.frame.height - self.portfolioViews[button.tag].frame.height
+            self.mainScrollView.contentSize = CGSize(width: self.mainScrollView.contentSize.width, height: self.mainScrollView.contentSize.height - self.portfolioViews[button.tag].frame.height*1.25)
+            self.portfoliosScrollView.frame.size.height = self.portfoliosScrollView.frame.height - self.portfolioViews[button.tag].frame.height*1.25
             self.dotsLabel.frame.origin.y = self.portfoliosScrollView.frame.origin.y + self.portfoliosScrollView.frame.height - 10
         }, completion: {(value) in
             self.hasPortfolioGraphView = false

@@ -216,7 +216,7 @@ class SecuritiesViewController: UIViewController, UITableViewDelegate, UITableVi
         cell.price.frame.origin.y = 15
         cell.price.textAlignment = .left
         cell.price.text = "price"
-        cell.price.font = UIFont.boldSystemFont(ofSize: 20)
+        cell.price.font = UIFont.boldSystemFont(ofSize: 25)
         
         cell.graphView.frame.size.width = cell.bcView.frame.width - cell.price.frame.width - 30
         cell.graphView.frame.size.height = cell.title.frame.height
