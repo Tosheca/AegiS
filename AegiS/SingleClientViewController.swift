@@ -956,9 +956,9 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
         cell.title.text = currentSecurity["Short description"] as? String
         cell.title.font = UIFont.boldSystemFont(ofSize: 15)
         
-        cell.arrow.frame.size.height = cell.frame.height
-        cell.arrow.frame.size.width = 30
-        cell.arrow.frame.origin.x = cell.frame.width - 40
+        cell.arrow.frame.size.height = cell.frame.height - 10
+        cell.arrow.frame.size.width = 20
+        cell.arrow.frame.origin.x = cell.frame.width - 30
         cell.arrow.image = UIImage(systemName: "arrow.up")
         cell.arrow.tintColor = .red
         cell.arrow.contentMode = .scaleAspectFit
