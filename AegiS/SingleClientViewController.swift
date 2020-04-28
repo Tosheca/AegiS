@@ -1050,10 +1050,11 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
         
         if (currentSecurity["Price 5"] as! Int) >= (currentSecurity["Price 4"] as! Int) { // price going up
             cell.arrow.tintColor = .green
+            cell.arrow.image = UIImage(systemName: "arrow.up")
         }
         else {
             cell.arrow.tintColor = .red
-            cell.arrow.transform = CGAffineTransform(rotationAngle: .pi)
+            cell.arrow.image = UIImage(systemName: "arrow.down")
         }
         
         cell.price.frame.size.height = cell.frame.height/3
