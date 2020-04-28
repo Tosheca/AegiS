@@ -12,6 +12,7 @@ import Firebase
 import FirebaseStorage
 import FirebaseDatabase
 import PieCharts
+import SwiftChart
 
 class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieChartDelegate, UITableViewDelegate, UITableViewDataSource {
 
@@ -74,11 +75,11 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
     var portfolioGraphTitle = UILabel()
     var selectedSecurities = [Int]()
     var securitiesTableView = UITableView()
-    
     var pSecuritiesView = UIView()
     var securityIDs = [String: [String: Int]]()
     var securities = [[String: AnyObject]]()
     var searchedSecurities = [[String: AnyObject]]()
+    var pChart = Chart()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -500,7 +501,9 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
         recentChangeLabel.textAlignment = .center
         recentChangeLabel.font = UIFont.boldSystemFont(ofSize: 25)
         summaryView3.addSubview(recentChangeLabel)
-        recentChangeLabel.text = "£\("\(client["Recent change"] as! String)")"
+        var change = client["Recent change"] as! String
+        change.removeFirst()
+        recentChangeLabel.text = "-£\(change)"
         recentChangeLabel.adjustsFontSizeToFitWidth = true
         recentChangeLabel.textColor = .red
         
@@ -652,30 +655,52 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
                 
                 pview.addShadow(shadowColor: .darkGray, offSet: CGSize(width: 10, height: 5), opacity: 1.0, shadowRadius: 3, cornerRadius: 10.0, corners: [.allCorners], fillColor: .white)
                 
-                let initialValueTitle = UILabel()
-                initialValueTitle.frame.size.width = pview.frame.width - 20
-                initialValueTitle.frame.size.height = pview.frame.height/10
-                initialValueTitle.frame.origin.y = 5
-                initialValueTitle.frame.origin.x = 10
-                initialValueTitle.text = "Initial value"
-                initialValueTitle.textColor = .gray
-                pview.addSubview(initialValueTitle)
+                let currentValueTitle = UILabel()
+                currentValueTitle.frame.size.width = pview.frame.width - 20
+                currentValueTitle.frame.size.height = pview.frame.height/10
+                currentValueTitle.frame.origin.y = 5
+                currentValueTitle.frame.origin.x = 10
+                currentValueTitle.text = "Current value"
+                currentValueTitle.textColor = .gray
+                pview.addSubview(currentValueTitle)
                 
-                let initialValueLabel = UILabel()
-                initialValueLabel.frame.size.width = pview.frame.width - 20
-                initialValueLabel.frame.size.height = pview.frame.height/8
-                initialValueLabel.frame.origin.y = initialValueTitle.frame.origin.y + initialValueTitle.frame.height - 5
-                initialValueLabel.frame.origin.x = 10
-                initialValueLabel.text = "£\(portfolios[pindex]["Initial Value"] as! String)"
-                initialValueLabel.adjustsFontSizeToFitWidth = true
-                initialValueLabel.textColor = .black
-                initialValueLabel.font = UIFont.boldSystemFont(ofSize: 25)
-                pview.addSubview(initialValueLabel)
+                let currentValueLabel = UILabel()
+                currentValueLabel.frame.size.width = pview.frame.width - 20
+                currentValueLabel.frame.size.height = pview.frame.height/8
+                currentValueLabel.frame.origin.y = currentValueTitle.frame.origin.y + currentValueTitle.frame.height - 5
+                currentValueLabel.frame.origin.x = 10
+                currentValueLabel.text = "£\(portfolios[pindex]["Current value"] as! String)"
+                currentValueLabel.adjustsFontSizeToFitWidth = true
+                currentValueLabel.textColor = .black
+                currentValueLabel.font = UIFont.boldSystemFont(ofSize: 25)
+                pview.addSubview(currentValueLabel)
+                
+                let recentChangeTitle = UILabel()
+                recentChangeTitle.frame.size.width = pview.frame.width - 20
+                recentChangeTitle.frame.size.height = pview.frame.height/10
+                recentChangeTitle.frame.origin.y = currentValueLabel.frame.origin.y + currentValueLabel.frame.height + 5
+                recentChangeTitle.frame.origin.x = 10
+                recentChangeTitle.text = "Recent change"
+                recentChangeTitle.textColor = .gray
+                pview.addSubview(recentChangeTitle)
+                
+                let recentChangeLabel = UILabel()
+                recentChangeLabel.frame.size.width = pview.frame.width - 20
+                recentChangeLabel.frame.size.height = pview.frame.height/8
+                recentChangeLabel.frame.origin.y = recentChangeTitle.frame.origin.y + recentChangeTitle.frame.height - 10
+                recentChangeLabel.frame.origin.x = 10
+                var change = portfolios[pindex]["Recent change"] as! String
+                change.removeFirst()
+                recentChangeLabel.text = "-£\(change)"
+                recentChangeLabel.adjustsFontSizeToFitWidth = true
+                recentChangeLabel.textColor = .red
+                recentChangeLabel.font = UIFont.systemFont(ofSize: 20)
+                pview.addSubview(recentChangeLabel)
                 
                 let typeTitle = UILabel()
                 typeTitle.frame.size.width = pview.frame.width - 20
                 typeTitle.frame.size.height = pview.frame.height/10
-                typeTitle.frame.origin.y = initialValueLabel.frame.origin.y + initialValueLabel.frame.height + 10
+                typeTitle.frame.origin.y = recentChangeLabel.frame.origin.y + recentChangeLabel.frame.height + 5
                 typeTitle.frame.origin.x = 10
                 typeTitle.text = "Type"
                 typeTitle.textColor = .gray
@@ -684,7 +709,7 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
                 let typeLabel = UILabel()
                 typeLabel.frame.size.width = pview.frame.width - 20
                 typeLabel.frame.size.height = pview.frame.height/8
-                typeLabel.frame.origin.y = typeTitle.frame.origin.y + typeTitle.frame.height - 5
+                typeLabel.frame.origin.y = typeTitle.frame.origin.y + typeTitle.frame.height - 10
                 typeLabel.frame.origin.x = 10
                 let type = portfolios[pindex]["Type"] as? String
                 if type == "EXE" {
@@ -701,7 +726,7 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
                 let feeCodeTitle = UILabel()
                 feeCodeTitle.frame.size.width = pview.frame.width - 20
                 feeCodeTitle.frame.size.height = pview.frame.height/10
-                feeCodeTitle.frame.origin.y = typeLabel.frame.origin.y + typeLabel.frame.height + 10
+                feeCodeTitle.frame.origin.y = typeLabel.frame.origin.y + typeLabel.frame.height + 5
                 feeCodeTitle.frame.origin.x = 10
                 feeCodeTitle.text = "Fee Code"
                 feeCodeTitle.textColor = .gray
@@ -710,7 +735,7 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
                 let feeCodeLabel = UILabel()
                 feeCodeLabel.frame.size.width = pview.frame.width - 20
                 feeCodeLabel.frame.size.height = pview.frame.height/8
-                feeCodeLabel.frame.origin.y = feeCodeTitle.frame.origin.y + feeCodeTitle.frame.height - 5
+                feeCodeLabel.frame.origin.y = feeCodeTitle.frame.origin.y + feeCodeTitle.frame.height - 10
                 feeCodeLabel.frame.origin.x = 10
                 feeCodeLabel.text = portfolios[pindex]["Fee Code"] as? String
                 feeCodeLabel.adjustsFontSizeToFitWidth = true
@@ -720,7 +745,7 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
                 let statusTitle = UILabel()
                 statusTitle.frame.size.width = pview.frame.width - 20
                 statusTitle.frame.size.height = pview.frame.height/10
-                statusTitle.frame.origin.y = typeLabel.frame.origin.y + typeLabel.frame.height + 10
+                statusTitle.frame.origin.y = typeLabel.frame.origin.y + typeLabel.frame.height + 5
                 statusTitle.frame.origin.x = 10
                 statusTitle.text = "Status"
                 statusTitle.textColor = .gray
@@ -730,7 +755,7 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
                 let statusLabel = UILabel()
                 statusLabel.frame.size.width = pview.frame.width - 20
                 statusLabel.frame.size.height = pview.frame.height/8
-                statusLabel.frame.origin.y = statusTitle.frame.origin.y + statusTitle.frame.height - 5
+                statusLabel.frame.origin.y = statusTitle.frame.origin.y + statusTitle.frame.height - 10
                 statusLabel.frame.origin.x = 10
                 statusLabel.text = portfolios[pindex]["STATUS"] as? String
                 statusLabel.adjustsFontSizeToFitWidth = true
@@ -744,7 +769,7 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
                 showInfoButton.setTitle("Show more info", for: .normal)
                 showInfoButton.sizeToFit()
                 showInfoButton.addTarget(self, action: #selector(closeGraphView(button:)), for: .touchUpInside)
-                showInfoButton.frame.origin.y = statusLabel.frame.origin.y + statusLabel.frame.height + 10
+                showInfoButton.frame.origin.y = statusLabel.frame.origin.y + statusLabel.frame.height
                 showInfoButton.center.x = pview.frame.width/2
                 showInfoButton.setTitleColor(.systemBlue, for: .normal)
                 showInfoButton.isEnabled = false
@@ -861,30 +886,19 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
             portfolioGraph.addSubview(portfolioGraphTitle)
             
             pSecuritiesView.frame.size.width = parentView.frame.width*2 + 70
-            pSecuritiesView.frame.size.height = parentView.frame.height*1.25 + 10
+            pSecuritiesView.frame.size.height = parentView.frame.height*2.05 + 10
             pSecuritiesView.frame.origin.x = parentView.frame.origin.x
             if pSecuritiesView.layer.sublayers?.count == nil {
                 pSecuritiesView.addShadow(shadowColor: .darkGray, offSet: CGSize(width: 10, height: 5), opacity: 1.0, shadowRadius: 3, cornerRadius: 10.0, corners: [.bottomLeft, .bottomRight], fillColor: .white)
             }
             pSecuritiesView.alpha = 0
             
-            let sLabel = UILabel()
-            sLabel.frame.size.width = pSecuritiesView.frame.width
-            sLabel.frame.size.height = pSecuritiesView.frame.height/8
-            sLabel.textAlignment = .center
-            sLabel.center.x = pSecuritiesView.frame.width/2
-            sLabel.frame.origin.y = 5
-            sLabel.text = "Securities"
-            sLabel.font = UIFont.systemFont(ofSize: 20)
-            sLabel.textColor = .black
-            pSecuritiesView.addSubview(sLabel)
-            
             let tradingActivityButton = UIButton()
             tradingActivityButton.setTitle("Show trading activity", for: .normal)
             tradingActivityButton.setTitleColor(.systemBlue, for: .normal)
             tradingActivityButton.addTarget(self, action: #selector(showTradingActivity), for: .touchUpInside)
             tradingActivityButton.sizeToFit()
-            tradingActivityButton.frame.origin.y = pSecuritiesView.frame.height - tradingActivityButton.frame.height - 20
+            tradingActivityButton.frame.origin.y = pSecuritiesView.frame.height - tradingActivityButton.frame.height - 10
             tradingActivityButton.center.x = pSecuritiesView.frame.width/2
             pSecuritiesView.addSubview(tradingActivityButton)
             
@@ -897,10 +911,81 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
             
             securitiesTableView.removeFromSuperview()
             securitiesTableView.frame.size.width = pSecuritiesView.frame.width - 50
-            securitiesTableView.frame.size.height = pSecuritiesView.frame.height - sLabel.frame.height - tradingActivityButton.frame.height - 40
-            securitiesTableView.frame.origin.y = sLabel.frame.origin.y + sLabel.frame.height + 5
+            securitiesTableView.frame.size.height = (pSecuritiesView.frame.height - tradingActivityButton.frame.height*2 - 50)/2
+            securitiesTableView.frame.origin.y = 5
             securitiesTableView.frame.origin.x = 25
             pSecuritiesView.addSubview(securitiesTableView)
+            
+            let line2 = UIView()
+            line2.frame.size.width = pSecuritiesView.frame.width/1.5
+            line2.frame.size.height = 2
+            line2.frame.origin.y = securitiesTableView.frame.origin.y + securitiesTableView.frame.height + 20
+            line2.center.x = pSecuritiesView.frame.width/2
+            line2.backgroundColor = .gray
+            pSecuritiesView.addSubview(line2)
+            
+            let pChartLabel = UILabel()
+            pChartLabel.frame.size.height = tradingActivityButton.frame.height
+            pChartLabel.frame.size.width = pSecuritiesView.frame.width
+            pChartLabel.frame.origin.x = 25
+            pChartLabel.frame.origin.y = line2.frame.origin.y + line2.frame.height + 5
+            pChartLabel.text = "Portfolio value"
+            pChartLabel.textColor = .black
+            pChartLabel.textAlignment = .left
+            pChartLabel.font = UIFont.boldSystemFont(ofSize: 20)
+            pSecuritiesView.addSubview(pChartLabel)
+            
+            pChart = Chart(frame: CGRect(x: securitiesTableView.frame.origin.x, y: pChartLabel.frame.origin.y + pChartLabel.frame.height, width: securitiesTableView.frame.width, height: securitiesTableView.frame.height))
+            pChart.backgroundColor = UIColor(red: 14/255, green: 27/255, blue: 56/255, alpha: 1.0)
+            pChart.xLabelsSkipLast = false
+            var yValues = [Double]()
+            let months = [0, 1, 2, 3]
+            
+            var values = [String]()
+            values.append(portfolios[index]["Initial Value"] as! String)
+            values.append(portfolios[index]["First month value"] as! String)
+            values.append(portfolios[index]["Second month value"] as! String)
+            values.append(portfolios[index]["Current value"] as! String)
+            
+            for stringValue in values {
+                yValues.append(Double(Int(stringValue.replacingOccurrences(of: ",", with: ""))!))
+            }
+            
+            print(yValues)
+            
+            let data = [(x: 0, y: yValues[0]), (x: 1, y: yValues[1]), (x: 2, y: yValues[2]), (x: 3, y: yValues[3])]
+            
+            let series = ChartSeries(data: data)
+            series.area = true
+            series.color = .white
+            pChart.add(series)
+            pChart.minY = yValues[0]
+            pChart.axesColor = .white
+            pChart.gridColor = .white
+            pChart.labelColor = .white
+            pChart.showXLabelsAndGrid = true
+            
+            pChart.xLabelsFormatter = {
+                var label = ""
+                if Int($1) != 0 {
+                    label = "Month \(Int($1))"
+                }
+                else if Int($1) == 0 {
+                    label = "Initial"
+                }
+                return label
+            }
+            
+            let fmt = NumberFormatter()
+            fmt.numberStyle = .decimal
+            pChart.yLabelsFormatter = {
+                let label = fmt.string(from: NSNumber(value: $1))
+                return label!
+            }
+            
+            pChart.layer.cornerRadius = 10
+            pChart.clipsToBounds = true
+            pSecuritiesView.addSubview(pChart)
             
             fetchSecurities(portfolioID: portfolios[index]["PORTFOLIO ID"] as! String)
             
@@ -908,13 +993,13 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
             portfoliosScrollView.addSubview(pSecuritiesView)
             portfoliosScrollView.isScrollEnabled = false
             
-            mainScrollView.contentSize = CGSize(width: mainScrollView.contentSize.width, height: mainScrollView.contentSize.height + parentView.frame.height*1.25)
-            portfoliosScrollView.frame.size.height = portfoliosScrollView.frame.height + parentView.frame.height*1.25
+            mainScrollView.contentSize = CGSize(width: mainScrollView.contentSize.width, height: mainScrollView.contentSize.height + parentView.frame.height*2.05)
+            portfoliosScrollView.frame.size.height = portfoliosScrollView.frame.height + parentView.frame.height*2.05
             dotsLabel.frame.origin.y = portfoliosScrollView.frame.origin.y + portfoliosScrollView.frame.height - 10
             
             hasPortfolioGraphView = true
 
-            let infoButton = parentView.subviews[8] as! UIButton
+            let infoButton = parentView.subviews[10] as! UIButton
             infoButton.setTitle("Hide more info", for: .normal)
             infoButton.isEnabled = true
             
@@ -928,7 +1013,7 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
                 self.pSecuritiesView.frame.origin.y = parentView.frame.height - 10
                 
             }, completion: {(value) in
-                self.mainScrollView.setContentOffset(CGPoint(x: self.mainScrollView.contentOffset.x, y: self.mainScrollView.contentOffset.y + parentView.frame.height*1.25), animated: true)
+                self.mainScrollView.setContentOffset(CGPoint(x: self.mainScrollView.contentOffset.x, y: self.mainScrollView.contentOffset.y + parentView.frame.height*2.05), animated: true)
             })
         }
     }
@@ -1089,8 +1174,8 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
             self.pSecuritiesView.alpha = 0
             self.pSecuritiesView.frame.origin.y = self.portfolioViews[button.tag].frame.origin.y
             
-            self.mainScrollView.contentSize = CGSize(width: self.mainScrollView.contentSize.width, height: self.mainScrollView.contentSize.height - self.portfolioViews[button.tag].frame.height*1.25)
-            self.portfoliosScrollView.frame.size.height = self.portfoliosScrollView.frame.height - self.portfolioViews[button.tag].frame.height*1.25
+            self.mainScrollView.contentSize = CGSize(width: self.mainScrollView.contentSize.width, height: self.mainScrollView.contentSize.height - self.portfolioViews[button.tag].frame.height*2.05)
+            self.portfoliosScrollView.frame.size.height = self.portfoliosScrollView.frame.height - self.portfolioViews[button.tag].frame.height*2.05
             self.dotsLabel.frame.origin.y = self.portfoliosScrollView.frame.origin.y + self.portfoliosScrollView.frame.height - 10
         }, completion: {(value) in
             self.hasPortfolioGraphView = false
