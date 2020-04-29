@@ -38,6 +38,7 @@
 		EDCD0DE52411A30500FC6524 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDCD0DE32411A30500FC6524 /* LaunchScreen.storyboard */; };
 		EDCD0DF02411A30500FC6524 /* AegiSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCD0DEF2411A30500FC6524 /* AegiSTests.swift */; };
 		EDCD0DFB2411A30500FC6524 /* AegiSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCD0DFA2411A30500FC6524 /* AegiSUITests.swift */; };
+		EDD0D62A2459FB7F0017F665 /* TradingActivityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD0D6292459FB7F0017F665 /* TradingActivityTableViewCell.swift */; };
 		F8E7C9D2D050738D0FBFE9D1 /* Pods_AegiS_AegiSUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63616588F2F43A15453C93AB /* Pods_AegiS_AegiSUITests.framework */; };
 		FDDA074C42D0D858FF4DFDFF /* Pods_AegiS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9B7C7DD9558CFC5E1B246D1 /* Pods_AegiS.framework */; };
 /* End PBXBuildFile section */
@@ -104,6 +105,7 @@
 		EDCD0DF62411A30500FC6524 /* AegiSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AegiSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDCD0DFA2411A30500FC6524 /* AegiSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AegiSUITests.swift; sourceTree = "<group>"; };
 		EDCD0DFC2411A30500FC6524 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EDD0D6292459FB7F0017F665 /* TradingActivityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingActivityTableViewCell.swift; sourceTree = "<group>"; };
 		F5124A8DF89F9649BF1C888F /* Pods-AegiS-AegiSUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AegiS-AegiSUITests.debug.xcconfig"; path = "Target Support Files/Pods-AegiS-AegiSUITests/Pods-AegiS-AegiSUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -190,6 +192,7 @@
 				ED59B01624407BCB00CE4AC9 /* SingleSecurityInfoTableViewCell.swift */,
 				ED13A82F2420193A00A6FE82 /* MainSecuritiesTableViewCell.swift */,
 				ED13A8312422AB6B00A6FE82 /* ClientsCollectionViewCell.swift */,
+				EDD0D6292459FB7F0017F665 /* TradingActivityTableViewCell.swift */,
 				EDCD0DDB2411A30300FC6524 /* Main.storyboard */,
 				EDCD0DE12411A30500FC6524 /* Assets.xcassets */,
 				EDCD0DE32411A30500FC6524 /* LaunchScreen.storyboard */,
@@ -505,6 +508,7 @@
 				EDCD0DD82411A30300FC6524 /* SceneDelegate.swift in Sources */,
 				ED13A8302420193A00A6FE82 /* MainSecuritiesTableViewCell.swift in Sources */,
 				ED516219241988540008C621 /* clientView.swift in Sources */,
+				EDD0D62A2459FB7F0017F665 /* TradingActivityTableViewCell.swift in Sources */,
 				EDCD0DE02411A30300FC6524 /* AegiS.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

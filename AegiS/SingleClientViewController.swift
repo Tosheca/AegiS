@@ -80,6 +80,11 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
     var securities = [[String: AnyObject]]()
     var searchedSecurities = [[String: AnyObject]]()
     var pChart = Chart()
+    var isShowingTradingActivity = false
+    var tradingActivityView = UIView()
+    var tradingActivityTableView = UITableView()
+    
+    var trades = [[String: AnyObject]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -609,6 +614,10 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
         securitiesTableView.delegate = self
         securitiesTableView.dataSource = self
         securitiesTableView.register(SecuritiesTableViewCell.self, forCellReuseIdentifier: "pSecurity")
+        
+        tradingActivityTableView.delegate = self
+        tradingActivityTableView.dataSource = self
+        tradingActivityTableView.register(TradingActivityTableViewCell.self, forCellReuseIdentifier: "pTActivity")
     }
     
     @objc func openMap(button: UIButton) {
@@ -900,6 +909,7 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
             tradingActivityButton.sizeToFit()
             tradingActivityButton.frame.origin.y = pSecuritiesView.frame.height - tradingActivityButton.frame.height - 10
             tradingActivityButton.center.x = pSecuritiesView.frame.width/2
+            tradingActivityButton.tag = index
             pSecuritiesView.addSubview(tradingActivityButton)
             
             let underlineView1 = UIView()
@@ -996,6 +1006,7 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
             mainScrollView.contentSize = CGSize(width: mainScrollView.contentSize.width, height: mainScrollView.contentSize.height + parentView.frame.height*2.05)
             portfoliosScrollView.frame.size.height = portfoliosScrollView.frame.height + parentView.frame.height*2.05
             dotsLabel.frame.origin.y = portfoliosScrollView.frame.origin.y + portfoliosScrollView.frame.height - 10
+            portfoliosScrollView.setContentOffset(CGPoint(x: (mainView.frame.width*1/2)*CGFloat(index) + CGFloat(30*index), y: 0), animated: false)
             
             hasPortfolioGraphView = true
 
@@ -1019,7 +1030,66 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
     }
     
     @objc func showTradingActivity(button: UIButton) {
-        print("Show trading activity")
+        let parentView = portfolioViews[button.tag]
+        if button.titleLabel?.text == "Show trading activity" {
+            button.setTitle("Hide trading activity", for: .normal)
+            isShowingTradingActivity = true
+            
+            tradingActivityView.frame.size.width = parentView.frame.width*2 + 70
+            tradingActivityView.frame.size.height = parentView.frame.height*1 + 10
+            tradingActivityView.frame.origin.x = parentView.frame.origin.x
+            tradingActivityView.frame.origin.y = pChart.frame.origin.y
+            if tradingActivityView.layer.sublayers?.count == nil {
+                tradingActivityView.addShadow(shadowColor: .darkGray, offSet: CGSize(width: 10, height: 5), opacity: 1.0, shadowRadius: 3, cornerRadius: 10.0, corners: [.bottomLeft, .bottomRight], fillColor: .white)
+            }
+            tradingActivityView.alpha = 0
+            
+            tradingActivityTableView.removeFromSuperview()
+            tradingActivityTableView.frame.size.width = pSecuritiesView.frame.width - 50
+            tradingActivityTableView.frame.size.height = tradingActivityView.frame.height - 50
+            tradingActivityTableView.frame.origin.x = 25
+            tradingActivityTableView.frame.origin.y = 25
+            tradingActivityTableView.separatorColor = .white
+            tradingActivityTableView.layer.cornerRadius = 10
+            tradingActivityTableView.clipsToBounds = true
+            tradingActivityView.addSubview(tradingActivityTableView)
+            
+            fetchTrades(portfolioID: portfolios[button.tag]["PORTFOLIO ID"] as! String)
+            
+            portfoliosScrollView.addSubview(tradingActivityView)
+            
+            mainScrollView.contentSize = CGSize(width: mainScrollView.contentSize.width, height: mainScrollView.contentSize.height + parentView.frame.height*1)
+            portfoliosScrollView.frame.size.height = portfoliosScrollView.frame.height + parentView.frame.height*1
+            dotsLabel.frame.origin.y = portfoliosScrollView.frame.origin.y + portfoliosScrollView.frame.height - 10
+            
+            portfoliosScrollView.setContentOffset(CGPoint(x: (mainView.frame.width*1/2)*CGFloat(button.tag) + CGFloat(30*button.tag), y: 0), animated: false)
+            
+            UIView.animate(withDuration: 0.5, animations: {
+                
+                self.tradingActivityView.alpha = 1
+                self.tradingActivityView.frame.origin.y = self.pSecuritiesView.frame.origin.y + self.pSecuritiesView.frame.height - 10
+                
+            }, completion: {(value) in
+                self.mainScrollView.setContentOffset(CGPoint(x: self.mainScrollView.contentOffset.x, y: self.mainScrollView.contentOffset.y + parentView.frame.height*1), animated: true)
+            })
+        }
+        else {
+            button.setTitle("Show trading activity", for: .normal)
+            
+            UIView.animate(withDuration: 0.5, animations: {
+                self.tradingActivityView.alpha = 0
+                self.tradingActivityView.frame.origin.y = self.pChart.frame.origin.y
+                
+                self.mainScrollView.contentSize = CGSize(width: self.mainScrollView.contentSize.width, height: self.mainScrollView.contentSize.height - self.portfolioViews[button.tag].frame.height*1)
+                self.portfoliosScrollView.frame.size.height = self.portfoliosScrollView.frame.height - self.portfolioViews[button.tag].frame.height*1
+                self.dotsLabel.frame.origin.y = self.portfoliosScrollView.frame.origin.y + self.portfoliosScrollView.frame.height - 10
+                
+                self.portfoliosScrollView.setContentOffset(CGPoint(x: (self.mainView.frame.width*1/2)*CGFloat(button.tag) + CGFloat(30*button.tag), y: 0), animated: false)
+            }, completion: {(value) in
+                self.isShowingTradingActivity = false
+                
+            })
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -1027,110 +1097,176 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "pSecurity", for: indexPath) as! SecuritiesTableViewCell
-        var currentSecurity = securities[indexPath.row]
-        if selectedSecurities.isEmpty == false {
-            currentSecurity = searchedSecurities[indexPath.row]
-        }
-        
-        cell.selectionStyle = .none
-        cell.title.frame.size.height = cell.frame.height/2
-        cell.title.frame.size.width = cell.frame.width*3/5
-        cell.title.frame.origin.x = 15
-        cell.title.center.y = cell.frame.height/3
-        cell.title.text = currentSecurity["Short description"] as? String
-        cell.title.font = UIFont.boldSystemFont(ofSize: 15)
-        
-        cell.arrow.frame.size.height = cell.frame.height - 10
-        cell.arrow.frame.size.width = 20
-        cell.arrow.frame.origin.x = cell.frame.width - 30
-        cell.arrow.image = UIImage(systemName: "arrow.up")
-        cell.arrow.tintColor = .red
-        cell.arrow.contentMode = .scaleAspectFit
-        
-        if (currentSecurity["Price 5"] as! Int) >= (currentSecurity["Price 4"] as! Int) { // price going up
-            cell.arrow.tintColor = .green
+        if tableView == securitiesTableView {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "pSecurity", for: indexPath) as! SecuritiesTableViewCell
+            var currentSecurity = securities[indexPath.row]
+            if selectedSecurities.isEmpty == false {
+                currentSecurity = searchedSecurities[indexPath.row]
+            }
+            
+            cell.selectionStyle = .none
+            cell.title.frame.size.height = cell.frame.height/2
+            cell.title.frame.size.width = cell.frame.width*3/5
+            cell.title.frame.origin.x = 15
+            cell.title.center.y = cell.frame.height/3
+            cell.title.text = currentSecurity["Short description"] as? String
+            cell.title.font = UIFont.boldSystemFont(ofSize: 15)
+            
+            cell.arrow.frame.size.height = cell.frame.height - 10
+            cell.arrow.frame.size.width = 20
+            cell.arrow.frame.origin.x = cell.frame.width - 30
             cell.arrow.image = UIImage(systemName: "arrow.up")
-        }
-        else {
             cell.arrow.tintColor = .red
-            cell.arrow.image = UIImage(systemName: "arrow.down")
-        }
-        
-        cell.price.frame.size.height = cell.frame.height/3
-        cell.price.frame.size.width = cell.frame.width - cell.arrow.frame.width - 10 - cell.title.frame.width - 15
-        cell.price.frame.origin.x = cell.title.frame.origin.x + cell.title.frame.width
-        cell.price.frame.origin.y = 15
-        cell.price.textAlignment = .center
-        cell.price.text = "£\((currentSecurity["Price 5"] as! Int))"
-        cell.price.font = UIFont.boldSystemFont(ofSize: 20)
-        
-        cell.percentage.frame.size = cell.price.frame.size
-        cell.percentage.frame.origin.x = cell.price.frame.origin.x
-        cell.percentage.frame.origin.y = cell.price.frame.origin.y + cell.price.frame.height
-        cell.percentage.textColor = .red
-        cell.percentage.textAlignment = .center
-        cell.percentage.adjustsFontSizeToFitWidth = true
-        
-        cell.alert.isHidden = false
-        cell.alert.frame.size.height = cell.title.frame.height/2
-        cell.alert.frame.size.width = cell.title.frame.width
-        cell.alert.text = "Hold on this stock"
-        cell.alert.sizeToFit()
-        cell.alert.frame.origin.x = cell.alert.frame.height/1.5 + 15 + 5
-        cell.alert.center.y = cell.frame.height*2/3
-        cell.alert.textAlignment = .left
-        cell.alert.textColor = .lightGray
-        cell.alert.font = UIFont.systemFont(ofSize: 15)
-        
-        cell.alertIcon.isHidden = false
-        cell.alertIcon.tintColor = UIColor.lightGray.withAlphaComponent(0.8)
-        cell.alertIcon.frame.size.height = cell.alert.frame.height/1.5
-        cell.alertIcon.frame.size.width = cell.alertIcon.frame.height
-        cell.alertIcon.center.y = cell.alert.center.y
-        cell.alertIcon.frame.origin.x = cell.alert.frame.origin.x - cell.alertIcon.frame.width - 5
-        cell.alertIcon.contentMode = .scaleAspectFit
-        
-        let percentageChange = ((currentSecurity["Price 5"] as! Double) - (currentSecurity["Price 4"] as! Double))/(currentSecurity["Price 4"] as! Double)*100
-        cell.percentage.text = "\(String(format: "%.2f", percentageChange))%"
-        
-        if percentageChange >= 0 {
-            cell.percentage.textColor = .green
-            cell.percentage.text = "+" + cell.percentage.text!
-        }
-        else {
-            cell.percentage.textColor = .red
-        }
-        
-        if percentageChange > 10.00 || percentageChange < -10 {
-            if percentageChange > 10.00 {
-                cell.alert.text = "Best time to sell"
+            cell.arrow.contentMode = .scaleAspectFit
+            
+            if (currentSecurity["Price 5"] as! Int) >= (currentSecurity["Price 4"] as! Int) { // price going up
+                cell.arrow.tintColor = .green
+                cell.arrow.image = UIImage(systemName: "arrow.up")
             }
             else {
-                cell.alert.text = "Best time to buy"
+                cell.arrow.tintColor = .red
+                cell.arrow.image = UIImage(systemName: "arrow.down")
             }
+            
+            cell.price.frame.size.height = cell.frame.height/3
+            cell.price.frame.size.width = cell.frame.width - cell.arrow.frame.width - 10 - cell.title.frame.width - 15
+            cell.price.frame.origin.x = cell.title.frame.origin.x + cell.title.frame.width
+            cell.price.frame.origin.y = 15
+            cell.price.textAlignment = .center
+            cell.price.text = "£\((currentSecurity["Price 5"] as! Int))"
+            cell.price.font = UIFont.boldSystemFont(ofSize: 20)
+            
+            cell.percentage.frame.size = cell.price.frame.size
+            cell.percentage.frame.origin.x = cell.price.frame.origin.x
+            cell.percentage.frame.origin.y = cell.price.frame.origin.y + cell.price.frame.height
+            cell.percentage.textColor = .red
+            cell.percentage.textAlignment = .center
+            cell.percentage.adjustsFontSizeToFitWidth = true
+            
+            cell.alert.isHidden = false
+            cell.alert.frame.size.height = cell.title.frame.height/2
+            cell.alert.frame.size.width = cell.title.frame.width
+            cell.alert.text = "Hold on this stock"
+            cell.alert.sizeToFit()
+            cell.alert.frame.origin.x = cell.alert.frame.height/1.5 + 15 + 5
+            cell.alert.center.y = cell.frame.height*2/3
+            cell.alert.textAlignment = .left
+            cell.alert.textColor = .lightGray
+            cell.alert.font = UIFont.systemFont(ofSize: 15)
+            
+            cell.alertIcon.isHidden = false
+            cell.alertIcon.tintColor = UIColor.lightGray.withAlphaComponent(0.8)
+            cell.alertIcon.frame.size.height = cell.alert.frame.height/1.5
+            cell.alertIcon.frame.size.width = cell.alertIcon.frame.height
+            cell.alertIcon.center.y = cell.alert.center.y
+            cell.alertIcon.frame.origin.x = cell.alert.frame.origin.x - cell.alertIcon.frame.width - 5
+            cell.alertIcon.contentMode = .scaleAspectFit
+            
+            let percentageChange = ((currentSecurity["Price 5"] as! Double) - (currentSecurity["Price 4"] as! Double))/(currentSecurity["Price 4"] as! Double)*100
+            cell.percentage.text = "\(String(format: "%.2f", percentageChange))%"
+            
+            if percentageChange >= 0 {
+                cell.percentage.textColor = .green
+                cell.percentage.text = "+" + cell.percentage.text!
+            }
+            else {
+                cell.percentage.textColor = .red
+            }
+            
+            if percentageChange > 10.00 || percentageChange < -10 {
+                if percentageChange > 10.00 {
+                    cell.alert.text = "Best time to sell"
+                }
+                else {
+                    cell.alert.text = "Best time to buy"
+                }
+            }
+            else {
+                cell.alert.text = "Hold on this stock"
+            }
+            cell.alert.sizeToFit()
+            cell.alert.frame.origin.x = cell.alert.frame.height/1.5 + 15 + 5
+            cell.alert.center.y = cell.frame.height*2/3
+            
+            cell.alertIcon.frame.size.height = cell.alert.frame.height/1.5
+            cell.alertIcon.frame.size.width = cell.alertIcon.frame.height
+            cell.alertIcon.center.y = cell.alert.center.y
+            cell.alertIcon.frame.origin.x = cell.alert.frame.origin.x - cell.alertIcon.frame.width - 5
+            
+            return cell
         }
         else {
-            cell.alert.text = "Hold on this stock"
+            let cell = tableView.dequeueReusableCell(withIdentifier: "pTActivity", for: indexPath) as! TradingActivityTableViewCell
+            
+            cell.selectionStyle = .none
+            cell.backgroundColor = UIColor(red: 14/255, green: 27/255, blue: 56/255, alpha: 1.0)
+
+            cell.dateLabel.frame.size.height = cell.frame.height/2
+            cell.dateLabel.frame.size.width = cell.frame.width/5
+            cell.dateLabel.frame.origin.x = 15
+            cell.dateLabel.center.y = cell.frame.height/3
+            cell.dateLabel.text = trades[indexPath.row]["Date of transaction"] as? String
+            cell.dateLabel.font = UIFont.boldSystemFont(ofSize: 15)
+            cell.dateLabel.textColor = .white
+            cell.dateLabel.textAlignment = .left
+            
+            cell.securityName.frame.size.height = cell.frame.height/2
+            cell.securityName.frame.size.width = cell.frame.width*4/5 - 15 - 5
+            cell.securityName.frame.origin.x = cell.dateLabel.frame.origin.x + cell.dateLabel.frame.width + 5
+            cell.securityName.center.y = cell.frame.height/3
+            cell.securityName.textAlignment = .left
+            cell.securityName.textColor = .white
+            cell.securityName.text = ""
+            
+            let secID = trades[indexPath.row]["Security ID"] as? String
+            
+            for sec in securities {
+                if sec["Security code"] as? String == secID {
+                    cell.securityName.text = sec["Short description"] as? String
+                    break
+                }
+            }
+            
+            cell.type.frame.size.height = cell.frame.height/2
+            cell.type.frame.size.width = cell.frame.width/5
+            cell.type.frame.origin.x = 15
+            cell.type.center.y = cell.frame.height*2/3
+            cell.type.text = trades[indexPath.row]["Type of  Transaction"] as? String
+            cell.type.font = UIFont.boldSystemFont(ofSize: 15)
+            cell.type.textColor = .white
+            cell.type.textAlignment = .left
+            
+            if cell.type.text == "BUY" {
+                cell.type.textColor = .green
+            }
+            else {
+                cell.type.textColor = .red
+            }
+            
+            cell.amount.frame.size.height = cell.frame.height/2
+            cell.amount.frame.size.width = cell.frame.width/3
+            cell.amount.frame.origin.x = cell.type.frame.origin.x + cell.type.frame.width + 5
+            cell.amount.center.y = cell.frame.height*2/3
+            cell.amount.text = "Amount: \(trades[indexPath.row]["Security Amount"] as! Int)"
+            cell.amount.font = UIFont.systemFont(ofSize: 15)
+            cell.amount.textColor = .white
+            cell.amount.textAlignment = .left
+            
+            return cell
         }
-        cell.alert.sizeToFit()
-        cell.alert.frame.origin.x = cell.alert.frame.height/1.5 + 15 + 5
-        cell.alert.center.y = cell.frame.height*2/3
-        
-        cell.alertIcon.frame.size.height = cell.alert.frame.height/1.5
-        cell.alertIcon.frame.size.width = cell.alertIcon.frame.height
-        cell.alertIcon.center.y = cell.alert.center.y
-        cell.alertIcon.frame.origin.x = cell.alert.frame.origin.x - cell.alertIcon.frame.width - 5
-        
-        return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if selectedSecurities.isEmpty {
-            return securities.count
+        if tableView == securitiesTableView {
+            if selectedSecurities.isEmpty {
+                return securities.count
+            }
+            else {
+                return selectedSecurities.count
+            }
         }
         else {
-            return selectedSecurities.count
+            return trades.count
         }
     }
     
@@ -1178,12 +1314,27 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
             self.mainScrollView.contentSize = CGSize(width: self.mainScrollView.contentSize.width, height: self.mainScrollView.contentSize.height - self.portfolioViews[button.tag].frame.height*2.05)
             self.portfoliosScrollView.frame.size.height = self.portfoliosScrollView.frame.height - self.portfolioViews[button.tag].frame.height*2.05
             self.dotsLabel.frame.origin.y = self.portfoliosScrollView.frame.origin.y + self.portfoliosScrollView.frame.height - 10
+            
+            if self.isShowingTradingActivity {
+                self.tradingActivityView.alpha = 0
+                self.tradingActivityView.frame.origin.y = self.pChart.frame.origin.y
+                
+                self.mainScrollView.contentSize = CGSize(width: self.mainScrollView.contentSize.width, height: self.mainScrollView.contentSize.height - self.portfolioViews[button.tag].frame.height*1)
+                self.portfoliosScrollView.frame.size.height = self.portfoliosScrollView.frame.height - self.portfolioViews[button.tag].frame.height*1
+                self.dotsLabel.frame.origin.y = self.portfoliosScrollView.frame.origin.y + self.portfoliosScrollView.frame.height - 10
+                
+                self.portfoliosScrollView.setContentOffset(CGPoint(x: (self.mainView.frame.width*1/2)*CGFloat(button.tag) + CGFloat(30*button.tag), y: 0), animated: false)
+            }
         }, completion: {(value) in
             self.hasPortfolioGraphView = false
             button.setTitle("Show more info", for: .normal)
             button.isEnabled = false
             self.portfoliosScrollView.isScrollEnabled = true
             self.portfoliosSegmentedControl.isEnabled = true
+            
+            if self.isShowingTradingActivity {
+                self.isShowingTradingActivity = false
+            }
         })
     }
     
@@ -1376,6 +1527,24 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
             print(self.portfolios)
             self.setupPortfolios()
             self.fetchSecurityIDs()
+        })
+    }
+    
+    func fetchTrades(portfolioID: String) {
+        trades.removeAll()
+        
+        let ref = Database.database().reference()
+        
+        ref.child("trades").observeSingleEvent(of: .value, with: {(snapshot) in
+            let t = snapshot.value as! [[String: AnyObject]]
+            for tr in t {
+                if tr["Portfolio ID"] as! String == portfolioID {
+                    self.trades.append(tr)
+                }
+            }
+            
+            print(self.trades)
+            self.tradingActivityTableView.reloadData()
         })
     }
     
