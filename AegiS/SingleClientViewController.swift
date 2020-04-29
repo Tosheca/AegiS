@@ -455,7 +455,12 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
         profitabilityLabel.textAlignment = .center
         profitabilityLabel.font = UIFont.boldSystemFont(ofSize: 25)
         summaryView1.addSubview(profitabilityLabel)
-        profitabilityLabel.text = "\(client["Profitability"] as! Double)%"
+        if clientEditing {
+            profitabilityLabel.text = "N/A"
+        }
+        else {
+            profitabilityLabel.text = "\(client["Profitability"] as! Double)%"
+        }
         profitabilityLabel.adjustsFontSizeToFitWidth = true
         profitabilityLabel.textColor = .green
         
@@ -480,7 +485,7 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
         totalSecuritiesLabel.textAlignment = .center
         totalSecuritiesLabel.font = UIFont.boldSystemFont(ofSize: 25)
         summaryView2.addSubview(totalSecuritiesLabel)
-        totalSecuritiesLabel.text = ""
+        totalSecuritiesLabel.text = "N/A"
         totalSecuritiesLabel.adjustsFontSizeToFitWidth = true
         totalSecuritiesLabel.textColor = .white
         
@@ -506,9 +511,15 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
         recentChangeLabel.textAlignment = .center
         recentChangeLabel.font = UIFont.boldSystemFont(ofSize: 25)
         summaryView3.addSubview(recentChangeLabel)
-        var change = client["Recent change"] as! String
-        change.removeFirst()
-        recentChangeLabel.text = "-£\(change)"
+        if clientEditing {
+            recentChangeLabel.text = "N/A"
+            recentChangeLabel.center.x = summaryView3.frame.width/2
+        }
+        else {
+            var change = client["Recent change"] as! String
+            change.removeFirst()
+            recentChangeLabel.text = "-£\(change)"
+        }
         recentChangeLabel.adjustsFontSizeToFitWidth = true
         recentChangeLabel.textColor = .red
         
@@ -518,6 +529,9 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
         changeArrow.center.y = recentChangeLabel.center.y
         changeArrow.frame.origin.x = recentChangeLabel.frame.origin.x - changeArrow.frame.width
         changeArrow.tintColor = .red
+        if clientEditing {
+            changeArrow.isHidden = true
+        }
         summaryView3.addSubview(changeArrow)
         
         portfoliosTitle.frame.size.width = mainView.frame.width

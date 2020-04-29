@@ -556,6 +556,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
             // Create a reference to the file you want to download
             let imageRef = Storage.storage().reference().child("images/\(imageName)")
 
+            cview.isUserInteractionEnabled = false
             // Download in memory with a maximum allowed size of 1MB (1 * 1024 * 1024 bytes)
             imageRef.getData(maxSize: 1 * 1256 * 1256) { data, error in
               if let error = error {
@@ -566,6 +567,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
                 // Data for thee image is returned
                 cview.imageView.image = UIImage(data: data!)
                 self.clients[client]["Image"] = UIImage(data: data!)
+                cview.isUserInteractionEnabled = true
               }
             }
             cview.imageView.contentMode = .scaleAspectFill

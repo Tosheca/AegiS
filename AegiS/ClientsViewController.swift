@@ -290,6 +290,7 @@ class ClientsViewController: UIViewController, UICollectionViewDataSource, UICol
         
         for client in 0..<clients.count {
             dispGroup.enter()
+            clientsCollectionView.isUserInteractionEnabled = false
             let imageName = clients[client]["Image"] as! String
             // Create a reference to the file you want to download
             let imageRef = Storage.storage().reference().child("images/\(imageName)")
@@ -310,6 +311,7 @@ class ClientsViewController: UIViewController, UICollectionViewDataSource, UICol
         
         dispGroup.notify(queue: .main, execute: {
             self.clientsCollectionView.reloadData()
+            self.clientsCollectionView.isUserInteractionEnabled = true
         })
     }
     
