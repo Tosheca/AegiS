@@ -362,9 +362,9 @@ class SecurityViewController: UIViewController, ChartDelegate, UITableViewDelega
                 }
                 
                 
-                for textField in changedTextFields {
-                    
-                }
+//                for textField in changedTextFields {
+//
+//                }
                 
                 tableView.reloadData()
             }

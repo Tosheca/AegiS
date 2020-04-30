@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseAuth
 import Firebase
+import FirebaseDatabase
 
 class RegisterViewController: UIViewController, UITextFieldDelegate {
     
@@ -83,16 +84,16 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                     else {
                         print("Successfully created user")
                         
-                        let db = Firestore.firestore()
-                        db.collection("users").addDocument(data: ["firstName": self.firstNameTextField.text!, "surname": self.surnameTextField.text!, "email": self.emailTextField.text!]) { (error) in
-                            
+                        let ref = Database.database().reference()
+                        
+                        ref.child("managers").child("\(Auth.auth().currentUser!.uid)").setValue(["firstName": self.firstNameTextField.text, "surname": self.surnameTextField.text, "email": self.emailTextField.text], withCompletionBlock: { (error, dbref) in
                             if error != nil {
                                 
                             }
                             else {
                                 self.performSegue(withIdentifier: "backToLogin", sender: nil)
                             }
-                        }
+                        })
                     }
                 }
             }

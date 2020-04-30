@@ -963,7 +963,6 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
             pChart.backgroundColor = UIColor(red: 14/255, green: 27/255, blue: 56/255, alpha: 1.0)
             pChart.xLabelsSkipLast = false
             var yValues = [Double]()
-            let months = [0, 1, 2, 3]
             
             var values = [String]()
             values.append(portfolios[index]["Initial Value"] as! String)
