@@ -124,7 +124,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
         managerNameLabel.frame.origin.y = helloLabel.frame.origin.y + helloLabel.frame.height
         managerNameLabel.frame.origin.x = 20
         managerNameLabel.textColor = .white
-        managerNameLabel.text = "John James"
+        managerNameLabel.text = ""
         managerNameLabel.font = UIFont.boldSystemFont(ofSize: 28)
         
         securitiesTableView.frame.size.width = self.view.frame.width - 50
@@ -153,7 +153,9 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
         
         ref.child("managers").child("\(Auth.auth().currentUser!.uid)").observeSingleEvent(of: .value, with: {(snapshot) in
             let fetchedData = snapshot.value as! [String: AnyObject]
-                        
+            
+            self.managerNameLabel.text = "\(fetchedData["firstName"] as! String) \(fetchedData["surname"] as! String)"
+            
             let imageName = fetchedData["Image"] as! String
             // Create a reference to the file you want to download
             let imageRef = Storage.storage().reference().child("images/\(imageName)")
