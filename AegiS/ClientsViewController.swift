@@ -30,6 +30,8 @@ class ClientsViewController: UIViewController, UICollectionViewDataSource, UICol
     var clients = [[String: AnyObject]]()
     var searchClients = [[String: AnyObject]]()
     
+    var managerID = Int()
+    
     ///3478
     
     override func viewDidLoad() {
@@ -40,6 +42,9 @@ class ClientsViewController: UIViewController, UICollectionViewDataSource, UICol
         self.edgesForExtendedLayout = []
         
         self.view.backgroundColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1.0)
+        
+        managerID = UserDefaults.standard.value(forKey: "rmID") as! Int
+        print("Manager ID: \(managerID)")
         
         backgroundImage.frame.size.width = self.view.frame.size.width
         backgroundImage.frame.size.height = self.view.frame.size.height
@@ -274,7 +279,7 @@ class ClientsViewController: UIViewController, UICollectionViewDataSource, UICol
         ref.child("clients").observeSingleEvent(of: .value, with: {(snapshot) in
             let fetchedData = snapshot.value as! [AnyObject]
             for value in fetchedData {
-                if value.value(forKey: "RM ID") as! Int == 3478 {
+                if value.value(forKey: "RM ID") as! Int == self.managerID {
                     self.clients.append(value as! [String : AnyObject])
                 }
             }

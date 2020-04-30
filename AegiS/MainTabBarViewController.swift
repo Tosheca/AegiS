@@ -10,6 +10,8 @@ import UIKit
 
 class MainTabBarViewController: UITabBarController {
 
+    var managerID = Int()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

@@ -66,20 +66,33 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 else {
                     print("logged in successfully")
                     
-                    let nc = UINavigationController(rootViewController: MainTabBarViewController())
-                    nc.modalPresentationStyle = .fullScreen
-                    nc.view.backgroundColor = .white
-                    self.present(nc, animated: true, completion: nil)
+                    let dispGroup = DispatchGroup()
+                    var rmID = 0
+                    let ref = Database.database().reference()
+                    
+                    dispGroup.enter()
+                    ref.child("managers").child("\(Auth.auth().currentUser!.uid)").observeSingleEvent(of: .value, with: {(snapshot) in
+                        let fetchedData = snapshot.value as! [String: AnyObject]
+                        
+                        rmID = fetchedData["ID"] as! Int
+                        print("login RM ID: \(fetchedData["ID"] as! Int)")
+                        UserDefaults.standard.setValue(rmID, forKey: "rmID")
+                        dispGroup.leave()
+                    })
+                    
+                    dispGroup.notify(queue: .main, execute: {
+                        let mainTabBarView = MainTabBarViewController()
+                        let nc = UINavigationController(rootViewController: mainTabBarView)
+                        nc.modalPresentationStyle = .fullScreen
+                        nc.view.backgroundColor = .white
+                        self.present(nc, animated: true, completion: nil)
+                    })
                 }
                 
             }
             
         }
         else {
-            let nc = UINavigationController(rootViewController: MainTabBarViewController())
-            nc.modalPresentationStyle = .fullScreen
-            nc.view.backgroundColor = .white
-            self.present(nc, animated: true, completion: nil)
             //Error
             emailMark.isHidden = false
             passwordMark.isHidden = false

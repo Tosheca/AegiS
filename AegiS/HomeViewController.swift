@@ -53,6 +53,8 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
     var clients = [[String: AnyObject]]()
     var securities = [[String: AnyObject]]()
 
+    var managerID = Int()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -62,6 +64,8 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
         self.overrideUserInterfaceStyle = .light
         self.edgesForExtendedLayout = []
         
+        managerID = UserDefaults.standard.value(forKey: "rmID") as! Int
+        print("Manager ID: \(managerID)")
         //self.view.backgroundColor = UIColor(red: 10/255, green: 22/255, blue: 46/255, alpha: 1.0)
         
         backgroundImage.frame.size = self.view.frame.size
@@ -98,6 +102,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
         securitiesOfClientsLabel.frame.origin.x = 25
         securitiesOfClientsLabel.frame.origin.y = clientsScrollView.frame.origin.y + clientsScrollView.frame.height + 20
         securitiesOfClientsLabel.font = UIFont.boldSystemFont(ofSize: 25)
+        securitiesOfClientsLabel.adjustsFontSizeToFitWidth = true
         
         infoButton.frame.size.width = self.view.frame.width/6
         infoButton.frame.size.height = infoButton.frame.width
@@ -305,7 +310,16 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
             emailTextField.frame.size.height = myClientsLabel.frame.height
             emailTextField.frame.origin.x = myClientsLabel.frame.origin.x
             emailTextField.frame.origin.y = emailTitle.frame.origin.y + emailTitle.frame.height
-            emailTextField.text = "sample@gmail.com"
+            emailTextField.text = ""
+            
+            let ref = Database.database().reference()
+            
+            ref.child("managers").child("\(Auth.auth().currentUser!.uid)").observeSingleEvent(of: .value, with: {(snapshot) in
+                let fetchedData = snapshot.value as! [String: AnyObject]
+                
+                self.emailTextField.text = fetchedData["email"] as? String
+            })
+            
             emailTextField.backgroundColor = UIColor.white
             emailTextField.clipsToBounds = true
             emailTextField.layer.cornerRadius = 10
@@ -349,6 +363,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
 
             }
             passwordButton.setTitle("Send email to change password", for: .normal)
+            passwordButton.titleLabel?.adjustsFontSizeToFitWidth = true
             passwordButton.setTitleColor(.black, for: .normal)
             passwordButton.addTarget(self, action: #selector(resetPassword), for: .touchUpInside)
             managerView.addSubview(passwordButton)
@@ -614,7 +629,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
         ref.child("clients").observeSingleEvent(of: .value, with: {(snapshot) in
             let fetchedData = snapshot.value as! [AnyObject]
             for value in fetchedData {
-                if value.value(forKey: "RM ID") as! Int == 3478 {
+                if value.value(forKey: "RM ID") as! Int == self.managerID {
                     self.clients.append(value as! [String : AnyObject])
                 }
             }
