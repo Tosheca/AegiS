@@ -43,7 +43,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
     var editEmailButton = UIButton()
     var clientsTitle = UILabel()
     var numberOfClientsLabel = UILabel()
-    var managerDetailsImage = UIImageView(image: UIImage(named: "89762769_223800988749873_7596640348722429952_n.jpg"))
+    var managerDetailsImage = UIImageView()
     var passwordTitle = UILabel()
     var passwordButton = UIButton()
     var managerLine1 = UIView()
@@ -142,13 +142,34 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
         managerImage.frame.size.height = infoButton.frame.height/1.3
         managerImage.frame.origin.x = 20
         managerImage.frame.origin.y = 35
-        managerImage.setImage(UIImage(named: "89762769_223800988749873_7596640348722429952_n.jpg"), for: .normal)
+        
         managerImage.imageView?.contentMode = .scaleAspectFill
         managerImage.layer.cornerRadius = managerImage.frame.width/2
         managerImage.clipsToBounds = true
         managerImage.layer.borderWidth = 1
         managerImage.layer.borderColor = UIColor.white.cgColor
         managerImage.addTarget(self, action: #selector(managerDetails), for: .touchUpInside)
+        let ref = Database.database().reference()
+        
+        ref.child("managers").child("\(Auth.auth().currentUser!.uid)").observeSingleEvent(of: .value, with: {(snapshot) in
+            let fetchedData = snapshot.value as! [String: AnyObject]
+                        
+            let imageName = fetchedData["Image"] as! String
+            // Create a reference to the file you want to download
+            let imageRef = Storage.storage().reference().child("images/\(imageName)")
+
+            // Download in memory with a maximum allowed size of 1MB (1 * 1024 * 1024 bytes)
+            imageRef.getData(maxSize: 1 * 1256 * 1256) { data, error in
+              if let error = error {
+                // Uh-oh, an error occurred!
+                print("Error")
+                print(error)
+              } else {
+                // Data for the image is returned
+                self.managerImage.setImage(UIImage(data: data!), for: .normal)
+              }
+            }
+        })
         
         logoTitle.frame.size.height = infoButton.frame.height
         logoTitle.frame.size.width = self.view.frame.width/2
@@ -318,6 +339,22 @@ class HomeViewController: UIViewController, UIScrollViewDelegate, UITableViewDel
                 let fetchedData = snapshot.value as! [String: AnyObject]
                 
                 self.emailTextField.text = fetchedData["email"] as? String
+                
+                let imageName = fetchedData["Image"] as! String
+                // Create a reference to the file you want to download
+                let imageRef = Storage.storage().reference().child("images/\(imageName)")
+
+                // Download in memory with a maximum allowed size of 1MB (1 * 1024 * 1024 bytes)
+                imageRef.getData(maxSize: 1 * 1256 * 1256) { data, error in
+                  if let error = error {
+                    // Uh-oh, an error occurred!
+                    print("Error")
+                    print(error)
+                  } else {
+                    // Data for the image is returned
+                    self.managerDetailsImage.image = UIImage(data: data!)
+                  }
+                }
             })
             
             emailTextField.backgroundColor = UIColor.white
