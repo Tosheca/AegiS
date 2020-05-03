@@ -1285,15 +1285,17 @@ class SingleClientViewController: UIViewController, UIScrollViewDelegate, PieCha
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("select")
-        let securityVC = SecurityViewController()
-        if selectedSecurities.isEmpty {
-            securityVC.security = securities[indexPath.row]
+        if tableView == securitiesTableView {
+            let securityVC = SecurityViewController()
+            if selectedSecurities.isEmpty {
+                securityVC.security = securities[indexPath.row]
+            }
+            else {
+                securityVC.security = searchedSecurities[indexPath.row]
+            }
+            securityVC.modalPresentationStyle = .fullScreen
+            self.present(securityVC, animated: true, completion: nil)
         }
-        else {
-            securityVC.security = searchedSecurities[indexPath.row]
-        }
-        securityVC.modalPresentationStyle = .fullScreen
-        self.present(securityVC, animated: true, completion: nil)
     }
     
     func onSelected(slice: PieSlice, selected: Bool) {

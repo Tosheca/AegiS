@@ -10,8 +10,8 @@ import UIKit
 
 class TradingActivityTableViewCell: UITableViewCell {
 
-    var dateLabel = UITextField()
-    var securityName = UITextField()
+    var dateLabel = UILabel()
+    var securityName = UILabel()
     var type = UILabel()
     var amount = UILabel()
     
